@@ -13,10 +13,8 @@ import mods.flammpfeil.slashblade.item.ItemProudSoul;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.network.*;
 import mods.flammpfeil.slashblade.util.KeyBindingEx;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.renderer.entity.*;
 import net.minecraft.entity.player.EntityPlayer;
@@ -87,20 +85,6 @@ public class CoreProxyClient extends CoreProxy {
         }
         */
 
-        {
-            StateMapperBase propertyStringMapper = new StateMapperBase() {
-                @Override
-                protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
-                    return new ModelResourceLocation("minecraft:stone");
-                }
-            };
-
-            for(ItemProudSoul.EnumSoulType type : ItemProudSoul.EnumSoulType.values()){
-                ModelLoader.setCustomModelResourceLocation(SlashBlade.proudSoul, type.getMetadata(), new ModelResourceLocation(SlashBlade.modid + ":" + "material", propertyStringMapper.getPropertyString(SlashBlade.proudSoul.getStateFromMeta(type.getMetadata()).getProperties())));
-            }
-        }
-
-
         //ModelLoader.setCustomModelResourceLocation(SlashBlade.proudSoul, 0, new ModelResourceLocation(SlashBlade.modid + ":" + "proudsoul"));
         ModelLoader.setCustomModelResourceLocation(SlashBlade.proudSoul, 0, new ModelResourceLocation(SlashBlade.modid + ":" + "soul.obj"));
 
@@ -117,6 +101,8 @@ public class CoreProxyClient extends CoreProxy {
         ModelLoader.setCustomModelResourceLocation(SlashBlade.proudSoul, 4, new ModelResourceLocation(SlashBlade.modid + ":" + "crystal.obj"));
 
         ModelLoader.setCustomModelResourceLocation(SlashBlade.proudSoul, 5, new ModelResourceLocation(SlashBlade.modid + ":" + "trapezohedron.obj"));
+        ModelLoader.setCustomModelResourceLocation(SlashBlade.proudSoul, ItemProudSoul.EnumSoulType.STEEL_INGOT.getMetadata(), new ModelResourceLocation(SlashBlade.modid + ":" + "ingot.obj"));
+        ModelLoader.setCustomModelResourceLocation(SlashBlade.proudSoul, ItemProudSoul.EnumSoulType.SILVER_INGOT.getMetadata(), new ModelResourceLocation(SlashBlade.modid + ":" + "ingot.obj"));
         OBJLoader.INSTANCE.addDomain(SlashBlade.modid);
 
         /* todo:advancement

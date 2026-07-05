@@ -30,7 +30,7 @@ public class ConfigCustomBladeManager {
     }
 
     public void loadConfig(Configuration config){
-        Property propCustomBlade = SlashBlade.mainConfiguration.get(Configuration.CATEGORY_GENERAL, "CustomBlade" ,new String[]{"dios"});
+        Property propCustomBlade = SlashBlade.mainConfiguration.get(Configuration.CATEGORY_GENERAL, "CustomBlade" ,new String[0]);
         lines = propCustomBlade.getStringList();
         propCustomBlade.setShowInGui(false);
     }
@@ -40,6 +40,13 @@ public class ConfigCustomBladeManager {
         int x = 1;
         int y = 13;
         for(String line : lines){
+            if(line == null || line.trim().isEmpty())
+                continue;
+
+            line = line.trim();
+            if(!hasCustomBladeAsset(line, "texture.png") || !hasCustomBladeAsset(line, "model.obj"))
+                continue;
+
             String key = "custom_"+line;
 
             ItemStack customBlade = new ItemStack(SlashBlade.bladeNamed,1,0);
@@ -76,5 +83,10 @@ public class ConfigCustomBladeManager {
 */
             ItemSlashBladeNamed.NamedBlades.add(key);
         }
+    }
+
+    private boolean hasCustomBladeAsset(String line, String fileName) {
+        String resourcePath = "assets/" + SlashBlade.modid + "/model/custom/" + line + "/" + fileName;
+        return getClass().getClassLoader().getResource(resourcePath) != null;
     }
 }
