@@ -12,16 +12,13 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
-import net.minecraftforge.oredict.RecipeSorter;
-
-import static net.minecraftforge.oredict.RecipeSorter.Category.SHAPED;
 
 /**
  * Created by Furia on 14/07/07.
  */
 public class Fox {
-    static public final String nameWhite = "flammpfeil.slashblade.named.fox.white";
-    static public final String nameBlack = "flammpfeil.slashblade.named.fox.black";
+    static public final String nameWhite = "slashblade.named.fox.white";
+    static public final String nameBlack = "slashblade.named.fox.black";
 
     @SubscribeEvent
     public void init(LoadEvent.InitEvent event){
@@ -206,7 +203,5 @@ public class Fox {
 
             SlashBlade.addRecipe(nameBlack, recipe);
         }
-
-        RecipeSorter.register("flammpfeil.slashblade:fox", RecipeAwakeBladeFox.class, SHAPED, "after:forge:shaped");
     }
 }

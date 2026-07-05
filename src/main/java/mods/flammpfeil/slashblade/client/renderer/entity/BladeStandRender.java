@@ -34,8 +34,8 @@ public class BladeStandRender extends Render{
 
     static public WavefrontObject standModel = null;
 
-    static public ResourceLocationRaw modelLocation = new ResourceLocationRaw("flammpfeil.slashblade","model/stand/stand.obj");
-    static public ResourceLocationRaw textureLocation = new ResourceLocationRaw("flammpfeil.slashblade","model/stand/stand.png");
+    static public ResourceLocationRaw modelLocation = new ResourceLocationRaw("slashblade","model/stand/stand.obj");
+    static public ResourceLocationRaw textureLocation = new ResourceLocationRaw("slashblade","model/stand/stand.png");
 
     public BladeStandRender(RenderManager renderManager) {
         super(renderManager);

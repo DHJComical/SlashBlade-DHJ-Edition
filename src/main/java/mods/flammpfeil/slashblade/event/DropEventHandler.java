@@ -21,7 +21,7 @@ import java.util.Set;
  * Created by Furia on 14/05/16.
  */
 public class DropEventHandler {
-    public static final String header = "flammpfeil.slashblade.entitydrops.";
+    public static final String header = "slashblade.entitydrops.";
 
     public static Set<String> registerdEntityNames = Sets.newHashSet();
 

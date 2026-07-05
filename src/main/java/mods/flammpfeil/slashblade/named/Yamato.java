@@ -21,7 +21,7 @@ public class Yamato {
         ItemStack itemSphereBladeSoul = SlashBlade.findItemStack(SlashBlade.modid,SlashBlade.SphereBladeSoulStr,1);
 
         {
-            String nameTrue = "flammpfeil.slashblade.named.yamato";
+            String nameTrue = "slashblade.named.yamato";
             {
 
                 ItemStack customblade = new ItemStack(SlashBlade.bladeNamed,1,0);
@@ -102,7 +102,7 @@ public class Yamato {
     public void postinit(LoadEvent.PostInitEvent event){
 
         //todo: drop point move enderdragon egg point
-        DropEventHandler.registerEntityDrop(new ResourceLocation("hardcoreenderexpansion","dragon"), 1.0f, SlashBlade.findItemStack(SlashBlade.modid, "flammpfeil.slashblade.named.yamato.broken", 1));
-        DropEventHandler.registerEntityDrop(new ResourceLocation("ender_dragon"), 1.0f, SlashBlade.findItemStack(SlashBlade.modid, "flammpfeil.slashblade.named.yamato.broken", 1));
+        DropEventHandler.registerEntityDrop(new ResourceLocation("hardcoreenderexpansion","dragon"), 1.0f, SlashBlade.findItemStack(SlashBlade.modid, "slashblade.named.yamato.broken", 1));
+        DropEventHandler.registerEntityDrop(new ResourceLocation("ender_dragon"), 1.0f, SlashBlade.findItemStack(SlashBlade.modid, "slashblade.named.yamato.broken", 1));
     }
 }

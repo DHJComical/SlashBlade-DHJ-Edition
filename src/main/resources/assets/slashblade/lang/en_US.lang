@@ -1,0 +1,304 @@
+slashblade=SlashBlade
+Key.SlashBlade.PS=Summoned Sword
+Key.SlashBlade.SA=SA:StyleAction
+Key.SlashBlade.LO=Lock-on
+Key.SlashBlade.CA=QT:QuickTurn
+
+slashblade.config.rustblade.spawnrate=Spawn Rate
+slashblade.config.rustblade.broken=Already broken
+slashblade.config.rustblade.scabbardlost=Scabbard is lost
+slashblade.config.rustblade.drop=Drop rate
+
+itemGroup.slashblade=SlashBlade
+item.slashblade.name=SlashBlade--
+item.slashblade.proudsoul.name=ProudSoul
+item.slashblade.proudsoul.soul.name=ProudSoul
+item.slashblade.proudsoul.ingot.name=BladeSoulIngot
+item.slashblade.proudsoul.sphere.name=BladeSoulSphere
+item.slashblade.proudsoul.tiny.name=TinyProudSoul
+item.slashblade.proudsoul.crystal.name=BladeSoulCrystal
+item.slashblade.proudsoul.trapezohedron.name=BladeSoulTrapezohedron
+flammpfeil.swaepon.info.bewitched=bewitched
+flammpfeil.swaepon.info.magic=enchanted
+flammpfeil.swaepon.info.noname=sealed
+
+flammpfeil.sweapon.info.hold=Hold
+flammpfeil.sweapon.info.shift=Shift
+flammpfeil.sweapon.info.forDetails=for Details
+flammpfeil.sweapon.info.energy=Energy
+
+flammpfeil.sweapon.info.hfeffect.trunon=turn on : press QT+SA key
+flammpfeil.sweapon.info.hfeffect.trunoff=turn off : press Sneak+QT+SA key
+
+flammpfeil.swaepon.info.notowner.msg=§8You are not worthy as my master.
+flammpfeil.swaepon.info.needlevel.msg=§8You need more experience. Requirements level:%1$s
+
+item.slashblade.wood.name=Anonymity-Wood-
+item.slashblade.bamboo.name=Anonymity-BambooLight-
+item.slashblade.silverbamboo.name=Noted-SilverBambooLight-
+item.slashblade.white.name=Sharpness-White-
+item.slashblade.wrapper.name=Scabbard
+slashblade.specialattack.slashdimension=SlashDimension
+slashblade.specialattack.slashdimension_spiral=SlashDimension S
+slashblade.specialattack.drive=Drive
+slashblade.specialattack.vdrive=VerticalDrive
+slashblade.specialattack.waveedge=WaveEdge
+slashblade.specialattack.spear=Piercing
+slashblade.specialattack.circleslash=CircleSlash
+slashblade.specialattack.BlisteringWitherSwords=BlisteringWitherSwords
+slashblade.specialattack.sakuraend=SakuraEnd
+slashblade.specialattack.maximumbet=MaximumBet
+
+item.slashblade.named.name=anonymity-nameless-
+item.slashblade.named.yamato.broken.name=brokenYAMATO
+item.slashblade.named.yamato.name=YAMATOOo!
+item.slashblade.named.tagayasan.name=hardwood-tagayasan-
+item.slashblade.named.yuzukitukumo.name=yuzuki-tukumo-
+item.slashblade.named.agito.rust.name=agito rust
+item.slashblade.named.agito.name=agito
+item.slashblade.named.orotiagito.rust.name=agito rust
+item.slashblade.named.orotiagito.seald.name=agito
+item.slashblade.named.orotiagito.name=orotiagito
+item.slashblade.named.sange.name=sange
+item.slashblade.named.yasha.name=yasha
+item.slashblade.named.yashatrue.name=yasha
+item.slashblade.wrapformat=Heirloom-%s-
+item.slashblade.wrapformat.low=Noted-%s-
+item.wrap.BambooMod.katana.name=ruby-nameless-
+item.wrap.reforged.wooden_katana.name=balkon-wood-
+item.wrap.reforged.stone_katana.name=balkon-rock-
+item.wrap.reforged.iron_katana.name=balkon-steel-
+item.wrap.reforged.diamond_katana.name=balkon-diamond-
+item.wrap.reforged.golden_katana.name=balkon-gold-
+item.slashblade.named.fox.white.name=Crescent-Weiss Fox-
+item.slashblade.named.fox.black.name=Crescent-Haze Fox-
+item.slashblade.named.muramasa.name=muramasa
+item.slashblade.named.sabigatana.name=rust blade
+item.slashblade.named.doutanuki.name=doutanuki
+
+item.slashblade.named.koseki.name=WitherBlade
+
+entity.slashblade.BladeStand.name=BladeStand
+
+death.attack.directMagic=%1$s was hacked by %2$s using magic blade
+
+slashblade.seffect.name.WitherEdge=WitherEdge
+slashblade.seffect.name.Limitter=Limitter
+slashblade.seffect.name.BlastEdge=BlastEdge
+slashblade.seffect.name.HFCustom=HFCustom
+
+slashblade.rangeattack.false=SummonedSword
+slashblade.rangeattack.true=SummonedBlade
+
+achievement.slashblade.slashWoodenSword=Fighting Spirit
+achievement.slashblade.slashWoodenSword.desc=Try fighting with wooden sword.
+achievement.slashblade.slashWoodenSword.pos=0,0
+
+achievement.slashblade.buildWoodenBlade=Anonymity-Wood-
+achievement.slashblade.buildWoodenBlade.desc=normal wood katana
+achievement.slashblade.buildWoodenBlade.pos=3,0
+
+achievement.slashblade.takemitu.pos=3,3
+achievement.slashblade.ginsitakemitu.pos=5,3
+achievement.slashblade.saya.pos=6, 5
+
+achievement.slashblade.tagayasan=iron wood
+achievement.slashblade.tagayasan.desc=immortal edge
+achievement.slashblade.tagayasan.pos=4,-2
+
+achievement.slashblade.buildSlashBlade=Blade for slash
+achievement.slashblade.buildSlashBlade.desc=Hidden possibilities
+achievement.slashblade.buildSlashBlade.pos=9,0
+
+achievement.slashblade.enchanted=SecretArts
+achievement.slashblade.enchanted.desc=Ennchanted
+achievement.slashblade.enchanted.pos=10,1
+
+achievement.slashblade.bewitched=Living edge
+achievement.slashblade.bewitched.desc=Soul of name
+achievement.slashblade.bewitched.pos=11,2
+
+achievement.slashblade.tukumo=yuzuki-tukumo-
+achievement.slashblade.tukumo.desc=Pride of the clan
+achievement.slashblade.tukumo.pos=11,-3
+
+
+achievement.slashblade.muramasa=Chizuru - Thousand Crane
+achievement.slashblade.muramasa.desc=Fragments of the Demon Blade of legend
+achievement.slashblade.muramasa.pos=12,0
+
+achievement.slashblade.buildWhiteSheath=Sharpness-White-
+achievement.slashblade.buildWhiteSheath.desc=steel edge
+achievement.slashblade.buildWhiteSheath.pos=6,0
+
+achievement.slashblade.brokenWhiteSheath=Broken-White-
+achievement.slashblade.brokenWhiteSheath.desc=Brittle
+achievement.slashblade.brokenWhiteSheath.pos=7,1
+
+achievement.slashblade.noname=anonymity-nameless-
+achievement.slashblade.noname.desc=tragedy mixed repair
+achievement.slashblade.noname.pos=-3,3
+
+achievement.slashblade.koseki=WitherBlade
+achievement.slashblade.koseki.desc=stone edge
+achievement.slashblade.koseki.pos=-4,5
+
+achievement.slashblade.hundredKill=100 killer
+achievement.slashblade.hundredKill.desc=edge eater
+achievement.slashblade.hundredKill.pos=1,-4
+
+achievement.slashblade.thousandKill=1000 killer
+achievement.slashblade.thousandKill.desc=cut down
+achievement.slashblade.thousandKill.pos=2,-3
+
+achievement.slashblade.soulEater=soul eater
+achievement.slashblade.soulEater.desc=repair edge
+achievement.slashblade.soulEater.pos=1,-2
+
+achievement.slashblade.rankD=§fDirt
+achievement.slashblade.rankD.desc=attack limitter
+achievement.slashblade.rankD.pos=2,-6
+
+achievement.slashblade.rankC=§9Coal
+achievement.slashblade.rankC.desc=max 2
+achievement.slashblade.rankC.pos=3,-6
+
+achievement.slashblade.rankB=§eBedrock
+achievement.slashblade.rankB.desc=unlock attack level
+achievement.slashblade.rankB.pos=4,-6
+
+achievement.slashblade.rankA=§cAir
+achievement.slashblade.rankA.desc=normal
+achievement.slashblade.rankA.pos=5,-6
+
+achievement.slashblade.rankS=§cSnow
+achievement.slashblade.rankS.desc=unlock level effect : 1000 killed
+achievement.slashblade.rankS.pos=6,-6
+
+achievement.slashblade.rankSS=§cSoul Sand
+achievement.slashblade.rankSS.desc=base limit 10
+achievement.slashblade.rankSS.pos=7,-6
+
+achievement.slashblade.rankSSS=§cStylish Sharpness Slashblade
+achievement.slashblade.rankSSS.desc=forging need
+achievement.slashblade.rankSSS.pos=8,-5
+
+achievement.slashblade.proudSoul=Proud Soul
+achievement.slashblade.proudSoul.desc=blade soul
+achievement.slashblade.proudSoul.pos=-3,-3
+
+achievement.slashblade.tinySoul=Tiny piece
+achievement.slashblade.tinySoul.desc=blade piece
+achievement.slashblade.tinySoul.pos=-2,-4
+
+achievement.slashblade.soulIngot=spiritual ingot
+achievement.slashblade.soulIngot.desc=forged burning soul
+achievement.slashblade.soulIngot.pos=-4,-2
+
+achievement.slashblade.soulSphere=pure sphere
+achievement.slashblade.soulSphere.desc=spiritual crystal
+achievement.slashblade.soulSphere.pos=-5,-1
+
+achievement.slashblade.soulCrystal=pure crystal
+achievement.slashblade.soulCrystal.desc=blade soul crystal<br>burning BladeStand < Click ProudSoul
+achievement.slashblade.soulCrystal.pos=-7,-3
+
+achievement.slashblade.namedbladeSoul=Named Blade Soul
+achievement.slashblade.namedbladeSoul.desc=burning BladeStand < Click Enchanted ProudSoul<br>or DefeatTheBoss
+achievement.slashblade.namedbladeSoul.pos=-8,-4
+
+achievement.slashblade.soulTrapezohedron=bladesoul trapezohedron
+achievement.slashblade.soulTrapezohedron.desc=burning BladeStand < Click pure blade soul crystal<br>owner registration key
+achievement.slashblade.soulTrapezohedron.pos=-9,-2
+
+achievement.slashblade.enchantmentSoul=force fragment
+achievement.slashblade.enchantmentSoul.desc=click! blade stand
+achievement.slashblade.enchantmentSoul.pos=-2,-1
+
+achievement.slashblade.bladeStand=BladeStand
+achievement.slashblade.bladeStand.desc=get:empty slot
+achievement.slashblade.bladeStand.pos=-3,0
+
+achievement.slashblade.wrap.BambooMod.katana.pos=9, 6
+achievement.slashblade.fox.white.pos=11, 5
+achievement.slashblade.fox.black.pos=11, 7
+
+achievement.slashblade.wrap.weaponmod.katana.wood.pos=7, 7
+achievement.slashblade.wrap.weaponmod.katana.stone.pos=8, 8
+achievement.slashblade.wrap.weaponmod.katana.iron.pos=9, 9
+achievement.slashblade.wrap.weaponmod.katana.diamond.pos=10, 10
+achievement.slashblade.wrap.weaponmod.katana.gold.pos=11, 11
+
+achievement.slashblade.wrap.Wa.katana.pos=8, 12
+achievement.slashblade.wrap.Wa.tachi.pos=9, 13
+
+achievement.slashblade.brokenYamato=broken YAMATO
+achievement.slashblade.brokenYamato.desc=Phantom of mirrored
+achievement.slashblade.brokenYamato.pos=-2, 6
+
+achievement.slashblade.yamato=YAMATOOo!
+achievement.slashblade.yamato.desc=Demon Blade of legend - another world
+achievement.slashblade.yamato.pos=0, 6
+
+achievement.slashblade.sabigatana=rust edge
+achievement.slashblade.sabigatana.desc=edge of brave warrior
+achievement.slashblade.sabigatana.pos=-2, 9
+
+achievement.slashblade.doutanuki=mighty edge
+achievement.slashblade.doutanuki.desc=strong powerful
+achievement.slashblade.doutanuki.pos=0, 9
+
+achievement.slashblade.agito.rust.pos=15, -3
+achievement.slashblade.agito.pos=17, -3
+
+achievement.slashblade.orotiagito.rust.pos=15, -4
+achievement.slashblade.orotiagito.sealed.pos=17, -4
+achievement.slashblade.orotiagito.pos=19, -4
+
+achievement.slashblade.yashatrue.pos=15, -2
+achievement.slashblade.sange.pos=17, -2
+achievement.slashblade.darkraven.pos=19, -2
+
+
+achievement.slashblade.yasha.pos=16, -0
+achievement.slashblade.fluorescentbar.pos=15, -0
+achievement.slashblade.snowcrow.pos=17, -0
+
+achievement.slashblade.phantomSword=Summoned Swords
+achievement.slashblade.phantomSword.desc=power of sparda<br>Power enchanted
+achievement.slashblade.phantomSword.pos=-6,-5
+
+achievement.slashblade.phantomBlade=Summoned Blades
+achievement.slashblade.phantomBlade.desc=power of soul<br>switch BladeSphere click
+achievement.slashblade.phantomBlade.pos=-7,-6
+
+
+achievement.slashblade.nihil.pos=22, -4
+achievement.slashblade.nihilex.pos=23, -4
+achievement.slashblade.nihilul.pos=24, -4
+achievement.slashblade.nihilbx.pos=25, -4
+achievement.slashblade.crimsoncherry.pos=24,-3
+achievement.slashblade.toyako.pos=22,-3
+
+achievement.slashblade.frostwolfa.pos=15, 8
+achievement.slashblade.frostwolfb.pos=16, 8
+
+achievement.slashblade.wanderer.pos=22, -1
+achievement.slashblade.wanderer.rfblade.pos=23, -1
+
+
+achievement.slashblade.kamuy.base.pos=15, 9
+achievement.slashblade.kamuy.fire.pos=16, 9
+achievement.slashblade.kamuy.water.pos=17, 9
+achievement.slashblade.kamuy.lightning.pos=18, 9
+
+achievement.slashblade.terra.pos=22, 0
+achievement.slashblade.zephyr.pos=24, 0
+achievement.slashblade.murasamablade.pos=26, 0
+achievement.slashblade.laemmle.pos=28, 0
+
+achievement.slashblade.blademaster.moonlightcherry.pos=15, 10
+achievement.slashblade.blademaster.aquablaze.pos=16, 10
+achievement.slashblade.blademaster.greenmist.pos=17, 10
+
+achievement.slashblade.yukari.pos=15, 11

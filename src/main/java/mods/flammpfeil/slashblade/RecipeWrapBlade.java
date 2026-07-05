@@ -136,11 +136,11 @@ public class RecipeWrapBlade extends ShapedRecipes {
         ItemSlashBladeNamed.BaseAttackModifier.set(tag,wrapableBaseAttackModifiers.get(targetName.toString()));
 
         if(target.hasDisplayName()){
-            scabbard.setStackDisplayName(I18n.format("item.flammpfeil.slashblade.wrapformat", target.getDisplayName()));
+            scabbard.setStackDisplayName(I18n.format("item.slashblade.wrapformat", target.getDisplayName()));
         }else if(target.isItemEnchanted()){
             scabbard.setStackDisplayName(scabbard.getDisplayName());
         }else{
-            scabbard.setStackDisplayName(I18n.format("item.flammpfeil.slashblade.wrapformat.low",target.getDisplayName()));
+            scabbard.setStackDisplayName(I18n.format("item.slashblade.wrapformat.low",target.getDisplayName()));
         }
 
         if(target.isItemEnchanted()){

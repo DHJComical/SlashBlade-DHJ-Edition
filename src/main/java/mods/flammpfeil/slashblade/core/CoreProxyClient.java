@@ -286,7 +286,7 @@ public class CoreProxyClient extends CoreProxy {
         });
 
 
-        summonedsword = new KeyBindingEx("Key.SlashBlade.PS",-98,"flammpfeil.slashblade"){
+        summonedsword = new KeyBindingEx("Key.SlashBlade.PS",-98,"slashblade"){
             @Override
             public void upkey(int count) {
                 charged = false;
@@ -350,7 +350,7 @@ public class CoreProxyClient extends CoreProxy {
             }
         };
 
-        styleaction = new KeyBindingEx("Key.SlashBlade.SA", Keyboard.KEY_V,"flammpfeil.slashblade"){
+        styleaction = new KeyBindingEx("Key.SlashBlade.SA", Keyboard.KEY_V,"slashblade"){
             @Override
             public void downkey() {
                 Minecraft mc = Minecraft.getMinecraft();
@@ -437,9 +437,9 @@ public class CoreProxyClient extends CoreProxy {
             }
         };
 
-        lockon = new KeyBindingEx("Key.SlashBlade.LO", Keyboard.KEY_LSHIFT, "flammpfeil.slashblade"){
+        lockon = new KeyBindingEx("Key.SlashBlade.LO", Keyboard.KEY_LSHIFT, "slashblade"){
         };
-        camera = new KeyBindingEx("Key.SlashBlade.CA", Keyboard.KEY_LCONTROL, "flammpfeil.slashblade"){
+        camera = new KeyBindingEx("Key.SlashBlade.CA", Keyboard.KEY_LCONTROL, "slashblade"){
         };
 
     }

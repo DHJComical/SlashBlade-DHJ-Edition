@@ -18,7 +18,7 @@ import net.minecraft.nbt.NBTTagCompound;
  */
 public class Tukumo {
 
-    static public final String YuzukiTukumo = "flammpfeil.slashblade.named.yuzukitukumo";
+    static public final String YuzukiTukumo = "slashblade.named.yuzukitukumo";
 
     @SubscribeEvent()
     public void init(LoadEvent.InitEvent event){
@@ -55,7 +55,7 @@ public class Tukumo {
 
                 ItemSlashBlade.KillCount.set(tagReqired, 1000);
 
-                String nameReqired = "flammpfeil.slashblade.thousandkill";
+                String nameReqired = "slashblade.thousandkill";
                 SlashBlade.registerCustomItemStack(nameReqired, custombladeReqired);
                 ItemSlashBladeNamed.NamedBlades.add(nameReqired);
 

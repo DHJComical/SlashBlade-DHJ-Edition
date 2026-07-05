@@ -14,7 +14,7 @@ import net.minecraft.nbt.NBTTagCompound;
  * Created by Furia on 14/07/07.
  */
 public class Tizuru {
-    String name = "flammpfeil.slashblade.named.muramasa";
+    String name = "slashblade.named.muramasa";
     @SubscribeEvent
     public void init(LoadEvent.InitEvent event){
         ItemStack customblade = new ItemStack(SlashBlade.bladeNamed,1,0);

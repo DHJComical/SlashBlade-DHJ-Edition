@@ -14,8 +14,8 @@ import javax.annotation.Nullable;
  */
 public abstract class DummyRecipeBase implements IRecipe {
 
-    public static final ResourceLocation BackGroundResource = new ResourceLocationRaw("flammpfeil.slashblade","textures/gui/crafting_recipe.png");
-    public static final ResourceLocation BackGroundResource2 = new ResourceLocationRaw("flammpfeil.slashblade","textures/gui/crafting_recipe2.png");
+    public static final ResourceLocation BackGroundResource = new ResourceLocationRaw("slashblade","textures/gui/crafting_recipe.png");
+    public static final ResourceLocation BackGroundResource2 = new ResourceLocationRaw("slashblade","textures/gui/crafting_recipe2.png");
 
     public enum RecipeType{
         Crafting(BackGroundResource, 0),

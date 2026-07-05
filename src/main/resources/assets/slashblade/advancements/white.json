@@ -1,0 +1,29 @@
+{
+  "display": {
+    "title": {
+      "translate": "achievement.slashblade.buildWhiteSheath"
+    },
+    "description": {
+      "translate": "achievement.slashblade.buildWhiteSheath.desc",
+      "with": ["\n"]
+    },
+    "icon": {
+      "item": "slashblade:slashbladeWhite",
+      "data": 0
+    },
+    "frame": "task"
+  },
+  "parent": "slashblade:wood",
+  "criteria": {
+    "crafting": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "slashblade:slashbladeWhite"
+          }
+        ]
+      }
+    }
+  }
+}

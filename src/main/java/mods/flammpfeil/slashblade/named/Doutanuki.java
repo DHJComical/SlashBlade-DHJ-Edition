@@ -26,8 +26,8 @@ import java.util.Random;
  * Created by Furia on 14/11/08.
  */
 public class Doutanuki {
-    public static final String name = "flammpfeil.slashblade.named.sabigatana";
-    public static final String namedou = "flammpfeil.slashblade.named.doutanuki";
+    public static final String name = "slashblade.named.sabigatana";
+    public static final String namedou = "slashblade.named.doutanuki";
 
     public static float spawnRate = 0.05f;
     public static float isBrokenRate = 0.7f;
@@ -125,7 +125,7 @@ public class Doutanuki {
                 prop.setShowInGui(true)
                         .setMinValue(0.0).setMaxValue(1.0)
                         //.setConfigEntryClass(GuiConfigEntries.NumberSliderEntry.class)
-                        .setLanguageKey("flammpfeil.slashblade.config.rustblade.spawnrate");
+                        .setLanguageKey("slashblade.config.rustblade.spawnrate");
 
                 spawnRate = (float)prop.getDouble(spawnRate);
                 spawnRate = Math.min(1.0f,Math.max(0.0f,spawnRate));
@@ -137,7 +137,7 @@ public class Doutanuki {
                 prop.setShowInGui(true)
                         .setMinValue(0.0).setMaxValue(1.0)
                         //.setConfigEntryClass(GuiConfigEntries.NumberSliderEntry.class)
-                        .setLanguageKey("flammpfeil.slashblade.config.rustblade.isbrokenrate");
+                        .setLanguageKey("slashblade.config.rustblade.isbrokenrate");
 
                 isBrokenRate = (float)prop.getDouble(isBrokenRate);
                 isBrokenRate = Math.min(1.0f,Math.max(0.0f,isBrokenRate));
@@ -149,7 +149,7 @@ public class Doutanuki {
                 prop.setShowInGui(true)
                         .setMinValue(0.0).setMaxValue(1.0)
                         //.setConfigEntryClass(GuiConfigEntries.NumberSliderEntry.class)
-                        .setLanguageKey("flammpfeil.slashblade.config.rustblade.scabbardlost");
+                        .setLanguageKey("slashblade.config.rustblade.scabbardlost");
 
                 noSheathRate = (float)prop.getDouble(noSheathRate);
                 noSheathRate = Math.min(1.0f,Math.max(0.0f,noSheathRate));
@@ -161,7 +161,7 @@ public class Doutanuki {
                 prop.setShowInGui(true)
                         .setMinValue(0.0).setMaxValue(2.0)
                         //.setConfigEntryClass(GuiConfigEntries.NumberSliderEntry.class)
-                        .setLanguageKey("flammpfeil.slashblade.config.rustblade.drop");
+                        .setLanguageKey("slashblade.config.rustblade.drop");
 
                 dropRate = (float)prop.getDouble(dropRate);
                 dropRate = Math.max(0.0f,dropRate);

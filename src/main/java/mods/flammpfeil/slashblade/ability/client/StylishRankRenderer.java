@@ -18,7 +18,7 @@ import org.lwjgl.opengl.GL11;
  */
 public class StylishRankRenderer {
 
-    static ResourceLocationRaw RankImg = new ResourceLocationRaw("flammpfeil.slashblade","textures/gui/rank.png");
+    static ResourceLocationRaw RankImg = new ResourceLocationRaw("slashblade","textures/gui/rank.png");
 
     @SubscribeEvent
     public void renderTick(TickEvent.RenderTickEvent event) {

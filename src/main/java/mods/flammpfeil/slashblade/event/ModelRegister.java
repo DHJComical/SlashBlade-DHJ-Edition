@@ -13,8 +13,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
  */
 public class ModelRegister {
 
-    static final ModelResourceLocation modelLoc = new ModelResourceLocation("flammpfeil.slashblade:model/named/blade.obj");
-    public static final ModelResourceLocation dummyLoc = new ModelResourceLocation("flammpfeil.slashblade:emptymodel");
+    static final ModelResourceLocation modelLoc = new ModelResourceLocation("slashblade:model/named/blade.obj");
+    public static final ModelResourceLocation dummyLoc = new ModelResourceLocation("slashblade:emptymodel");
 
     public ModelRegister() {
         MinecraftForge.EVENT_BUS.register(this);

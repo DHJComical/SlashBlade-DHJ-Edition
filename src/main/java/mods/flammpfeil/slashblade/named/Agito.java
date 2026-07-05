@@ -22,7 +22,7 @@ public class Agito {
 
         {
             //------------- false
-            String nameAgito = "flammpfeil.slashblade.named.agito";
+            String nameAgito = "slashblade.named.agito";
             String nameAgitoRust = nameAgito + ".rust";
             String nameAgitoReqired = nameAgito + ".reqired";
             {
@@ -93,7 +93,7 @@ public class Agito {
 
         //------------- true
         {
-            String nameOrotiagito = "flammpfeil.slashblade.named.orotiagito";
+            String nameOrotiagito = "slashblade.named.orotiagito";
             String nameOrotiagitoSeald = nameOrotiagito + ".seald";
             String nameOrotiagitoReqired = nameOrotiagito + ".reqired";
             String nameOrotiagitoRust = nameOrotiagito + ".rust";
@@ -221,8 +221,8 @@ public class Agito {
 
     @SubscribeEvent
     public void postinit(LoadEvent.PostInitEvent event){
-        DropEventHandler.registerEntityDrop(new ResourceLocation("twilightforest","hydra"), 0.3f, SlashBlade.findItemStack(SlashBlade.modid, "flammpfeil.slashblade.named.orotiagito.rust", 1));
-        DropEventHandler.registerEntityDrop(new ResourceLocation("twilightforest","naga"),0.3f,SlashBlade.findItemStack(SlashBlade.modid,"flammpfeil.slashblade.named.agito.rust",1));
+        DropEventHandler.registerEntityDrop(new ResourceLocation("twilightforest","hydra"), 0.3f, SlashBlade.findItemStack(SlashBlade.modid, "slashblade.named.orotiagito.rust", 1));
+        DropEventHandler.registerEntityDrop(new ResourceLocation("twilightforest","naga"),0.3f,SlashBlade.findItemStack(SlashBlade.modid,"slashblade.named.agito.rust",1));
 
     }
 

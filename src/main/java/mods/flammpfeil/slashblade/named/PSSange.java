@@ -15,7 +15,7 @@ import net.minecraft.nbt.NBTTagCompound;
  * Created by Furia on 14/07/07.
  */
 public class PSSange {
-    String name = "flammpfeil.slashblade.named.sange";
+    String name = "slashblade.named.sange";
     @SubscribeEvent
     public void init(LoadEvent.InitEvent event){
         ItemStack customblade = new ItemStack(SlashBlade.bladeNamed,1,0);

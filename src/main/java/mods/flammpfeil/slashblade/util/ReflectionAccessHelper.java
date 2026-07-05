@@ -5,7 +5,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Timer;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -16,6 +15,7 @@ import java.lang.reflect.Method;
  * Created by Furia on 2016/02/03.
  */
 public class ReflectionAccessHelper {
+    private static final Method FORGE_INIT_METHOD = findForgeInitMethod();
 
     @SideOnly(Side.CLIENT)
     public static Timer timer;
@@ -23,24 +23,33 @@ public class ReflectionAccessHelper {
     public static float getPartialTicks(){
 
         if(timer == null)
-            timer = ReflectionHelper.getPrivateValue(Minecraft.class, Minecraft.getMinecraft(), "timer", "field_71428_T");
+            timer = Minecraft.getMinecraft().timer;
 
         return timer.renderPartialTicks;
     }
 
     public static void setFire(Entity entity, int ticks) {
-        ReflectionHelper.setPrivateValue(Entity.class, entity, ticks, "fire", "field_70151_c", "field_190534_ay");
+        entity.fire = ticks;
     }
 
     public static void setItem(ItemStack stack , Item item){
-        ReflectionHelper.setPrivateValue(ItemStack.class, stack, item, "item", "field_151002_e");
-        Method forgeInit = ReflectionHelper.findMethod(ItemStack.class, "forgeInit","forgeInit");
-        if(forgeInit != null) try {
-            forgeInit.invoke(stack);
+        stack.item = item;
+        if(FORGE_INIT_METHOD != null) try {
+            FORGE_INIT_METHOD.invoke(stack);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
             e.printStackTrace();
+        }
+    }
+
+    private static Method findForgeInitMethod() {
+        try {
+            Method method = ItemStack.class.getDeclaredMethod("forgeInit");
+            method.setAccessible(true);
+            return method;
+        } catch (NoSuchMethodException e) {
+            return null;
         }
     }
 

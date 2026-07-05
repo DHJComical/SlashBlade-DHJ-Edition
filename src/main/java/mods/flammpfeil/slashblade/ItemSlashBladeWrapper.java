@@ -20,7 +20,7 @@ public class ItemSlashBladeWrapper extends ItemSlashBladeNamed {
         super(par2EnumToolMaterial, 4.0f);
     }
 
-    private ResourceLocationRaw texture = new ResourceLocationRaw("flammpfeil.slashblade","model/scabbard.png");
+    private ResourceLocationRaw texture = new ResourceLocationRaw("slashblade","model/scabbard.png");
     @Override
     public ResourceLocationRaw getModelTexture(){
         return texture;
@@ -106,7 +106,7 @@ public class ItemSlashBladeWrapper extends ItemSlashBladeNamed {
             if(!wrapItem.isEmpty())
                 return wrapItem.getMaxDamage();
         }
-        return this.getMaxDamage();
+        return super.getMaxDamage(stack);
     }
 
     @Override

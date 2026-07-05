@@ -24,8 +24,8 @@ public class GrimGripKeyRender extends Render{
 
     static public WavefrontObject model = null;
 
-    static public ResourceLocationRaw modelLocation = new ResourceLocationRaw("flammpfeil.slashblade","model/util/grim_grip.obj");
-    static public ResourceLocationRaw textureLocation = new ResourceLocationRaw("flammpfeil.slashblade","model/util/grim_grip.png");
+    static public ResourceLocationRaw modelLocation = new ResourceLocationRaw("slashblade","model/util/grim_grip.obj");
+    static public ResourceLocationRaw textureLocation = new ResourceLocationRaw("slashblade","model/util/grim_grip.png");
 
     public GrimGripKeyRender(RenderManager renderManager) {
         super(renderManager);

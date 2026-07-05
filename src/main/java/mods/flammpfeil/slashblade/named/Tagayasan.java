@@ -18,7 +18,7 @@ import net.minecraft.nbt.NBTTagCompound;
  */
 public class Tagayasan {
 
-    public static final String Tagayasan = "flammpfeil.slashblade.named.tagayasan";
+    public static final String Tagayasan = "slashblade.named.tagayasan";
 
     @SubscribeEvent()
     public void init(LoadEvent.InitEvent event){
@@ -50,7 +50,7 @@ public class Tagayasan {
 
             reqiredBlade.setStackDisplayName("thousandkill woodblade");
 
-            name = "flammpfeil.slashblade.tagayasan.reqired";
+            name = "slashblade.tagayasan.reqired";
             SlashBlade.registerCustomItemStack(name, reqiredBlade);
             ItemSlashBladeNamed.NamedBlades.add(name);
 

@@ -242,17 +242,6 @@ public class BladeModel implements IBakedModel {
     }
 
     @Override
-    public ItemCameraTransforms getItemCameraTransforms() {
-        return new ItemCameraTransforms(ItemCameraTransforms.DEFAULT){
-            @Override
-            public ItemTransformVec3f getTransform(TransformType srctype) {
-                type = srctype;
-                return super.getTransform(srctype);
-            }
-        } ;
-    }
-
-    @Override
     public Pair<? extends IBakedModel, Matrix4f> handlePerspective(ItemCameraTransforms.TransformType cameraTransformType) {
         this.type = cameraTransformType;
 

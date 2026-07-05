@@ -28,9 +28,10 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.util.math.*;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.common.IRarity;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.registry.IThrowableEntity;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import mods.flammpfeil.slashblade.ability.*;
 import mods.flammpfeil.slashblade.ability.StylishRankManager.*;
 import mods.flammpfeil.slashblade.specialattack.*;
@@ -63,9 +64,13 @@ import java.lang.reflect.Method;
 import java.util.*;
 
 public class ItemSlashBlade extends ItemSword {
+    private static final Method ENTITY_JUMP_METHOD =
+            ObfuscationReflectionHelper.findMethod(EntityLivingBase.class, "func_70664_aZ", void.class);
+    private static final Method ENTITY_GET_EXPERIENCE_POINTS_METHOD =
+            ObfuscationReflectionHelper.findMethod(EntityLivingBase.class, "func_70693_a", int.class, EntityPlayer.class);
 
 
-    private static ResourceLocationRaw texture = new ResourceLocationRaw("flammpfeil.slashblade","model/blade.png");
+    private static ResourceLocationRaw texture = new ResourceLocationRaw("slashblade","model/blade.png");
     public ResourceLocationRaw getModelTexture(){
         return texture;
     }
@@ -79,7 +84,7 @@ public class ItemSlashBlade extends ItemSword {
             ResourceLocationRaw loc;
             if(!textureMap.containsKey(textureName))
             {
-                loc = new ResourceLocationRaw("flammpfeil.slashblade","model/" + textureName + ".png");
+                loc = new ResourceLocationRaw("slashblade","model/" + textureName + ".png");
                 textureMap.put(textureName,loc);
             }else{
                 loc = textureMap.get(textureName);
@@ -90,7 +95,7 @@ public class ItemSlashBlade extends ItemSword {
     }
 
 
-    private ResourceLocationRaw model =  new ResourceLocationRaw("flammpfeil.slashblade","model/blade.obj");
+    private ResourceLocationRaw model =  new ResourceLocationRaw("slashblade","model/blade.obj");
     public ResourceLocationRaw getModel(){ return model; }
     static public Map<String,ResourceLocationRaw> modelMap = new HashMap<String, ResourceLocationRaw>();
 
@@ -102,7 +107,7 @@ public class ItemSlashBlade extends ItemSword {
             ResourceLocationRaw loc;
             if(!modelMap.containsKey(modelName))
             {
-                loc = new ResourceLocationRaw("flammpfeil.slashblade","model/" + modelName + ".obj");
+                loc = new ResourceLocationRaw("slashblade","model/" + modelName + ".obj");
                 modelMap.put(modelName,loc);
             }else{
                 loc = modelMap.get(modelName);
@@ -1516,10 +1521,8 @@ public class ItemSlashBlade extends ItemSword {
 
         if(player.world.isRemote && player.onGround) {
             if (charge == 3 && getComboSequence(tag) == ComboSequence.Kiriage) {
-                Method jump = ReflectionHelper.findMethod(EntityLivingBase.class, "jump","func_70664_aZ");
                 try {
-                    if (jump != null)
-                        jump.invoke(player);
+                    ENTITY_JUMP_METHOD.invoke(player);
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 } catch (InvocationTargetException e) {
@@ -1529,10 +1532,8 @@ public class ItemSlashBlade extends ItemSword {
 
             } else if (charge == 7 && getComboSequence(tag) == ComboSequence.RapidSlash) {
                 if (player.world.isRemote) {
-                    Method jump = ReflectionHelper.findMethod(EntityLivingBase.class, "jump","func_70664_aZ");
                     try {
-                        if (jump != null)
-                            jump.invoke(player);
+                        ENTITY_JUMP_METHOD.invoke(player);
                     } catch (IllegalAccessException e) {
                         e.printStackTrace();
                     } catch (InvocationTargetException e) {
@@ -2494,7 +2495,7 @@ public class ItemSlashBlade extends ItemSword {
         if(swordType.contains(SwordType.Bewitched)){
             NBTTagCompound tag = getItemTagCompound(par1ItemStack);
 
-            String key = "flammpfeil.slashblade.specialattack." + getSpecialAttack(par1ItemStack).toString();
+            String key = "slashblade.specialattack." + getSpecialAttack(par1ItemStack).toString();
 
             par3List.add(String.format("SA:%s",  I18n.format(key)));
         }
@@ -3520,9 +3521,7 @@ public class ItemSlashBlade extends ItemSword {
     }
 
 
-
-    @Override
-    public EnumRarity getRarity(ItemStack stack)
+    private EnumRarity getBladeRarity(ItemStack stack)
     {
         NBTTagCompound tag = getItemTagCompound(stack);
 
@@ -3561,6 +3560,12 @@ public class ItemSlashBlade extends ItemSword {
     }
 
     @Override
+    public IRarity getForgeRarity(ItemStack stack)
+    {
+        return getBladeRarity(stack);
+    }
+
+    @Override
     public void onCreated(ItemStack p_77622_1_, World p_77622_2_, EntityPlayer p_77622_3_) {
         super.onCreated(p_77622_1_, p_77622_2_, p_77622_3_);
 
@@ -3595,7 +3600,7 @@ public class ItemSlashBlade extends ItemSword {
 
 
         if(forceDrop
-                || stack.getRarity() != EnumRarity.COMMON
+                || getBladeRarity(stack) != EnumRarity.COMMON
                 || stack.hasDisplayName()
                 || stack.hasTagCompound()
                     && (ItemSlashBladeNamed.TrueItemName.exists(stack.getTagCompound())
@@ -3634,9 +3639,8 @@ public class ItemSlashBlade extends ItemSword {
 
     static void incrementProudSoul(ItemStack stack, EntityLivingBase target,EntityLivingBase player){
         if(player instanceof EntityPlayer) {
-            Method getExperiencePoints = ReflectionHelper.findMethod(EntityLivingBase.class, "getExperiencePoints", "func_70693_a", EntityPlayer.class);
             try {
-                int exp = (Integer)getExperiencePoints.invoke(target, (EntityPlayer) player);
+                int exp = (Integer)ENTITY_GET_EXPERIENCE_POINTS_METHOD.invoke(target, (EntityPlayer) player);
                 exp = net.minecraftforge.event.ForgeEventFactory.getExperienceDrop(target, (EntityPlayer) player, exp);
 
                 float rank = StylishRankManager.getStylishRank(player);

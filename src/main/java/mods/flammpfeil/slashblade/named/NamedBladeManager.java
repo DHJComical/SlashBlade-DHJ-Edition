@@ -114,8 +114,8 @@ public class NamedBladeManager {
 
             if(!icon.isEmpty()){
                 /*todo:advancement
-                String achievementKey = entry.getKey().replaceFirst("flammpfeil.slashblade.named.","");
-                achievementKey = achievementKey.replaceFirst("flammpfeil.slashblade.","");
+                String achievementKey = entry.getKey().replaceFirst("slashblade.named.","");
+                achievementKey = achievementKey.replaceFirst("slashblade.","");
                 Achievement ach = AchievementList.registerCraftingAchievement(achievementKey, icon, net.minecraft.stats.AchievementList.BUILD_SWORD);
                 */
 

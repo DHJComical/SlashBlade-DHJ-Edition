@@ -4,6 +4,7 @@ import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -18,7 +19,8 @@ public class PlayerDropsEventHandler {
             if(!(item.getItem().getItem() instanceof ItemSlashBlade))
                 continue;
 
-            if(isPlayer || item.hasCustomName() || item.getItem().getRarity() != EnumRarity.COMMON)
+            ItemStack stack = item.getItem();
+            if(isPlayer || item.hasCustomName() || stack.getItem().getForgeRarity(stack) != EnumRarity.COMMON)
                 item.addTag("SB.DeathDrop");
         }
     }

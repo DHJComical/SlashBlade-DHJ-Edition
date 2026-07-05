@@ -22,8 +22,8 @@ import org.lwjgl.opengl.GL11;
  */
 public class LockonCircleRender {
 
-    static final ResourceLocationRaw modelLoc = new ResourceLocationRaw("flammpfeil.slashblade","model/util/lockon.obj");
-    static final ResourceLocationRaw textureLoc = new ResourceLocationRaw("flammpfeil.slashblade","model/util/lockon.png");
+    static final ResourceLocationRaw modelLoc = new ResourceLocationRaw("slashblade","model/util/lockon.obj");
+    static final ResourceLocationRaw textureLoc = new ResourceLocationRaw("slashblade","model/util/lockon.png");
 
     @SubscribeEvent
     public void onRenderLiving(RenderWorldLastEvent event){

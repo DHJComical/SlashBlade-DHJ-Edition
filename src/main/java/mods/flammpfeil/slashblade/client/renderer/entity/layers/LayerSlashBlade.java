@@ -35,8 +35,8 @@ public class LayerSlashBlade implements LayerRenderer<EntityLivingBase> {
 
     static public WavefrontObject trailModel = null;
 
-    static public ResourceLocationRaw modelLocation = new ResourceLocationRaw("flammpfeil.slashblade","model/util/trail.obj");
-    static public ResourceLocationRaw textureLocation = new ResourceLocationRaw("flammpfeil.slashblade","model/util/trail.png");
+    static public ResourceLocationRaw modelLocation = new ResourceLocationRaw("slashblade","model/util/trail.obj");
+    static public ResourceLocationRaw textureLocation = new ResourceLocationRaw("slashblade","model/util/trail.png");
 
     private final RenderLivingBase<?> render;
 
@@ -118,8 +118,8 @@ public class LayerSlashBlade implements LayerRenderer<EntityLivingBase> {
     public static class RingState{
 
         static public WavefrontObject ringModel = null;
-        public static final ResourceLocationRaw ringModelLoc = new ResourceLocationRaw("flammpfeil.slashblade","model/util/ring.obj");
-        public static final ResourceLocationRaw ringTexLoc = new ResourceLocationRaw("flammpfeil.slashblade","model/util/ring.png");
+        public static final ResourceLocationRaw ringModelLoc = new ResourceLocationRaw("slashblade","model/util/ring.obj");
+        public static final ResourceLocationRaw ringTexLoc = new ResourceLocationRaw("slashblade","model/util/ring.png");
 
         public void transform(){
 

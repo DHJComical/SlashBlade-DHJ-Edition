@@ -1,0 +1,28 @@
+{
+  "display": {
+    "title": {
+      "translate": "achievement.slashblade.buildSlashBlade"
+    },
+    "description": {
+      "translate": "achievement.slashblade.buildSlashBlade.desc",
+      "with": ["\n"]
+    },
+    "icon": {
+      "item": "slashblade:slashblade"
+    },
+    "frame": "task"
+  },
+  "parent": "slashblade:brokenwhite",
+  "criteria": {
+    "crafting": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "slashblade:slashblade"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -15,8 +15,8 @@ import net.minecraft.nbt.NBTTagCompound;
  * Created by Furia on 14/07/07.
  */
 public class PSYasha {
-    String name = "flammpfeil.slashblade.named.yasha";
-    String nameTrue = "flammpfeil.slashblade.named.yashatrue";
+    String name = "slashblade.named.yasha";
+    String nameTrue = "slashblade.named.yashatrue";
     @SubscribeEvent
     public void init(LoadEvent.InitEvent event){
 

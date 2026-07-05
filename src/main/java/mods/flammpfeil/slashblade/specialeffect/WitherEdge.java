@@ -97,7 +97,7 @@ public class WitherEdge implements ISpecialEffect, IRemovable{
 
     @Override
     public boolean canRemoval(ItemStack stack) {
-        if(stack.getTranslationKey().equals("item.flammpfeil.slashblade.named.koseki"))
+        if(stack.getTranslationKey().equals("item.slashblade.named.koseki"))
             return false;
         return true;
     }

@@ -17,7 +17,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.world.World;
-import net.minecraftforge.oredict.RecipeSorter;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
 /**
@@ -64,8 +63,6 @@ public class BambooMod {
         if(Loader.isModLoaded("BambooMod") && !katana.isEmpty()){
             RecipeBambooMod recipe = new BambooMod.RecipeBambooMod();
             SlashBlade.addRecipe("wrap.BambooMod.katana.sample", recipe);
-
-            RecipeSorter.register("flammpfeil.slashblade:bamboomod", RecipeBambooMod.class, RecipeSorter.Category.SHAPED, "after:forge:shaped");
         }
     }
     /**
@@ -135,11 +132,11 @@ public class BambooMod {
             ItemSlashBladeNamed.BaseAttackModifier.set(tag,attackModif);
 
             if(target.hasDisplayName()){
-                scabbard.setStackDisplayName(String.format(I18n.format("item.flammpfeil.slashblade.wrapformat").trim(), target.getDisplayName()));
+                scabbard.setStackDisplayName(String.format(I18n.format("item.slashblade.wrapformat").trim(), target.getDisplayName()));
             }else if(target.isItemEnchanted()){
                 scabbard.setStackDisplayName(scabbard.getDisplayName());
             }else{
-                scabbard.setStackDisplayName(String.format(I18n.format("item.flammpfeil.slashblade.wrapformat.low").trim(),target.getDisplayName()));
+                scabbard.setStackDisplayName(String.format(I18n.format("item.slashblade.wrapformat.low").trim(),target.getDisplayName()));
             }
 
             if(target.isItemEnchanted()){

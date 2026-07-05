@@ -12,7 +12,7 @@ public class ItemSlashBladeDetune extends ItemSlashBlade {
 
     public ItemSlashBladeDetune(ToolMaterial par2EnumToolMaterial,float baseAttackModifiers){
         super(par2EnumToolMaterial, baseAttackModifiers);
-        texture = new ResourceLocationRaw("flammpfeil.slashblade","model/wood.png");
+        texture = new ResourceLocationRaw("slashblade","model/wood.png");
     }
 
 

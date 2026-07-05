@@ -5,7 +5,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
@@ -88,7 +87,7 @@ public class EnemyStep {
 
 
     public boolean canCycleJump(EntityLivingBase target){
-        boolean isJumping = ReflectionHelper.getPrivateValue(EntityLivingBase.class,target,"isJumping","field_70703_bu");
+        boolean isJumping = target.isJumping;
 
         int jumpState = target.getEntityData().getInteger(DoJumping);
 
@@ -128,7 +127,7 @@ public class EnemyStep {
     }
     private void resetJump(EntityLivingBase target){
         target.onGround = true;
-        ReflectionHelper.setPrivateValue(EntityLivingBase.class, target, 0, "jumpTicks", "field_70773_bE");
+        target.jumpTicks = 0;
     }
 
     public boolean hasCollidWallBlocks(Entity target, Vec3d pos)

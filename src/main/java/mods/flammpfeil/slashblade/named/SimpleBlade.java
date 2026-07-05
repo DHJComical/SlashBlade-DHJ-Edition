@@ -109,9 +109,10 @@ public class SimpleBlade {
         }
 
 
+        int whiteSheathMaxDamage = new ItemStack(SlashBlade.bladeWhiteSheath).getMaxDamage();
         SlashBlade.addRecipe("slashbladeWhite",
                 new RecipeUpgradeBlade(new ResourceLocation(SlashBlade.modid,"white"),
-                        new ItemStack(SlashBlade.bladeWhiteSheath, 1, SlashBlade.bladeWhiteSheath.getMaxDamage() / 3),
+                        new ItemStack(SlashBlade.bladeWhiteSheath, 1, whiteSheathMaxDamage / 3),
                 "  #",
                 " # ",
                 "XG ",
@@ -120,7 +121,7 @@ public class SimpleBlade {
                 'X', new BladeIngredient(new ItemStack(SlashBlade.bladeWood,1,OreDictionary.WILDCARD_VALUE))));
         SlashBlade.addRecipe("slashbladeWhite",
                 new RecipeUpgradeBlade(new ResourceLocation(SlashBlade.modid,"white2"),
-                        new ItemStack(SlashBlade.bladeWhiteSheath, 1, SlashBlade.bladeWhiteSheath.getMaxDamage() / 4),
+                        new ItemStack(SlashBlade.bladeWhiteSheath, 1, whiteSheathMaxDamage / 4),
                 "  #",
                 " # ",
                 "XG ",

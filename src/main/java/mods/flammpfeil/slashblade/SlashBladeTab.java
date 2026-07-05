@@ -14,7 +14,7 @@ public class SlashBladeTab extends CreativeTabs {
 
     @Override
     public ItemStack createIcon() {
-        return SlashBlade.getCustomBlade("flammpfeil.slashblade.named.yamato");
+        return SlashBlade.getCustomBlade("slashblade.named.yamato");
     }
 
 }

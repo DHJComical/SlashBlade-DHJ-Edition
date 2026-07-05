@@ -19,7 +19,7 @@ import net.minecraft.nbt.NBTTagCompound;
  * Created by Furia on 15/06/22.
  */
 public class Koseki {
-    String name = "flammpfeil.slashblade.named.koseki";
+    String name = "slashblade.named.koseki";
     @SubscribeEvent
     public void init(LoadEvent.InitEvent event){
         ItemStack customblade = new ItemStack(SlashBlade.bladeNamed,1,0);

@@ -25,10 +25,10 @@ public class BladeModelManager {
     }
 
     WavefrontObject defaultModel;
-    static final ResourceLocationRaw resourceDefaultModel = new ResourceLocationRaw("flammpfeil.slashblade","model/blade.obj");
+    static final ResourceLocationRaw resourceDefaultModel = new ResourceLocationRaw("slashblade","model/blade.obj");
 
-    public static final ResourceLocationRaw resourceDurabilityModel = new ResourceLocationRaw("flammpfeil.slashblade","model/util/durability.obj");
-    public static final ResourceLocationRaw resourceDurabilityTexture = new ResourceLocationRaw("flammpfeil.slashblade","model/util/durability.png");
+    public static final ResourceLocationRaw resourceDurabilityModel = new ResourceLocationRaw("slashblade","model/util/durability.obj");
+    public static final ResourceLocationRaw resourceDurabilityTexture = new ResourceLocationRaw("slashblade","model/util/durability.png");
 
     LoadingCache<ResourceLocationRaw, WavefrontObject> cache;
 

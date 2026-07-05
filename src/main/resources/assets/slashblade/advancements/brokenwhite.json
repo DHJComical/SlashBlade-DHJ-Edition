@@ -1,0 +1,34 @@
+{
+  "display": {
+    "title": {
+      "translate": "achievement.slashblade.brokenWhiteSheath"
+    },
+    "description": {
+      "translate": "achievement.slashblade.brokenWhiteSheath.desc",
+      "with": ["\n"]
+    },
+    "icon": {
+      "item": "slashblade:slashbladeWhite",
+      "data": 70,
+      "nbt": "{isBroken: 1}"
+    },
+    "frame": "task"
+  },
+  "parent": "slashblade:white",
+  "criteria": {
+    "brokeitem": {
+      "trigger": "minecraft:item_durability_changed",
+      "conditions": {
+        "item": {
+          "item": "slashblade:slashbladeWhite"
+        },
+        "durability": {
+          "max": 1
+        }
+      }
+    }
+  },
+  "rewards": {
+    "recipes": ["slashblade:slashblade"]
+  }
+}

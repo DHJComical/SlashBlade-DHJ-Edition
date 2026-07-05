@@ -22,8 +22,8 @@ public class RenderSlashDimension extends Render{
 
     static public WavefrontObject model = null;
 
-    static public ResourceLocationRaw modelLocation = new ResourceLocationRaw("flammpfeil.slashblade","model/util/slashdim.obj");
-    static public ResourceLocationRaw textureLocation = new ResourceLocationRaw("flammpfeil.slashblade","model/util/slashdim.png");
+    static public ResourceLocationRaw modelLocation = new ResourceLocationRaw("slashblade","model/util/slashdim.obj");
+    static public ResourceLocationRaw textureLocation = new ResourceLocationRaw("slashblade","model/util/slashdim.png");
 
     public RenderSlashDimension(RenderManager renderManager) {
         super(renderManager);

@@ -184,6 +184,11 @@ public class ItemProudSoul extends Item {
     }
 
     @Override
+    public int getItemBurnTime(ItemStack itemStack) {
+        return itemStack.getMetadata() == EnumSoulType.SOUL.getMetadata() ? 10000 : 0;
+    }
+
+    @Override
     public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         ItemStack stack = player.getHeldItem(hand);
 
@@ -260,7 +265,7 @@ public class ItemProudSoul extends Item {
         NBTTagCompound tag = ItemSlashBlade.getItemTagCompound(par1ItemStack);
 
         if(ItemSlashBlade.SpecialAttackType.exists(tag)){
-            String key = "flammpfeil.slashblade.specialattack." + SlashBlade.weapon.getSpecialAttack(par1ItemStack).toString();
+            String key = "slashblade.specialattack." + SlashBlade.weapon.getSpecialAttack(par1ItemStack).toString();
 
             par3List.add(String.format("SA:%s",  I18n.translateToLocal(key)));
         }
