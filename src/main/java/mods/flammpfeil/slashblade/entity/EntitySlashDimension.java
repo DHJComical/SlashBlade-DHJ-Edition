@@ -6,7 +6,6 @@ import mods.flammpfeil.slashblade.ability.TeleportCanceller;
 import mods.flammpfeil.slashblade.entity.selector.EntitySelectorAttackable;
 import mods.flammpfeil.slashblade.entity.selector.EntitySelectorDestructable;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
-import mods.flammpfeil.slashblade.specialattack.SlashDimension;
 import mods.flammpfeil.slashblade.util.ReflectionAccessHelper;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;

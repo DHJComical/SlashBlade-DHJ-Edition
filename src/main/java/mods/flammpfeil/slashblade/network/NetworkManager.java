@@ -1,11 +1,8 @@
 package mods.flammpfeil.slashblade.network;
 
-import mods.flammpfeil.slashblade.network.MessageRangeAttack;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
-import mods.flammpfeil.slashblade.network.MessageSpecialAction;
-import mods.flammpfeil.slashblade.network.MessageSpecialActionHandler;
 
 /**
  * Created by Furia on 14/06/09.

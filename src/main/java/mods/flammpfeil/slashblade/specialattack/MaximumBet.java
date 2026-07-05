@@ -1,7 +1,6 @@
 package mods.flammpfeil.slashblade.specialattack;
 
 import mods.flammpfeil.slashblade.entity.EntityMaximumBetManager;
-import mods.flammpfeil.slashblade.entity.EntitySakuraEndManager;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;

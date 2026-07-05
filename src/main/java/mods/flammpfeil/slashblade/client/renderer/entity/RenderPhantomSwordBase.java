@@ -4,7 +4,6 @@ package mods.flammpfeil.slashblade.client.renderer.entity;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import mods.flammpfeil.slashblade.entity.EntitySummonedSwordBase;

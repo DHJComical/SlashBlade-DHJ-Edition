@@ -346,7 +346,7 @@ public class EntitySpiralSwords extends EntitySummonedSwordBase {
 
         if (getThrower() != null) {
             pos = pos.add(getThrower().getPositionVector());
-            pos = pos.addVector(0, getThrower().getEyeHeight() / 3.0, 0);
+            pos = pos.add(0, getThrower().getEyeHeight() / 3.0, 0);
         }
 
         Vector3d rot = new Vector3d();

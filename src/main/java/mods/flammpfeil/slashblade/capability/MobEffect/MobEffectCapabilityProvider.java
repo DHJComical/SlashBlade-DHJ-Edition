@@ -7,7 +7,6 @@ import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.INBTSerializable;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class MobEffectCapabilityProvider implements ICapabilityProvider, INBTSerializable<NBTBase> {

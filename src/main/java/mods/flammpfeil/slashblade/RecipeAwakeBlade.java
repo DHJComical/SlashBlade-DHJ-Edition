@@ -32,7 +32,7 @@ public class RecipeAwakeBlade extends ShapedOreRecipe {
         boolean result = super.matches(inv, world);
 
         if(result && !requiredStateBlade.isEmpty()){
-        	requiredStateBlade.setItemDamage(OreDictionary.WILDCARD_VALUE);
+            requiredStateBlade.setItemDamage(OreDictionary.WILDCARD_VALUE);
             for(int idx = 0; idx < inv.getSizeInventory(); idx++){
                 ItemStack curIs = inv.getStackInSlot(idx);
                 if(!curIs.isEmpty()
@@ -53,7 +53,7 @@ public class RecipeAwakeBlade extends ShapedOreRecipe {
                     NBTTagCompound reqTag = ItemSlashBlade.getItemTagCompound(requiredStateBlade);
                     NBTTagCompound srcTag = ItemSlashBlade.getItemTagCompound(curIs);
 
-                    if(!curIs.getUnlocalizedName().equals(requiredStateBlade.getUnlocalizedName()))
+                    if(!curIs.getTranslationKey().equals(requiredStateBlade.getTranslationKey()))
                         return false;
 
                     if(0 < tagValueCompare(ItemSlashBlade.ProudSoul, reqTag, srcTag))
@@ -73,18 +73,18 @@ public class RecipeAwakeBlade extends ShapedOreRecipe {
         return result;
     }
 
-	@Override
-	public ItemStack getCraftingResult(InventoryCrafting var1) {
-		ItemStack result = super.getCraftingResult(var1);
+    @Override
+    public ItemStack getCraftingResult(InventoryCrafting var1) {
+        ItemStack result = super.getCraftingResult(var1);
 
-		for(int idx = 0; idx < var1.getSizeInventory(); idx++){
-			ItemStack curIs = var1.getStackInSlot(idx);
-			if(!curIs.isEmpty()
-					&& curIs.getItem() instanceof ItemSlashBlade
-					&& curIs.hasTagCompound()){
+        for(int idx = 0; idx < var1.getSizeInventory(); idx++){
+            ItemStack curIs = var1.getStackInSlot(idx);
+            if(!curIs.isEmpty()
+                    && curIs.getItem() instanceof ItemSlashBlade
+                    && curIs.hasTagCompound()){
 
                 NBTTagCompound oldTag = curIs.getTagCompound();
-				oldTag = (NBTTagCompound)oldTag.copy();
+                oldTag = (NBTTagCompound)oldTag.copy();
 
                 {
                     NBTTagCompound newTag;
@@ -148,10 +148,10 @@ public class RecipeAwakeBlade extends ShapedOreRecipe {
                     }
                     EnchantmentHelper.setEnchantments(newItemEnchants, result);
                 }
-			}
-		}
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
 }

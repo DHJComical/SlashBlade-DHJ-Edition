@@ -1,12 +1,10 @@
 package mods.flammpfeil.slashblade.ability;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import mods.flammpfeil.slashblade.util.ReflectionAccessHelper;
 import net.minecraft.potion.Potion;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;

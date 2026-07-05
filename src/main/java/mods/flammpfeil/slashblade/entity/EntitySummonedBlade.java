@@ -1,12 +1,8 @@
 package mods.flammpfeil.slashblade.entity;
 
 import mods.flammpfeil.slashblade.entity.selector.EntitySelectorAttackable;
-import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -184,7 +180,7 @@ public class EntitySummonedBlade extends EntitySummonedSwordBase {
 
                 faceEntity(this,target, 10.0f, 10.0f);
 
-                float lastSpeed = (float)(new Vec3d(this.motionX,this.motionY,this.motionZ)).lengthVector();
+                float lastSpeed = (float)(new Vec3d(this.motionX,this.motionY,this.motionZ)).length();
 
                 float speedFactor = Math.abs(iniYaw - lastYaw) / 10f + Math.abs(iniPitch - lastPitch)/10f;
                 speedFactor = 1.0f - Math.min(speedFactor, 0.75f);

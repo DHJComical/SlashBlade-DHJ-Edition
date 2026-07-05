@@ -1,11 +1,8 @@
 package mods.flammpfeil.slashblade.item;
 
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
 import com.google.common.collect.Maps;
 import mods.flammpfeil.slashblade.SlashBlade;
 import mods.flammpfeil.slashblade.entity.EntityBladeStand;
-import mods.flammpfeil.slashblade.entity.EntityGrimGrip;
 import mods.flammpfeil.slashblade.entity.EntityGrimGripKey;
 import mods.flammpfeil.slashblade.named.NamedBladeManager;
 import mods.flammpfeil.slashblade.specialeffect.IRemovable;
@@ -14,7 +11,6 @@ import mods.flammpfeil.slashblade.specialeffect.SpecialEffects;
 import mods.flammpfeil.slashblade.util.EnchantHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -28,41 +24,34 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
-import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagInt;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagLong;
 import net.minecraft.server.management.UserListOpsEntry;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class ItemProudSoul extends Item {
 
-	public ItemProudSoul() {
+    public ItemProudSoul() {
         setHasSubtypes(true);
-	}
+    }
 
-	public enum EnumSoulType implements IStringSerializable{
+    public enum EnumSoulType implements IStringSerializable{
         NONE    (-1, "none"),
-	    SOUL    (0, "soul"),
+        SOUL    (0, "soul"),
         TINY    (3, "tiny"),
         INGOT   (1, "ingot"),
         SPHERE  (2, "sphere"),
@@ -70,9 +59,9 @@ public class ItemProudSoul extends Item {
         TRAPEZOHEDRON   (5, "trapezohedron"),
         STEEL_INGOT     (0x1000 | 1, "steel_ingot"),
         SILVER_INGOT    (0x1000 | 2, "silver_ingot")
-	    ;
-	    private final int meta;
-	    private final String name;
+        ;
+        private final int meta;
+        private final String name;
 
         private static final Map<Integer, EnumSoulType> metamap = new Supplier<Map<Integer, EnumSoulType>>(){
             @Override
@@ -110,42 +99,42 @@ public class ItemProudSoul extends Item {
         }
     }
 
-	IBlockState baseState = (new BlockStateContainer(Blocks.STONE, new IProperty[]{SOUL_TYPE})).getBaseState().withProperty(SOUL_TYPE, EnumSoulType.NONE);
+    IBlockState baseState = (new BlockStateContainer(Blocks.STONE, new IProperty[]{SOUL_TYPE})).getBaseState().withProperty(SOUL_TYPE, EnumSoulType.NONE);
     public static final PropertyEnum<EnumSoulType> SOUL_TYPE = PropertyEnum.<EnumSoulType>create("type", EnumSoulType.class);
-	public IBlockState getStateFromMeta(int meta){
-	    return baseState.withProperty(SOUL_TYPE , EnumSoulType.byMetadata(meta));
+    public IBlockState getStateFromMeta(int meta){
+        return baseState.withProperty(SOUL_TYPE , EnumSoulType.byMetadata(meta));
     }
 
     static public final int AchievementIconIdHead = 0x1000;
     static public final int AchievementEffectedIconIdHead = 0x1500;
 
     @Override
-	public boolean hasEffect(ItemStack par1ItemStack) {
+    public boolean hasEffect(ItemStack par1ItemStack) {
 
         if(AchievementIconIdHead <= par1ItemStack.getMetadata()){
             return AchievementEffectedIconIdHead <= par1ItemStack.getMetadata();
         }
 
-		if(	par1ItemStack.getItem() == SlashBlade.proudSoul){
-			return true;
-		}
-		return super.hasEffect(par1ItemStack);
-	}
+        if(	par1ItemStack.getItem() == SlashBlade.proudSoul){
+            return true;
+        }
+        return super.hasEffect(par1ItemStack);
+    }
 
-	@Override
-	public String getUnlocalizedName(ItemStack par1ItemStack) {
-		String s = super.getUnlocalizedName(par1ItemStack);
+    @Override
+    public String getTranslationKey(ItemStack par1ItemStack) {
+        String s = super.getTranslationKey(par1ItemStack);
 
-		int meta = par1ItemStack.getMetadata();
-		EnumSoulType type = EnumSoulType.byMetadata(meta);
-		if(type != EnumSoulType.NONE)
+        int meta = par1ItemStack.getMetadata();
+        EnumSoulType type = EnumSoulType.byMetadata(meta);
+        if(type != EnumSoulType.NONE)
             s += "." + type.getName();
 
         /*
-		switch(par1ItemStack.getMetadata()){
-		case 1:
-			s += ".ingot";
-			break;
+        switch(par1ItemStack.getMetadata()){
+        case 1:
+            s += ".ingot";
+            break;
         case 2:
             s += ".sphere";
             break;
@@ -158,17 +147,17 @@ public class ItemProudSoul extends Item {
         case 5:
             s += ".trapezohedron";
             break;
-		}
-		*/
-		return s;
-	}
+        }
+        */
+        return s;
+    }
 
     @Override
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems) {
         if (!this.isInCreativeTab(tab)) return;
         super.getSubItems(tab, subItems);
-		subItems.add(SlashBlade.findItemStack(SlashBlade.modid, SlashBlade.ProudSoulStr, 1));
-		subItems.add(SlashBlade.findItemStack(SlashBlade.modid, SlashBlade.IngotBladeSoulStr, 1));
+        subItems.add(SlashBlade.findItemStack(SlashBlade.modid, SlashBlade.ProudSoulStr, 1));
+        subItems.add(SlashBlade.findItemStack(SlashBlade.modid, SlashBlade.IngotBladeSoulStr, 1));
         subItems.add(SlashBlade.findItemStack(SlashBlade.modid, SlashBlade.SphereBladeSoulStr, 1));
         subItems.add(SlashBlade.findItemStack(SlashBlade.modid, SlashBlade.TinyBladeSoulStr, 1));
         subItems.add(SlashBlade.findItemStack(SlashBlade.modid, SlashBlade.CrystalBladeSoulStr, 1));
@@ -192,7 +181,7 @@ public class ItemProudSoul extends Item {
         for(ItemStack stack : NamedBladeManager.namedbladeSouls.values()){
             subItems.add(stack);
         }
-	}
+    }
 
     @Override
     public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
@@ -231,9 +220,9 @@ public class ItemProudSoul extends Item {
             if (!world.isRemote) {
                 EntityGrimGripKey e = new EntityGrimGripKey(world);
                 e.setPositionAndRotation(
-                        pos.getX() + 0.5 + side.getFrontOffsetX(),
-                        pos.getY() + 0.5 + side.getFrontOffsetY(),
-                        pos.getZ() + 0.5 + side.getFrontOffsetZ(), e.rotationYaw, e.rotationPitch);
+                        pos.getX() + 0.5 + side.getXOffset(),
+                        pos.getY() + 0.5 + side.getYOffset(),
+                        pos.getZ() + 0.5 + side.getZOffset(), e.rotationYaw, e.rotationPitch);
                 //e.setLifeTime(1000);
 
 
@@ -250,9 +239,9 @@ public class ItemProudSoul extends Item {
                 && !world.isRemote
                 && player.isSneaking()){
 
-            stack.setTagInfo("GPX", new NBTTagInt(pos.getX() + side.getFrontOffsetX()));
-            stack.setTagInfo("GPY", new NBTTagInt(pos.getY() + side.getFrontOffsetY()));
-            stack.setTagInfo("GPZ", new NBTTagInt(pos.getZ() + side.getFrontOffsetZ()));
+            stack.setTagInfo("GPX", new NBTTagInt(pos.getX() + side.getXOffset()));
+            stack.setTagInfo("GPY", new NBTTagInt(pos.getY() + side.getYOffset()));
+            stack.setTagInfo("GPZ", new NBTTagInt(pos.getZ() + side.getZOffset()));
 
             return EnumActionResult.SUCCESS;
         }else{

@@ -1,11 +1,8 @@
 package mods.flammpfeil.slashblade.ability;
 
 import mods.flammpfeil.slashblade.util.ReflectionAccessHelper;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.init.Enchantments;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.TagPropertyAccessor;

@@ -4,7 +4,6 @@ import com.google.common.base.Predicate;
 import mods.flammpfeil.slashblade.entity.selector.EntitySelectorAttackable;
 import mods.flammpfeil.slashblade.entity.selector.EntitySelectorDestructable;
 import mods.flammpfeil.slashblade.util.ReflectionAccessHelper;
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.MoverType;
 import net.minecraft.init.SoundEvents;
@@ -22,7 +21,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntityFireball;
 import net.minecraft.entity.projectile.EntityThrowable;
@@ -266,7 +264,7 @@ public class EntitySummonedSwordBase extends Entity implements IProjectile,IThro
         }
 
         Vec3d lookVec = getLook(owner, par1);
-        Vec3d reachVec = entityPos.addVector(lookVec.x * reachMax, lookVec.y * reachMax, lookVec.z * reachMax);
+        Vec3d reachVec = entityPos.add(lookVec.x * reachMax, lookVec.y * reachMax, lookVec.z * reachMax);
         pointedEntity = null;
         List<Entity> list = this.world.getEntitiesWithinAABBExcludingEntity(this
                 , this.getEntityBoundingBox()
@@ -327,7 +325,7 @@ public class EntitySummonedSwordBase extends Entity implements IProjectile,IThro
     {
         Vec3d Vec3d = getPosition(owner);
         Vec3d Vec3d1 = getLook(owner, par3);
-        Vec3d Vec3d2 = Vec3d.addVector(Vec3d1.x * par1, Vec3d1.y * par1, Vec3d1.z * par1);
+        Vec3d Vec3d2 = Vec3d.add(Vec3d1.x * par1, Vec3d1.y * par1, Vec3d1.z * par1);
         return owner.world.rayTraceBlocks(Vec3d, Vec3d2, false, false, true);
     }
     public static Vec3d getPosition(Entity owner)

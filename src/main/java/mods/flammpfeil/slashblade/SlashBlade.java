@@ -46,32 +46,32 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import java.io.File;
 import java.util.*;
 
-@Mod(name = SlashBlade.modname, modid = SlashBlade.modid, version = SlashBlade.version,
+@Mod(name = Reference.MOD_NAME, modid = Reference.MOD_ID, version = Reference.VERSION,
     guiFactory = "mods.flammpfeil.slashblade.gui.config.ConfigGuiFactory")
 public class SlashBlade implements IFuelHandler{
 
 
-	public static final String modname = "SlashBlade";
-    public static final String modid = "flammpfeil.slashblade";
-    public static final String version = "@VERSION@";
+    public static final String modname = Reference.MOD_NAME;
+    public static final String modid = Reference.MOD_ID;
+    public static final String version = Reference.VERSION;
 
-	public static final String BrokenBladeWhiteStr = "BrokenBladeWhite";
+    public static final String BrokenBladeWhiteStr = "BrokenBladeWhite";
 
-	public static ItemSlashBlade weapon;
-	public static ItemSlashBladeDetune bladeWood;
-	public static ItemSlashBladeDetune bladeBambooLight;
-	public static ItemSlashBladeDetune bladeSilverBambooLight;
+    public static ItemSlashBlade weapon;
+    public static ItemSlashBladeDetune bladeWood;
+    public static ItemSlashBladeDetune bladeBambooLight;
+    public static ItemSlashBladeDetune bladeSilverBambooLight;
     public static ItemSlashBladeDetune bladeWhiteSheath;
     public static ItemSlashBladeNamed bladeNamed;
 
     public static ItemSlashBladeWrapper wrapBlade = null;
 
-	public static ItemProudSoul proudSoul;
+    public static ItemProudSoul proudSoul;
 
     public static Configuration mainConfiguration;
     public static File mainConfigurationFile;
 
-	public static ConfigEntityListManager manager;
+    public static ConfigEntityListManager manager;
 
     public static boolean SafeDrop = true;
     public static boolean MobSafeDrop = false;
@@ -87,8 +87,8 @@ public class SlashBlade implements IFuelHandler{
     public static boolean FPVOldStryleLike = true;
     public static boolean FPVDisabledSyncPitch = true;
 
-	public static final String ProudSoulStr = "proudsoul";
-	public static final String IngotBladeSoulStr = "ingot_bladesoul";
+    public static final String ProudSoulStr = "proudsoul";
+    public static final String IngotBladeSoulStr = "ingot_bladesoul";
     public static final String SphereBladeSoulStr = "sphere_bladesoul";
     public static final String TinyBladeSoulStr = "tiny_bladesoul";
     public static final String CrystalBladeSoulStr = "crystal_bladesoul";
@@ -130,10 +130,10 @@ public class SlashBlade implements IFuelHandler{
     }
 
     @EventHandler
-	public void preInit(FMLPreInitializationEvent evt){
-		mainConfiguration = new Configuration(this.mainConfigurationFile = evt.getSuggestedConfigurationFile());
+    public void preInit(FMLPreInitializationEvent evt){
+        mainConfiguration = new Configuration(this.mainConfigurationFile = evt.getSuggestedConfigurationFile());
 
-		try {
+        try {
             mainConfiguration.load();
 
 
@@ -250,27 +250,27 @@ public class SlashBlade implements IFuelHandler{
 
 
             MinecraftForge.EVENT_BUS.register(new ConfigManager());
-		}
-		finally
-		{
-			mainConfiguration.save();
-		}
+        }
+        finally
+        {
+            mainConfiguration.save();
+        }
 
 
-		proudSoul = (ItemProudSoul)(new ItemProudSoul())
-				.setUnlocalizedName("flammpfeil.slashblade.proudsoul")
-				.setCreativeTab(tab)
+        proudSoul = (ItemProudSoul)(new ItemProudSoul())
+                .setTranslationKey("flammpfeil.slashblade.proudsoul")
+                .setCreativeTab(tab)
                 .setRegistryName("proudsoul");
-		ForgeRegistries.ITEMS.register(proudSoul);
+        ForgeRegistries.ITEMS.register(proudSoul);
 
 
-		ItemStack itemProudSoul = new ItemStack(proudSoul,1,0);
-		itemProudSoul.setRepairCost(-10);
-		registerCustomItemStack(ProudSoulStr , itemProudSoul);
+        ItemStack itemProudSoul = new ItemStack(proudSoul,1,0);
+        itemProudSoul.setRepairCost(-10);
+        registerCustomItemStack(ProudSoulStr , itemProudSoul);
 
-		ItemStack itemIngotBladeSoul = new ItemStack(proudSoul,1,1);
-		itemIngotBladeSoul.setRepairCost(-25);
-		registerCustomItemStack(IngotBladeSoulStr , itemIngotBladeSoul);
+        ItemStack itemIngotBladeSoul = new ItemStack(proudSoul,1,1);
+        itemIngotBladeSoul.setRepairCost(-25);
+        registerCustomItemStack(IngotBladeSoulStr , itemIngotBladeSoul);
 
         ItemStack itemSphereBladeSoul = new ItemStack(proudSoul,1,2);
         itemSphereBladeSoul.setRepairCost(-50);
@@ -295,11 +295,11 @@ public class SlashBlade implements IFuelHandler{
 
         //==================================================================================================================================
 
-		weapon = (ItemSlashBlade)(new ItemSlashBlade(ToolMaterial.IRON, 4 + ToolMaterial.DIAMOND.getAttackDamage()))
-				.setRepairMaterial(new ItemStack(Items.IRON_INGOT))
-				.setRepairMaterialOreDic("ingotSteel", "nuggetSteel")
-				.setUnlocalizedName("flammpfeil.slashblade")
-				.setCreativeTab(tab)
+        weapon = (ItemSlashBlade)(new ItemSlashBlade(ToolMaterial.IRON, 4 + ToolMaterial.DIAMOND.getAttackDamage()))
+                .setRepairMaterial(new ItemStack(Items.IRON_INGOT))
+                .setRepairMaterialOreDic("ingotSteel", "nuggetSteel")
+                .setTranslationKey("flammpfeil.slashblade")
+                .setCreativeTab(tab)
                 .setRegistryName("slashblade");
 
         ForgeRegistries.ITEMS.register(weapon);
@@ -311,7 +311,7 @@ public class SlashBlade implements IFuelHandler{
                 .setModelTexture(new ResourceLocationRaw("flammpfeil.slashblade", "model/wood.png"))
                 .setRepairMaterialOreDic("logWood")
                 .setMaxDamage(60)
-                .setUnlocalizedName("flammpfeil.slashblade.wood")
+                .setTranslationKey("flammpfeil.slashblade.wood")
                 .setCreativeTab(tab)
                 .setRegistryName("slashbladeWood");
         ForgeRegistries.ITEMS.register(bladeWood);
@@ -321,7 +321,7 @@ public class SlashBlade implements IFuelHandler{
                 .setModelTexture(new ResourceLocationRaw("flammpfeil.slashblade", "model/banboo.png"))
                 .setRepairMaterialOreDic("bamboo")
                 .setMaxDamage(50)
-                .setUnlocalizedName("flammpfeil.slashblade.bamboo")
+                .setTranslationKey("flammpfeil.slashblade.bamboo")
                 .setCreativeTab(tab)
                 .setRegistryName("slashbladeBambooLight");
         ForgeRegistries.ITEMS.register(bladeBambooLight);
@@ -331,7 +331,7 @@ public class SlashBlade implements IFuelHandler{
                 .setModelTexture(new ResourceLocationRaw("flammpfeil.slashblade", "model/silverbanboo.png"))
                 .setRepairMaterialOreDic("bamboo")
                 .setMaxDamage(40)
-                .setUnlocalizedName("flammpfeil.slashblade.silverbamboo")
+                .setTranslationKey("flammpfeil.slashblade.silverbamboo")
                 .setCreativeTab(tab)
                 .setRegistryName("slashbladeSilverBambooLight");
         ForgeRegistries.ITEMS.register(bladeSilverBambooLight);
@@ -342,7 +342,7 @@ public class SlashBlade implements IFuelHandler{
                 .setRepairMaterial(new ItemStack(Items.IRON_INGOT))
                 .setRepairMaterialOreDic("ingotSteel", "nuggetSteel")
                 .setMaxDamage(70)
-                .setUnlocalizedName("flammpfeil.slashblade.white")
+                .setTranslationKey("flammpfeil.slashblade.white")
                 .setCreativeTab(tab)
                 .setRegistryName("slashbladeWhite");
         ForgeRegistries.ITEMS.register(bladeWhiteSheath);
@@ -353,7 +353,7 @@ public class SlashBlade implements IFuelHandler{
 
         wrapBlade = (ItemSlashBladeWrapper)(new ItemSlashBladeWrapper(ToolMaterial.IRON))
                 .setMaxDamage(40)
-                .setUnlocalizedName("flammpfeil.slashblade.wrapper")
+                .setTranslationKey("flammpfeil.slashblade.wrapper")
                 .setCreativeTab(tab)
                 .setRegistryName("slashbladeWrapper");
         ForgeRegistries.ITEMS.register(wrapBlade);
@@ -363,17 +363,17 @@ public class SlashBlade implements IFuelHandler{
 
         bladeNamed = (ItemSlashBladeNamed)(new ItemSlashBladeNamed(ToolMaterial.IRON, 4.0f))
                 .setMaxDamage(40)
-                .setUnlocalizedName("flammpfeil.slashblade.named")
+                .setTranslationKey("flammpfeil.slashblade.named")
                 .setCreativeTab(tab)
                 .setRegistryName("slashbladeNamed");
         ForgeRegistries.ITEMS.register(bladeNamed);
 
 
-		GameRegistry.registerFuelHandler(this);
+        GameRegistry.registerFuelHandler(this);
 
-		CoreProxy.proxy.initializeItemRenderer();
+        CoreProxy.proxy.initializeItemRenderer();
 
-		manager = new ConfigEntityListManager();
+        manager = new ConfigEntityListManager();
 
         MinecraftForge.EVENT_BUS.register(manager);
 
@@ -576,10 +576,10 @@ public class SlashBlade implements IFuelHandler{
     }
 
 
-	@Override
-	public int getBurnTime(ItemStack fuel) {
-		return (fuel.getItem() == this.proudSoul && fuel.getItemDamage() == 0) ? 10000 : 0;
-	}
+    @Override
+    public int getBurnTime(ItemStack fuel) {
+        return (fuel.getItem() == this.proudSoul && fuel.getItemDamage() == 0) ? 10000 : 0;
+    }
 
 
 /*

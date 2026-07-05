@@ -9,10 +9,8 @@ import mods.flammpfeil.slashblade.ability.UntouchableTime;
 import mods.flammpfeil.slashblade.entity.EntityJudgmentCutManager;
 import mods.flammpfeil.slashblade.entity.selector.EntitySelectorAttackable;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.SoundEvents;
@@ -76,9 +74,9 @@ public class SlashDimension extends SpecialAttackBase implements IJustSpecialAtt
                     Vec3d pos = player.getLookVec();
                     pos = pos.scale(5);
                     pos = pos.add(player.getPositionVector());
-                    pos = pos.addVector(0, player.getEyeHeight(), 0);
+                    pos = pos.add(0, player.getEyeHeight(), 0);
 
-                    Vec3d offset = player.getPositionVector().addVector(0,player.getEyeHeight(),0);
+                    Vec3d offset = player.getPositionVector().add(0,player.getEyeHeight(),0);
                     Vec3d offsettedLook = offset.add(player.getLookVec().scale(5));
                     RayTraceResult movingobjectposition = world.rayTraceBlocks(offset, offsettedLook);
                     if (movingobjectposition != null)
@@ -230,11 +228,11 @@ public class SlashDimension extends SpecialAttackBase implements IJustSpecialAtt
                 Vec3d pos = player.getLookVec();
                 pos = pos.scale(5);
                 pos = pos.add(player.getPositionVector());
-                pos = pos.addVector(0, player.getEyeHeight(), 0);
+                pos = pos.add(0, player.getEyeHeight(), 0);
 
                 ItemSlashBlade blade = (ItemSlashBlade)stack.getItem();
 
-                Vec3d offset = player.getPositionVector().addVector(0,player.getEyeHeight(),0);
+                Vec3d offset = player.getPositionVector().add(0,player.getEyeHeight(),0);
                 Vec3d offsettedLook = offset.add(player.getLookVec().scale(5));
                 RayTraceResult movingobjectposition = world.rayTraceBlocks(offset, offsettedLook);
                 if (movingobjectposition != null)

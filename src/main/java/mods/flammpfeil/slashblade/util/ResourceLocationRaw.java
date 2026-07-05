@@ -22,13 +22,13 @@ public class ResourceLocationRaw extends ResourceLocation {
     }
 
     @Override
-    public String getResourcePath() {
+    public String getPath() {
         return resourcePathRaw;
     }
 
     @Override
     public String toString()
     {
-        return this.resourceDomain + ':' + this.resourcePath;
+        return this.getNamespace() + ':' + this.resourcePathRaw;
     }
 }

@@ -7,19 +7,19 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class CoreProxy {
-	@SidedProxy(clientSide = "mods.flammpfeil.slashblade.core.CoreProxyClient", serverSide = "mods.flammpfeil.slashblade.core.CoreProxy")
-	public static CoreProxy proxy;
+    @SidedProxy(clientSide = "mods.flammpfeil.slashblade.core.CoreProxyClient", serverSide = "mods.flammpfeil.slashblade.core.CoreProxy")
+    public static CoreProxy proxy;
 
 
-	public void initializeItemRenderer() {}
+    public void initializeItemRenderer() {}
 
-	public void postInit(){}
+    public void postInit(){}
 
     //public void getMouseOver(double len){}
 
-	public IMessage onMessage(MessageRankpointSynchronize message, MessageContext ctx) {
-		return null;
-	}
+    public IMessage onMessage(MessageRankpointSynchronize message, MessageContext ctx) {
+        return null;
+    }
 
-	public void setTEISR(Item item){}
+    public void setTEISR(Item item){}
 }

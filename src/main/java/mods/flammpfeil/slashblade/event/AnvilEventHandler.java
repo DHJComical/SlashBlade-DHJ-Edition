@@ -5,11 +5,8 @@ import mods.flammpfeil.slashblade.SlashBlade;
 import mods.flammpfeil.slashblade.TagPropertyAccessor;
 import mods.flammpfeil.slashblade.item.ItemProudSoul;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
-import mods.flammpfeil.slashblade.named.Doutanuki;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.event.AnvilUpdateEvent;
@@ -92,7 +89,7 @@ public class AnvilEventHandler {
 
                 if (ItemSlashBladeNamed.CurrentItemName.exists(matTag)) {
                     ItemStack targetBlade = SlashBlade.findItemStack(SlashBlade.modid, "slashbladeNamed", 1);
-                    if (out.getUnlocalizedName().equals(targetBlade.getUnlocalizedName())) {
+                    if (out.getTranslationKey().equals(targetBlade.getTranslationKey())) {
 
                         ItemSlashBladeNamed.CurrentItemName.set(tag, ItemSlashBladeNamed.CurrentItemName.get(matTag));
 

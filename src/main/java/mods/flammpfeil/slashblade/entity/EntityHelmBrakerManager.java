@@ -1,7 +1,6 @@
 package mods.flammpfeil.slashblade.entity;
 
 import mods.flammpfeil.slashblade.ability.StylishRankManager;
-import mods.flammpfeil.slashblade.ability.UpthrustBlast;
 import mods.flammpfeil.slashblade.entity.selector.EntitySelectorAttackable;
 import mods.flammpfeil.slashblade.entity.selector.EntitySelectorDestructable;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
@@ -29,7 +28,6 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.registry.IThrowableEntity;

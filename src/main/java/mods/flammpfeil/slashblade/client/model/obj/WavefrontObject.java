@@ -90,7 +90,7 @@ public class WavefrontObject
                 }
                 else if (currentLine.startsWith("v "))
                 {
-                	vertex = parseVertex(currentLine, lineCount);
+                    vertex = parseVertex(currentLine, lineCount);
                     if (vertex != null)
                     {
                         vertices.add(vertex);
@@ -106,7 +106,7 @@ public class WavefrontObject
                 }
                 else if (currentLine.startsWith("vt "))
                 {
-                	textureCoordinate = parseTextureCoordinate(currentLine, lineCount);
+                    textureCoordinate = parseTextureCoordinate(currentLine, lineCount);
                     if (textureCoordinate != null)
                     {
                         textureCoordinates.add(textureCoordinate);
@@ -129,7 +129,7 @@ public class WavefrontObject
                 }
                 else if (currentLine.startsWith("g ") | currentLine.startsWith("o "))
                 {
-                	group = parseGroupObject(currentLine, lineCount);
+                    group = parseGroupObject(currentLine, lineCount);
 
                     if (group != null)
                     {

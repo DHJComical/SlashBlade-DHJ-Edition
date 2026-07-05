@@ -1,7 +1,6 @@
 package mods.flammpfeil.slashblade.core;
 
 import com.google.common.collect.Iterables;
-import com.google.common.collect.Maps;
 import mods.flammpfeil.slashblade.*;
 import mods.flammpfeil.slashblade.ability.StylishRankManager;
 import mods.flammpfeil.slashblade.client.model.BladeModelManager;
@@ -16,13 +15,11 @@ import mods.flammpfeil.slashblade.network.*;
 import mods.flammpfeil.slashblade.util.KeyBindingEx;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.renderer.entity.*;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.util.*;
 import net.minecraftforge.client.model.ModelLoader;
@@ -42,7 +39,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import org.lwjgl.input.Keyboard;
 
 import java.util.EnumSet;
-import java.util.Map;
 
 public class CoreProxyClient extends CoreProxy {
 
@@ -52,8 +48,8 @@ public class CoreProxyClient extends CoreProxy {
     static public KeyBindingEx summonedsword = null;
     static public KeyBindingEx styleaction = null;
 
-	@Override
-	public void initializeItemRenderer() {
+    @Override
+    public void initializeItemRenderer() {
         //resource reload event
         MinecraftForge.EVENT_BUS.register(BladeModelManager.getInstance());
 
@@ -65,11 +61,11 @@ public class CoreProxyClient extends CoreProxy {
 
         MinecraftForge.EVENT_BUS.register(new LockonCircleRender());
 
-		/*
+        /*
         MinecraftForgeClient.registerItemRenderer(SlashBlade.weapon, renderer);
-		MinecraftForgeClient.registerItemRenderer(SlashBlade.bladeWood, renderer);
-		MinecraftForgeClient.registerItemRenderer(SlashBlade.bladeBambooLight, renderer);
-		MinecraftForgeClient.registerItemRenderer(SlashBlade.bladeSilverBambooLight, renderer);
+        MinecraftForgeClient.registerItemRenderer(SlashBlade.bladeWood, renderer);
+        MinecraftForgeClient.registerItemRenderer(SlashBlade.bladeBambooLight, renderer);
+        MinecraftForgeClient.registerItemRenderer(SlashBlade.bladeSilverBambooLight, renderer);
         MinecraftForgeClient.registerItemRenderer(SlashBlade.bladeWhiteSheath, renderer);
         MinecraftForgeClient.registerItemRenderer(SlashBlade.wrapBlade, renderer);
         MinecraftForgeClient.registerItemRenderer(SlashBlade.bladeNamed, renderer);
@@ -446,7 +442,7 @@ public class CoreProxyClient extends CoreProxy {
         camera = new KeyBindingEx("Key.SlashBlade.CA", Keyboard.KEY_LCONTROL, "flammpfeil.slashblade"){
         };
 
-	}
+    }
 
 
     @Override
@@ -526,7 +522,7 @@ public class CoreProxyClient extends CoreProxy {
                 }
 
                 Vec3d vec31 = entity.getLook(partialTicks);
-                Vec3d vec32 = vec3.addVector(vec31.x * d0, vec31.y * d0, vec31.z * d0);
+                Vec3d vec32 = vec3.add(vec31.x * d0, vec31.y * d0, vec31.z * d0);
                 Entity pointedEntity = null;
                 Vec3d vec33 = null;
                 float f = 1.0F;

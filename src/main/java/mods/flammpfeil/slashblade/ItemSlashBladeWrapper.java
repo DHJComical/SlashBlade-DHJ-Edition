@@ -1,24 +1,15 @@
 package mods.flammpfeil.slashblade;
 
 import net.minecraft.util.NonNullList;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import mods.flammpfeil.slashblade.util.ResourceLocationRaw;
-import net.minecraftforge.oredict.OreDictionary;
-import org.omg.CORBA.Current;
 
 import javax.annotation.Nullable;
 import java.util.EnumSet;
-import java.util.List;
 
 /**
  * Created by Furia on 14/03/11.

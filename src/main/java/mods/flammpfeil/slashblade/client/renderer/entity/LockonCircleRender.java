@@ -8,13 +8,11 @@ import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.util.ResourceLocationRaw;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.Vec3d;
-import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.opengl.GL11;
@@ -67,8 +65,8 @@ public class LockonCircleRender {
         GL11.glPushMatrix();
 
         Vec3d pos = lerp(new Vec3d(target.prevPosX, target.prevPosY, target.prevPosZ),target.getPositionVector(), partialTicks)
-                .addVector(0,target.height / 2.0, 0)
-                .addVector(-d3,-d4,-d5);
+                .add(0,target.height / 2.0, 0)
+                .add(-d3,-d4,-d5);
         GL11.glTranslated(pos.x, pos.y, pos.z);
         float scale = 0.00625f;
         GL11.glScalef(scale, scale, scale);

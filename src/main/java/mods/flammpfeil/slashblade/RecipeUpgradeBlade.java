@@ -9,31 +9,31 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 
 public class RecipeUpgradeBlade extends ShapedOreRecipe {
 
-	public RecipeUpgradeBlade(ResourceLocation loc, ItemStack result, Object... recipe) {
-		super(loc, result, recipe);
-	}
+    public RecipeUpgradeBlade(ResourceLocation loc, ItemStack result, Object... recipe) {
+        super(loc, result, recipe);
+    }
 
-	@Override
-	public ItemStack getCraftingResult(InventoryCrafting var1) {
-		ItemStack result = super.getCraftingResult(var1);
+    @Override
+    public ItemStack getCraftingResult(InventoryCrafting var1) {
+        ItemStack result = super.getCraftingResult(var1);
 
-		for(int idx = 0; idx < var1.getSizeInventory(); idx++){
-			ItemStack curIs = var1.getStackInSlot(idx);
-			if(!curIs.isEmpty()
-					&& curIs.getItem() instanceof ItemSlashBlade
-					&& curIs.hasTagCompound()){
+        for(int idx = 0; idx < var1.getSizeInventory(); idx++){
+            ItemStack curIs = var1.getStackInSlot(idx);
+            if(!curIs.isEmpty()
+                    && curIs.getItem() instanceof ItemSlashBlade
+                    && curIs.hasTagCompound()){
 
-				NBTTagCompound tag = curIs.getTagCompound();
-				tag = (NBTTagCompound)tag.copy();
+                NBTTagCompound tag = curIs.getTagCompound();
+                tag = (NBTTagCompound)tag.copy();
 
                 ItemSlashBlade.IsBroken.remove(tag);
                 ItemSlashBlade.IsNoScabbard.remove(tag);
 
-				result.setTagCompound(tag);
-			}
-		}
+                result.setTagCompound(tag);
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
 }

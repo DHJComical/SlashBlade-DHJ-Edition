@@ -1,7 +1,6 @@
 package mods.flammpfeil.slashblade.entity;
 
 import mods.flammpfeil.slashblade.ability.StylishRankManager;
-import mods.flammpfeil.slashblade.ability.UpthrustBlast;
 import mods.flammpfeil.slashblade.entity.selector.EntitySelectorAttackable;
 import mods.flammpfeil.slashblade.entity.selector.EntitySelectorDestructable;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;

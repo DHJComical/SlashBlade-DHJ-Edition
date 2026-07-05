@@ -2,13 +2,10 @@ package mods.flammpfeil.slashblade.entity;
 
 import mods.flammpfeil.slashblade.ability.StunManager;
 import mods.flammpfeil.slashblade.ability.StylishRankManager;
-import mods.flammpfeil.slashblade.entity.selector.EntitySelectorAttackable;
-import mods.flammpfeil.slashblade.entity.selector.EntitySelectorDestructable;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.util.ReflectionAccessHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -123,7 +120,7 @@ public class EntityHeavyRainSwords extends EntitySummonedSwordBase {
         } else {
             pos = pos.add(getThrower().getPositionVector());
             float len = 8.0f;
-            pos = pos.addVector(lookVec.x * len, 0, lookVec.z * len);
+            pos = pos.add(lookVec.x * len, 0, lookVec.z * len);
         }
 
         float areaSize;
@@ -132,7 +129,7 @@ public class EntityHeavyRainSwords extends EntitySummonedSwordBase {
         else
             areaSize = 0.1f;
 
-        pos = pos.addVector((getRand().nextGaussian() - 0.5) * areaSize, 8.0, (getRand().nextGaussian() - 0.5) * areaSize);
+        pos = pos.add((getRand().nextGaussian() - 0.5) * areaSize, 8.0, (getRand().nextGaussian() - 0.5) * areaSize);
 
         //■初期位置・初期角度等の設定
         setPosition(pos.x,

@@ -3,7 +3,6 @@ package mods.flammpfeil.slashblade.ability;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;

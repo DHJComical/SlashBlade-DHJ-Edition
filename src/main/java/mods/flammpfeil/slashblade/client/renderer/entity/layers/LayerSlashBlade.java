@@ -606,10 +606,10 @@ public class LayerSlashBlade implements LayerRenderer<EntityLivingBase> {
         }
 
         /*
-		if(!isBroken && isEnchanted && ItemSlashBlade.RequiredChargeTick < charge){
-			progress = 0.0f;
-			combo = ComboSequence.None;
-		}
+        if(!isBroken && isEnchanted && ItemSlashBlade.RequiredChargeTick < charge){
+            progress = 0.0f;
+            combo = ComboSequence.None;
+        }
         */
 
 

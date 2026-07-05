@@ -3,7 +3,6 @@ package mods.flammpfeil.slashblade.named;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import mods.flammpfeil.slashblade.ItemSlashBladeNamed;
-import mods.flammpfeil.slashblade.RecipeWrapBlade;
 import mods.flammpfeil.slashblade.SlashBlade;
 import mods.flammpfeil.slashblade.TagPropertyAccessor;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
@@ -70,8 +69,8 @@ public class NamedBladeManager {
             ItemStack blade = new ItemStack(SlashBlade.bladeNamed, 1, 0);
             blade.setTagCompound((NBTTagCompound)tag.copy());
 
-            SlashBlade.registerCustomItemStack(blade.getUnlocalizedName(), blade);
-            ItemSlashBladeNamed.NamedBlades.add(blade.getUnlocalizedName());
+            SlashBlade.registerCustomItemStack(blade.getTranslationKey(), blade);
+            ItemSlashBladeNamed.NamedBlades.add(blade.getTranslationKey());
         }
     }
 

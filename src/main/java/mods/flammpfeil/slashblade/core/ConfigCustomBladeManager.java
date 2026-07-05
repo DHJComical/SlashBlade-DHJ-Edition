@@ -1,6 +1,5 @@
 package mods.flammpfeil.slashblade.core;
 
-import com.google.common.collect.Lists;
 import mods.flammpfeil.slashblade.ItemSlashBladeNamed;
 import mods.flammpfeil.slashblade.SlashBlade;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
@@ -16,7 +15,6 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import java.util.List;
 
 /**
  * Created by Furia on 2016/02/10.

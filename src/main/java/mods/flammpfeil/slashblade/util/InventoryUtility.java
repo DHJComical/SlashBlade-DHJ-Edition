@@ -2,7 +2,6 @@ package mods.flammpfeil.slashblade.util;
 
 import com.google.common.collect.Lists;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import java.util.List;

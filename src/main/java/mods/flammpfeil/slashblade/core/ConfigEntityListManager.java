@@ -6,14 +6,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import mods.flammpfeil.slashblade.SlashBlade;
-import mods.flammpfeil.slashblade.util.ResourceLocationRaw;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.registry.EntityEntry;
-import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.IThrowableEntity;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityOwnable;
 import net.minecraft.entity.IMerchant;
@@ -25,7 +21,6 @@ import net.minecraft.entity.projectile.EntityFireball;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
@@ -48,143 +43,143 @@ public class ConfigEntityListManager {
      * @return
      */
     static private String escape(String source){
-		return String.format("\"%s\"", source.replace("\\","\\\\").replace("\"","\\quot;").replace("\r", "\\r;").replace("\n", "\\n;"));
+        return String.format("\"%s\"", source.replace("\\","\\\\").replace("\"","\\quot;").replace("\r", "\\r;").replace("\n", "\\n;"));
     }
     static private String unescape(String source){
-    	return source.replace("\"", "").replace("\\quot;", "\"").replace("\\r;","\r").replace("\\n;","\n").replace("\\\\", "\\");
+        return source.replace("\"", "").replace("\\quot;", "\"").replace("\\r;","\r").replace("\\n;","\n").replace("\\\\", "\\");
     }
 
 
     @SubscribeEvent
     public void onWorldTickEvent(TickEvent.WorldTickEvent event)
     {
-    	if(event.side == Side.SERVER && event.phase == Phase.START && event.type ==Type.WORLD){
-			try{
-				if(!SlashBlade.mainConfiguration.hasCategory(Configuration.CATEGORY_GENERAL))
-					SlashBlade.mainConfiguration.load();
+        if(event.side == Side.SERVER && event.phase == Phase.START && event.type ==Type.WORLD){
+            try{
+                if(!SlashBlade.mainConfiguration.hasCategory(Configuration.CATEGORY_GENERAL))
+                    SlashBlade.mainConfiguration.load();
 
 
 
-				for(EntityEntry entry : net.minecraftforge.fml.common.registry.ForgeRegistries.ENTITIES){
-					Class cls = entry.getEntityClass();
+                for(EntityEntry entry : net.minecraftforge.fml.common.registry.ForgeRegistries.ENTITIES){
+                    Class cls = entry.getEntityClass();
 
-					String name = entry.getName();//(String)EntityList.func_191302_a(key);
-					if(name == null || name.length() == 0)
-						continue;
+                    String name = entry.getName();//(String)EntityList.func_191302_a(key);
+                    if(name == null || name.length() == 0)
+                        continue;
 
-					Entity instance = null;
+                    Entity instance = null;
 
-					try{
+                    try{
                         Constructor<Entity> constructor = cls.getConstructor(World.class);
                         if(constructor != null){
                             instance = constructor.newInstance((Object)event.world);
                         }
-					}catch(Throwable e){
-						instance = null;
-					}
+                    }catch(Throwable e){
+                        instance = null;
+                    }
 
 
-					if(EntityLivingBase.class.isAssignableFrom(cls))
-					{
-						boolean attackable = true;
+                    if(EntityLivingBase.class.isAssignableFrom(cls))
+                    {
+                        boolean attackable = true;
 
-						if(instance == null){
-							attackable = true;
+                        if(instance == null){
+                            attackable = true;
 
-						}else if(IMob.class.isAssignableFrom(cls)){//instance instanceof IMob){
-							attackable = true;
+                        }else if(IMob.class.isAssignableFrom(cls)){//instance instanceof IMob){
+                            attackable = true;
 
-						}else if(instance instanceof IAnimals
-								||instance instanceof IEntityOwnable
-								||instance instanceof IMerchant){
-							attackable = false;
+                        }else if(instance instanceof IAnimals
+                                ||instance instanceof IEntityOwnable
+                                ||instance instanceof IMerchant){
+                            attackable = false;
 
-						}
-						attackableTargets.put(name, attackable);
-					}else{
+                        }
+                        attackableTargets.put(name, attackable);
+                    }else{
 
-						boolean destructable = false;
+                        boolean destructable = false;
 
-						if(instance instanceof IProjectile
-								|| instance instanceof EntityTNTPrimed
-								|| instance instanceof EntityFireball
-								|| instance instanceof IThrowableEntity){
-							destructable = true;
-						}
+                        if(instance instanceof IProjectile
+                                || instance instanceof EntityTNTPrimed
+                                || instance instanceof EntityFireball
+                                || instance instanceof IThrowableEntity){
+                            destructable = true;
+                        }
 
-						destructableTargets.put(cls.getSimpleName(), destructable);
+                        destructableTargets.put(cls.getSimpleName(), destructable);
 
-					}
-
-
-				}
-
-				{
-					Property propAttackableTargets = SlashBlade.mainConfiguration.get(Configuration.CATEGORY_GENERAL, "AttackableTargets" ,new String[]{});
-					propAttackableTargets.setShowInGui(false);
-
-					for(String curEntry : propAttackableTargets.getStringList()){
-						curEntry = unescape(curEntry);
-						int spliterIdx = curEntry.lastIndexOf(":");
-						String name = curEntry.substring(0, spliterIdx);
-						String attackableStr = curEntry.substring(spliterIdx + 1, curEntry.length());
-
-						boolean attackable = attackableStr.toLowerCase().equals("true");
-
-						attackableTargets.put(name, attackable);
-					}
-
-					ArrayList<String> profAttackableTargets = new ArrayList<String>();
-					for(Object key : attackableTargets.keySet()){
-						Boolean name = (Boolean)attackableTargets.get(key);
-
-						String keyStr = (String)key;
-						profAttackableTargets.add(escape(String.format("%s:%b", keyStr ,name)));
-					}
-					String[] data = profAttackableTargets.toArray(new String[]{});
-
-					propAttackableTargets.set(data);
-				}
+                    }
 
 
-				{
-					Property propDestructableTargets = SlashBlade.mainConfiguration.get(Configuration.CATEGORY_GENERAL, "DestructableTargets" ,new String[]{});
-					propDestructableTargets.setShowInGui(false);
+                }
 
-					for(String curEntry : propDestructableTargets.getStringList()){
-						curEntry = unescape(curEntry);
-						int spliterIdx = curEntry.lastIndexOf(":");
-						String name = curEntry.substring(0, spliterIdx);
-						String attackableStr = curEntry.substring(spliterIdx + 1, curEntry.length());
+                {
+                    Property propAttackableTargets = SlashBlade.mainConfiguration.get(Configuration.CATEGORY_GENERAL, "AttackableTargets" ,new String[]{});
+                    propAttackableTargets.setShowInGui(false);
 
-						boolean destructable = attackableStr.toLowerCase().equals("true");
+                    for(String curEntry : propAttackableTargets.getStringList()){
+                        curEntry = unescape(curEntry);
+                        int spliterIdx = curEntry.lastIndexOf(":");
+                        String name = curEntry.substring(0, spliterIdx);
+                        String attackableStr = curEntry.substring(spliterIdx + 1, curEntry.length());
 
-						destructableTargets.put(name, destructable);
-					}
+                        boolean attackable = attackableStr.toLowerCase().equals("true");
 
-					ArrayList<String> profDestructableTargets = new ArrayList<String>();
-					for(Object key : destructableTargets.keySet()){
-						Boolean name = (Boolean)destructableTargets.get(key);
+                        attackableTargets.put(name, attackable);
+                    }
 
-						String keyStr = (String)key;
-						profDestructableTargets.add(escape(String.format("%s:%b", keyStr ,name)));
-					}
-					String[] data2 = profDestructableTargets.toArray(new String[]{});
+                    ArrayList<String> profAttackableTargets = new ArrayList<String>();
+                    for(Object key : attackableTargets.keySet()){
+                        Boolean name = (Boolean)attackableTargets.get(key);
 
-					propDestructableTargets.set(data2);
-				}
+                        String keyStr = (String)key;
+                        profAttackableTargets.add(escape(String.format("%s:%b", keyStr ,name)));
+                    }
+                    String[] data = profAttackableTargets.toArray(new String[]{});
 
-
-
-
-			}
-			finally
-			{
-				SlashBlade.mainConfiguration.save();
-			}
+                    propAttackableTargets.set(data);
+                }
 
 
-	        MinecraftForge.EVENT_BUS.unregister(this);
-    	}
+                {
+                    Property propDestructableTargets = SlashBlade.mainConfiguration.get(Configuration.CATEGORY_GENERAL, "DestructableTargets" ,new String[]{});
+                    propDestructableTargets.setShowInGui(false);
+
+                    for(String curEntry : propDestructableTargets.getStringList()){
+                        curEntry = unescape(curEntry);
+                        int spliterIdx = curEntry.lastIndexOf(":");
+                        String name = curEntry.substring(0, spliterIdx);
+                        String attackableStr = curEntry.substring(spliterIdx + 1, curEntry.length());
+
+                        boolean destructable = attackableStr.toLowerCase().equals("true");
+
+                        destructableTargets.put(name, destructable);
+                    }
+
+                    ArrayList<String> profDestructableTargets = new ArrayList<String>();
+                    for(Object key : destructableTargets.keySet()){
+                        Boolean name = (Boolean)destructableTargets.get(key);
+
+                        String keyStr = (String)key;
+                        profDestructableTargets.add(escape(String.format("%s:%b", keyStr ,name)));
+                    }
+                    String[] data2 = profDestructableTargets.toArray(new String[]{});
+
+                    propDestructableTargets.set(data2);
+                }
+
+
+
+
+            }
+            finally
+            {
+                SlashBlade.mainConfiguration.save();
+            }
+
+
+            MinecraftForge.EVENT_BUS.unregister(this);
+        }
     }
 }

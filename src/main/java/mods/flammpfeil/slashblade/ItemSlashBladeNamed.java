@@ -28,8 +28,8 @@ public class ItemSlashBladeNamed extends ItemSlashBlade {
     static public final String RepairMaterialNameStr = "RepairMaterialName";
 
     @Override
-    public String getUnlocalizedName(ItemStack par1ItemStack) {
-        String result = super.getUnlocalizedName(par1ItemStack);
+    public String getTranslationKey(ItemStack par1ItemStack) {
+        String result = super.getTranslationKey(par1ItemStack);
         if(par1ItemStack.hasTagCompound()){
             NBTTagCompound tag = par1ItemStack.getTagCompound();
             if(CurrentItemName.exists(tag)){

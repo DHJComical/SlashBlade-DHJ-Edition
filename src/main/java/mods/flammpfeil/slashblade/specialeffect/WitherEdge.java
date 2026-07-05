@@ -8,7 +8,6 @@ import mods.flammpfeil.slashblade.util.SlashBladeEvent;
 import mods.flammpfeil.slashblade.util.SlashBladeHooks;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 
 /**
@@ -98,7 +97,7 @@ public class WitherEdge implements ISpecialEffect, IRemovable{
 
     @Override
     public boolean canRemoval(ItemStack stack) {
-        if(stack.getUnlocalizedName().equals("item.flammpfeil.slashblade.named.koseki"))
+        if(stack.getTranslationKey().equals("item.flammpfeil.slashblade.named.koseki"))
             return false;
         return true;
     }

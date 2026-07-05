@@ -268,7 +268,7 @@ public class EntityStormSwords extends EntitySummonedSwordBase {
 
         if (ridingEntity2 != null) {
             pos = pos.add(ridingEntity2.getPositionVector());
-            pos = pos.addVector(0, ridingEntity2.getEyeHeight() / 3.0, 0);
+            pos = pos.add(0, ridingEntity2.getEyeHeight() / 3.0, 0);
         }
 
         //■初期位置・初期角度等の設定

@@ -8,7 +8,6 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 public class RecipeAdjustPos extends ShapedRecipes
@@ -126,4 +125,3 @@ public class RecipeAdjustPos extends ShapedRecipes
         return itemstack;
     }
 }
-

@@ -48,7 +48,7 @@ public class Face
             return;
         }
 
-        wr = new BufferBuilder(this.vertices.length * wr.getVertexFormat().getNextOffset());
+        wr = new BufferBuilder(this.vertices.length * wr.getVertexFormat().getSize());
         wr.begin(glMode, DefaultVertexFormats.POSITION_TEX_COLOR_NORMAL);
 
         float averageU = 0F;
@@ -99,7 +99,7 @@ public class Face
             wr.color(r,g,b,a);
 
             if( vertexNormals != null) {
-            	normal = vertexNormals[i];
+                normal = vertexNormals[i];
                 wr.normal(normal.x*-1.05f, normal.y*-1.05f, normal.z*-1.05f);
             }else{
                 wr.normal(faceNormal.x, faceNormal.y, faceNormal.z);

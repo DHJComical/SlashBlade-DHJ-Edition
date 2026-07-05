@@ -2,7 +2,6 @@ package mods.flammpfeil.slashblade.client.renderer.entity;
 
 
 import mods.flammpfeil.slashblade.entity.EntitySpinningSword;
-import mods.flammpfeil.slashblade.entity.EntitySummonedBlade;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.entity.Render;

@@ -20,7 +20,6 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 
-import java.util.EnumSet;
 import java.util.List;
 
 /**
@@ -74,9 +73,9 @@ public class SlashDimensionSpiral extends SpecialAttackBase implements IJustSpec
                     Vec3d pos = player.getLookVec();
                     pos = pos.scale(5);
                     pos = pos.add(player.getPositionVector());
-                    pos = pos.addVector(0, player.getEyeHeight(), 0);
+                    pos = pos.add(0, player.getEyeHeight(), 0);
 
-                    Vec3d offset = player.getPositionVector().addVector(0,player.getEyeHeight(),0);
+                    Vec3d offset = player.getPositionVector().add(0,player.getEyeHeight(),0);
                     Vec3d offsettedLook = offset.add(player.getLookVec().scale(5));
                     RayTraceResult movingobjectposition = world.rayTraceBlocks(offset, offsettedLook);
                     if (movingobjectposition != null)
@@ -104,7 +103,7 @@ public class SlashDimensionSpiral extends SpecialAttackBase implements IJustSpec
 
 
                 Vec3d pos = dim.getPositionVector();
-                pos = pos.addVector(0 , -0.5f, 0);
+                pos = pos.add(0 , -0.5f, 0);
 
                 int rank = StylishRankManager.getStylishRank(player);
                 int count = 5 + rank;
@@ -195,7 +194,7 @@ public class SlashDimensionSpiral extends SpecialAttackBase implements IJustSpec
 
 
                 Vec3d pos = target.getPositionVector();
-                pos = pos.addVector(0 , -0.5f, 0);
+                pos = pos.add(0 , -0.5f, 0);
 
                 int rank = StylishRankManager.getStylishRank(player);
                 int count = 5 + rank;
@@ -332,11 +331,11 @@ public class SlashDimensionSpiral extends SpecialAttackBase implements IJustSpec
                 Vec3d pos = player.getLookVec();
                 pos = pos.scale(5);
                 pos = pos.add(player.getPositionVector());
-                pos = pos.addVector(0, player.getEyeHeight(), 0);
+                pos = pos.add(0, player.getEyeHeight(), 0);
 
                 ItemSlashBlade blade = (ItemSlashBlade)stack.getItem();
 
-                Vec3d offset = player.getPositionVector().addVector(0,player.getEyeHeight(),0);
+                Vec3d offset = player.getPositionVector().add(0,player.getEyeHeight(),0);
                 Vec3d offsettedLook = offset.add(player.getLookVec().scale(5));
                 RayTraceResult movingobjectposition = world.rayTraceBlocks(offset, offsettedLook);
                 if (movingobjectposition != null)
@@ -366,7 +365,7 @@ public class SlashDimensionSpiral extends SpecialAttackBase implements IJustSpec
                 }
 
 
-                pos = pos.addVector(0 , -0.5f, 0);
+                pos = pos.add(0 , -0.5f, 0);
 
                 int rank = StylishRankManager.getStylishRank(player);
                 int count = 5 + rank;
@@ -460,7 +459,7 @@ public class SlashDimensionSpiral extends SpecialAttackBase implements IJustSpec
 
 
             Vec3d pos = target.getPositionVector();
-            pos = pos.addVector(0 , -0.5f, 0);
+            pos = pos.add(0 , -0.5f, 0);
 
             int rank = StylishRankManager.getStylishRank(player);
             int count = 5 + rank;

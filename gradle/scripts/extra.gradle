@@ -5,7 +5,7 @@
 // apply from: 'gradle/scripts/helpers.gradle'
 spotless {
     java {
-        target 'src/*/java/**/*.java', 'src/*/java-templates/**/*.java'
+        target 'src/*/java/**/*.java'
 
         leadingTabsToSpaces()
         endWithNewline()

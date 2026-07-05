@@ -44,13 +44,13 @@ public class GroupObject
     @SideOnly(Side.CLIENT)
     public void render(Tessellator tessellator)
     {
-    	Face face;
+        Face face;
         if (faces.size() > 0)
         {
-        	for(int i = 0,j=faces.size();i<j;i++){
-        	face=faces.get(i);
+            for(int i = 0,j=faces.size();i<j;i++){
+            face=faces.get(i);
             face.addFaceForRender(tessellator,glDrawingMode);
-        	}
+            }
         }
     }
 }
