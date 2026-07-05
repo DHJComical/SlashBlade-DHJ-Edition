@@ -1,13 +1,13 @@
 [
 {
-  "modid": "flammpfeil.slashblade",
-  "name": "SlashBlade",
+  "modid": "${modid}",
+  "name": "${modname}",
   "description":"",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authors": [ "Ferne","zh_TW.lang-LostyBear","zh_CN.lang-Mrkwtkr"],
+  "authorList": [ "Ferne","zh_TW.lang-LostyBear","zh_CN.lang-Mrkwtkr"],
   "credits": "Furia",
   "logoFile": "",
   "parent":"",

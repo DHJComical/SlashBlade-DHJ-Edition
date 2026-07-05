@@ -1,4 +1,4 @@
-SlashBlade mc1.8.9 ${version}
+SlashBlade mc1.12.2 ${version}
 
 ◆概要
 鞘付きの大太刀を追加します。
