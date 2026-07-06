@@ -30,7 +30,7 @@ import java.util.Map;
 /**
  * Created by Furia on 14/08/15.
  */
-public class BladeStandRender extends Render{
+public class BladeStandRender extends Render<EntityBladeStand> {
 
     static public WavefrontObject standModel = null;
 
@@ -46,23 +46,23 @@ public class BladeStandRender extends Render{
     }
 
     public static Map<EntityBladeStand.StandType,String> nameMap = createNameMap();
-    private static <K, V> Map<K, V> createNameMap(){
-        nameMap = Maps.newHashMap();
-        nameMap.put(EntityBladeStand.StandType.Dual, "A");
-        nameMap.put(EntityBladeStand.StandType.Single, "B");
-        nameMap.put(EntityBladeStand.StandType.Upright, "C");
-        nameMap.put(EntityBladeStand.StandType.Wall, "D");
-        return (Map<K, V>)nameMap;
+    private static Map<EntityBladeStand.StandType, String> createNameMap(){
+        Map<EntityBladeStand.StandType, String> result = Maps.newHashMap();
+        result.put(EntityBladeStand.StandType.Dual, "A");
+        result.put(EntityBladeStand.StandType.Single, "B");
+        result.put(EntityBladeStand.StandType.Upright, "C");
+        result.put(EntityBladeStand.StandType.Wall, "D");
+        return result;
     }
 
     public static Map<EntityBladeStand.StandType,String> StandTypeName = createStandTypeNameMap();
-    private static <K, V> Map<K, V> createStandTypeNameMap(){
-        StandTypeName = Maps.newHashMap();
-        StandTypeName.put(EntityBladeStand.StandType.Dual, "dual");
-        StandTypeName.put(EntityBladeStand.StandType.Single, "single");
-        StandTypeName.put(EntityBladeStand.StandType.Upright, "upright");
-        StandTypeName.put(EntityBladeStand.StandType.Wall, "wall");
-        return (Map<K, V>)StandTypeName;
+    private static Map<EntityBladeStand.StandType, String> createStandTypeNameMap(){
+        Map<EntityBladeStand.StandType, String> result = Maps.newHashMap();
+        result.put(EntityBladeStand.StandType.Dual, "dual");
+        result.put(EntityBladeStand.StandType.Single, "single");
+        result.put(EntityBladeStand.StandType.Upright, "upright");
+        result.put(EntityBladeStand.StandType.Wall, "wall");
+        return result;
     }
 
     /*
@@ -97,7 +97,7 @@ public class BladeStandRender extends Render{
     * */
 
     @Override
-    public void doRender(Entity entity, double x, double y, double z, float yaw, float partialRenderTick) {
+    public void doRender(EntityBladeStand entity, double x, double y, double z, float yaw, float partialRenderTick) {
         if(renderOutlines){
             GlStateManager.disableLighting();
             GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit);
@@ -124,14 +124,13 @@ public class BladeStandRender extends Render{
         if(entity.isBurning())
             renderEntityOnFire(entity, x, y, z, partialRenderTick);
     }
-    public void renderModel(Entity entity, double x, double y, double z, float yaw, float partialRenderTick) {
+    public void renderModel(EntityBladeStand entity, double x, double y, double z, float yaw, float partialRenderTick) {
         if(standModel == null){
             standModel = new WavefrontObject(modelLocation);
         }
 
         this.bindEntityTexture(entity);
-
-        EntityBladeStand e = (EntityBladeStand)entity;
+        EntityBladeStand e = entity;
 
         GL11.glPushMatrix();
         GL11.glPushAttrib(GL11.GL_ALL_ATTRIB_BITS);
@@ -468,7 +467,7 @@ public class BladeStandRender extends Render{
     }
 
     @Override
-    protected ResourceLocationRaw getEntityTexture(Entity p_110775_1_) {
+    protected ResourceLocationRaw getEntityTexture(EntityBladeStand p_110775_1_) {
         return textureLocation;
     }
 

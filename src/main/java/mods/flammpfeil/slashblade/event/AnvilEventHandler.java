@@ -96,7 +96,7 @@ public class AnvilEventHandler {
                         if (ItemSlashBlade.BaseAttackModifier.exists(matTag))
                             ItemSlashBlade.setBaseAttackModifier(tag, ItemSlashBlade.BaseAttackModifier.get(matTag));
 
-                        TagPropertyAccessor[] accessors = {
+                        TagPropertyAccessor<?>[] accessors = {
                                 ItemSlashBladeNamed.CustomMaxDamage,
                                 ItemSlashBlade.TextureName,
                                 ItemSlashBlade.ModelName,
@@ -109,8 +109,8 @@ public class AnvilEventHandler {
                                 ItemSlashBlade.IsBroken
                         };
 
-                        for (TagPropertyAccessor acc : accessors)
-                            copyTag(acc, tag, matTag);
+                        for (TagPropertyAccessor<?> acc : accessors)
+                            acc.copy(tag, matTag);
                     }
                     repairFactor = 1.0f;
                     ItemSlashBlade.ProudSoul.add(tag, 0);
@@ -139,8 +139,4 @@ public class AnvilEventHandler {
         event.setOutput(out);
     }
 
-    public void copyTag(TagPropertyAccessor acc, NBTTagCompound dest , NBTTagCompound src){
-        if(acc.exists(src))
-            acc.set(dest, acc.get(src));
-    }
 }

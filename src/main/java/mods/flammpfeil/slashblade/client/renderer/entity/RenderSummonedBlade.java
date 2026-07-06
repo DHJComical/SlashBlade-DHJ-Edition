@@ -7,7 +7,6 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.entity.Entity;
 import mods.flammpfeil.slashblade.util.ResourceLocationRaw;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -17,7 +16,7 @@ import org.lwjgl.opengl.GL11;
  * Created by Furia on 14/05/08.
  */
 @SideOnly(Side.CLIENT)
-public class RenderSummonedBlade extends Render {
+public class RenderSummonedBlade extends Render<EntitySummonedBlade> {
     private static double[][] dVec = {
             {-3.2303,0.0000,-16.7280},
             {3.2303,0.0000,16.7280},
@@ -101,16 +100,12 @@ public class RenderSummonedBlade extends Render {
     }
 
     @Override
-    public void doRender(Entity entity, double d0, double d1, double d2, float f, float f1)
-    {
-        if (entity instanceof EntitySummonedBlade)
-        {
-            doDriveRender((EntitySummonedBlade) entity, d0, d1, d2, f, f1);
-        }
+    public void doRender(EntitySummonedBlade entity, double d0, double d1, double d2, float f, float f1) {
+        doDriveRender(entity, d0, d1, d2, f, f1);
     }
 
     @Override
-    protected ResourceLocationRaw getEntityTexture(Entity var1) {
+    protected ResourceLocationRaw getEntityTexture(EntitySummonedBlade var1) {
         return null;
     }
 

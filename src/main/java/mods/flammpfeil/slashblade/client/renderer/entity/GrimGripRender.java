@@ -2,12 +2,12 @@ package mods.flammpfeil.slashblade.client.renderer.entity;
 
 import mods.flammpfeil.slashblade.client.model.obj.Face;
 import mods.flammpfeil.slashblade.client.model.obj.WavefrontObject;
+import mods.flammpfeil.slashblade.entity.EntityGrimGrip;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.entity.Entity;
 import mods.flammpfeil.slashblade.util.ResourceLocationRaw;
 import org.lwjgl.opengl.GL11;
 
@@ -16,7 +16,7 @@ import java.awt.*;
 /**
  * Created by Furia on 14/08/15.
  */
-public class GrimGripRender extends Render{
+public class GrimGripRender extends Render<EntityGrimGrip> {
 
     static public WavefrontObject model = null;
 
@@ -32,7 +32,7 @@ public class GrimGripRender extends Render{
     }
 
     @Override
-    public void doRender(Entity entity, double x, double y, double z, float yaw, float partialRenderTick) {
+    public void doRender(EntityGrimGrip entity, double x, double y, double z, float yaw, float partialRenderTick) {
         if(renderOutlines){
             GlStateManager.disableLighting();
             GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit);
@@ -58,7 +58,7 @@ public class GrimGripRender extends Render{
         }
 
     }
-    public void renderModel(Entity entity, double x, double y, double z, float yaw, float partialRenderTick) {
+    public void renderModel(EntityGrimGrip entity, double x, double y, double z, float yaw, float partialRenderTick) {
         if(model == null){
             model = new WavefrontObject(modelLocation);
         }
@@ -119,7 +119,7 @@ public class GrimGripRender extends Render{
     }
 
     @Override
-    protected ResourceLocationRaw getEntityTexture(Entity p_110775_1_) {
+    protected ResourceLocationRaw getEntityTexture(EntityGrimGrip p_110775_1_) {
         return textureLocation;
     }
 }

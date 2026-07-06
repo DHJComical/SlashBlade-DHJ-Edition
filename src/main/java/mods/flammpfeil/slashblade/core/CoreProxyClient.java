@@ -234,9 +234,9 @@ public class CoreProxyClient extends CoreProxy {
             }
         });
 
-        RenderingRegistry.registerEntityRenderingHandler(EntitySummonedBlade.class, new IRenderFactory<EntitySummonedSwordBase>() {
+        RenderingRegistry.registerEntityRenderingHandler(EntitySummonedBlade.class, new IRenderFactory<EntitySummonedBlade>() {
             @Override
-            public Render<? super EntitySummonedSwordBase> createRenderFor(RenderManager manager) {
+            public Render<? super EntitySummonedBlade> createRenderFor(RenderManager manager) {
                 return new RenderSummonedBlade(manager);
             }
         });
@@ -435,11 +435,11 @@ public class CoreProxyClient extends CoreProxy {
     public void postInit() {
         RenderManager rm = Minecraft.getMinecraft().getRenderManager();
 
-        for(Render render : Iterables.concat(rm.getSkinMap().values(), rm.entityRenderMap.values())){
+        for(Render<?> render : Iterables.concat(rm.getSkinMap().values(), rm.entityRenderMap.values())){
             if(!(render instanceof RenderLivingBase))
                 continue;
 
-            RenderLivingBase rle = (RenderLivingBase) render;
+            RenderLivingBase<?> rle = (RenderLivingBase<?>) render;
 
 
             /*

@@ -168,6 +168,7 @@ if (propertyBool('use_access_transformer')) {
 
 processResources {
 
+    inputs.property 'minecraft_version', '1.12.2'
     inputs.property 'mod_id', propertyString('mod_id')
     inputs.property 'mod_name', propertyString('mod_name')
     inputs.property 'mod_version', propertyString('mod_version')
@@ -186,6 +187,7 @@ processResources {
 
     filesMatching(filterList) { fcd ->
         fcd.expand(
+                'minecraft_version': '1.12.2',
                 'mod_id': propertyString('mod_id'),
                 'mod_name': propertyString('mod_name'),
                 'mod_version': propertyString('mod_version'),

@@ -9,7 +9,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
-import net.minecraft.entity.Entity;
 import mods.flammpfeil.slashblade.util.ResourceLocationRaw;
 import org.lwjgl.opengl.GL11;
 
@@ -17,7 +16,7 @@ import org.lwjgl.opengl.GL11;
  * Created by Furia on 14/05/08.
  */
 @SideOnly(Side.CLIENT)
-public class RenderPhantomSword extends Render {
+public class RenderPhantomSword extends Render<EntitySummonedSword> {
     private static double[][] dVec = {
             {0.0000,0.0000,417.7431},
             {0.0000,-44.6113,0.0000},
@@ -53,16 +52,12 @@ public class RenderPhantomSword extends Render {
     }
 
     @Override
-    public void doRender(Entity entity, double d0, double d1, double d2, float f, float f1)
-    {
-        if (entity instanceof EntitySummonedSword)
-        {
-            doDriveRender((EntitySummonedSword) entity, d0, d1, d2, f, f1);
-        }
+    public void doRender(EntitySummonedSword entity, double d0, double d1, double d2, float f, float f1) {
+        doDriveRender(entity, d0, d1, d2, f, f1);
     }
 
     @Override
-    protected ResourceLocationRaw getEntityTexture(Entity var1) {
+    protected ResourceLocationRaw getEntityTexture(EntitySummonedSword var1) {
         return null;
     }
 

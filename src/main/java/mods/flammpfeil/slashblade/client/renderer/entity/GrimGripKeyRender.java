@@ -10,7 +10,6 @@ import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import mods.flammpfeil.slashblade.util.ResourceLocationRaw;
 import org.lwjgl.opengl.GL11;
@@ -20,7 +19,7 @@ import java.awt.*;
 /**
  * Created by Furia on 14/08/15.
  */
-public class GrimGripKeyRender extends Render{
+public class GrimGripKeyRender extends Render<EntityGrimGripKey> {
 
     static public WavefrontObject model = null;
 
@@ -36,7 +35,7 @@ public class GrimGripKeyRender extends Render{
     }
 
     @Override
-    public void doRender(Entity entity, double x, double y, double z, float yaw, float partialRenderTick) {
+    public void doRender(EntityGrimGripKey entity, double x, double y, double z, float yaw, float partialRenderTick) {
 
         if(renderOutlines){
             GlStateManager.disableLighting();
@@ -50,8 +49,7 @@ public class GrimGripKeyRender extends Render{
             GlStateManager.enableOutlineMode(Color.getHSBColor(0, 0.0f,b).getRGB());
         }
 
-        if(entity instanceof EntityGrimGripKey)
-            renderModel((EntityGrimGripKey)entity, x, y, z, yaw, partialRenderTick);
+        renderModel(entity, x, y, z, yaw, partialRenderTick);
 
         if(renderOutlines){
             GlStateManager.disableOutlineMode();
@@ -150,7 +148,7 @@ public class GrimGripKeyRender extends Render{
     }
 
     @Override
-    protected ResourceLocationRaw getEntityTexture(Entity p_110775_1_) {
+    protected ResourceLocationRaw getEntityTexture(EntityGrimGripKey p_110775_1_) {
         return textureLocation;
     }
 }

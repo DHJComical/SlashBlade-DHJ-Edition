@@ -93,7 +93,7 @@ public class NamedBladeManager {
                 if (ItemSlashBlade.BaseAttackModifier.exists(matTag))
                     ItemSlashBlade.setBaseAttackModifier(tag, ItemSlashBlade.BaseAttackModifier.get(matTag));
 
-                TagPropertyAccessor[] accessors = {
+                TagPropertyAccessor<?>[] accessors = {
                         ItemSlashBladeNamed.CustomMaxDamage,
                         ItemSlashBlade.TextureName,
                         ItemSlashBlade.ModelName,
@@ -106,8 +106,8 @@ public class NamedBladeManager {
                         ItemSlashBlade.IsBroken
                 };
 
-                for (TagPropertyAccessor acc : accessors)
-                    copyTag(acc, tag, matTag);
+                for (TagPropertyAccessor<?> acc : accessors)
+                    acc.copy(tag, matTag);
 
                 icon = targetBlade;
             }
@@ -127,9 +127,5 @@ public class NamedBladeManager {
             }
 
         }
-    }
-    public void copyTag(TagPropertyAccessor acc, NBTTagCompound dest , NBTTagCompound src){
-        if(acc.exists(src))
-            acc.set(dest, acc.get(src));
     }
 }

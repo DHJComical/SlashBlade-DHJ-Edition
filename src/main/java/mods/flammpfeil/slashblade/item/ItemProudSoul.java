@@ -15,6 +15,7 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
@@ -33,7 +34,6 @@ import net.minecraft.nbt.NBTTagLong;
 import net.minecraft.server.management.UserListOpsEntry;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -257,7 +257,7 @@ public class ItemProudSoul extends Item {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack par1ItemStack, World world, List par3List, ITooltipFlag flagIn) {
+    public void addInformation(ItemStack par1ItemStack, World world, List<String> par3List, ITooltipFlag flagIn) {
         EntityPlayer p_77624_2_ = Minecraft.getMinecraft().player;
         boolean p_77624_4_ = flagIn.isAdvanced();
         super.addInformation(par1ItemStack, world, par3List, flagIn);
@@ -267,7 +267,7 @@ public class ItemProudSoul extends Item {
         if(ItemSlashBlade.SpecialAttackType.exists(tag)){
             String key = "slashblade.specialattack." + SlashBlade.weapon.getSpecialAttack(par1ItemStack).toString();
 
-            par3List.add(String.format("SA:%s",  I18n.translateToLocal(key)));
+            par3List.add(String.format("SA:%s", I18n.format(key)));
         }
 
         NBTTagCompound etag = ItemSlashBlade.getSpecialEffect(par1ItemStack);
@@ -278,7 +278,7 @@ public class ItemProudSoul extends Item {
                 int reqiredLevel = etag.getInteger(key);
 
                 par3List.add(
-                        I18n.translateToLocal("slashblade.seffect.name." + key)
+                        I18n.format("slashblade.seffect.name." + key)
                                 + reqiredLevel);
             }
         }

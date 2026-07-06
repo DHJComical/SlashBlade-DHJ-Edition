@@ -10,6 +10,7 @@ import mods.flammpfeil.slashblade.entity.*;
 import mods.flammpfeil.slashblade.entity.selector.EntitySelectorAttackable;
 import mods.flammpfeil.slashblade.entity.selector.EntitySelectorDestructable;
 import mods.flammpfeil.slashblade.event.ScheduleEntitySpawner;
+import mods.flammpfeil.slashblade.mixin.EntityLivingBaseInvoker;
 import mods.flammpfeil.slashblade.network.MessageMoveCommandState;
 import mods.flammpfeil.slashblade.network.MessageRangeAttack;
 import mods.flammpfeil.slashblade.network.MessageSpecialAction;
@@ -27,10 +28,6 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.util.math.*;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.common.IRarity;
-import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.registry.IThrowableEntity;
 import mods.flammpfeil.slashblade.ability.*;
 import mods.flammpfeil.slashblade.ability.StylishRankManager.*;
@@ -53,23 +50,18 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
+import net.minecraftforge.common.IRarity;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 import org.lwjgl.input.Keyboard;
 
 import javax.annotation.Nullable;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.*;
 
 public class ItemSlashBlade extends ItemSword {
-    private static final Method ENTITY_JUMP_METHOD =
-            ObfuscationReflectionHelper.findMethod(EntityLivingBase.class, "func_70664_aZ", void.class);
-    private static final Method ENTITY_GET_EXPERIENCE_POINTS_METHOD =
-            ObfuscationReflectionHelper.findMethod(EntityLivingBase.class, "func_70693_a", int.class, EntityPlayer.class);
-
-
     private static ResourceLocationRaw texture = new ResourceLocationRaw("slashblade","model/blade.png");
     public ResourceLocationRaw getModelTexture(){
         return texture;
@@ -1305,7 +1297,7 @@ public class ItemSlashBlade extends ItemSword {
         ItemStack itemStackIn = playerIn.getHeldItem(hand);
 
         if(hand == EnumHand.OFF_HAND){
-            return new ActionResult(EnumActionResult.FAIL, itemStackIn);
+            return new ActionResult<>(EnumActionResult.FAIL, itemStackIn);
         }
 
         SlashBlade.abilityJustGuard.setJustGuardState(playerIn);
@@ -1334,7 +1326,7 @@ public class ItemSlashBlade extends ItemSword {
 
         playerIn.setActiveHand(hand);
 
-        return new ActionResult(EnumActionResult.SUCCESS, itemStackIn);
+        return new ActionResult<>(EnumActionResult.SUCCESS, itemStackIn);
     }
 
     public void nextAttackSequence(ItemStack stack, ComboSequence prevComboSeq, EntityPlayer player) {
@@ -1521,24 +1513,12 @@ public class ItemSlashBlade extends ItemSword {
 
         if(player.world.isRemote && player.onGround) {
             if (charge == 3 && getComboSequence(tag) == ComboSequence.Kiriage) {
-                try {
-                    ENTITY_JUMP_METHOD.invoke(player);
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
-                    e.printStackTrace();
-                }
+                ((EntityLivingBaseInvoker) player).slashblade$jump();
                 player.addVelocity(0.0, 0.2D, 0.0);
 
             } else if (charge == 7 && getComboSequence(tag) == ComboSequence.RapidSlash) {
                 if (player.world.isRemote) {
-                    try {
-                        ENTITY_JUMP_METHOD.invoke(player);
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    } catch (InvocationTargetException e) {
-                        e.printStackTrace();
-                    }
+                    ((EntityLivingBaseInvoker) player).slashblade$jump();
                     player.addVelocity(0.0, 0.2D, 0.0);
 
                     NetworkManager.INSTANCE.sendToServer(new MessageSpecialAction((byte) 4));
@@ -1841,7 +1821,7 @@ public class ItemSlashBlade extends ItemSword {
         {
             int cost = sitem.getRepairCost();
             if(cost != 0){
-                Map map = EnchantmentHelper.getEnchantments(sitem);
+                Map<Enchantment, Integer> map = EnchantmentHelper.getEnchantments(sitem);
 
                 cost = map.size() + 1;
                 cost *= AnvilRepairBonus;
@@ -2292,54 +2272,54 @@ public class ItemSlashBlade extends ItemSword {
     }
 
     Map<ComboSequence, String> attackTypeMap = crateAttackTypeMap();
-    public Map crateAttackTypeMap(){
-        attackTypeMap = Maps.newHashMap();
+    public Map<ComboSequence, String> crateAttackTypeMap(){
+        Map<ComboSequence, String> result = Maps.newHashMap();
 
-        attackTypeMap.put(ComboSequence.Kiriage,AttackTypes.Kiriage);
-        attackTypeMap.put(ComboSequence.Kiriorosi,AttackTypes.Kiriorosi);
+        result.put(ComboSequence.Kiriage,AttackTypes.Kiriage);
+        result.put(ComboSequence.Kiriorosi,AttackTypes.Kiriorosi);
 
-        attackTypeMap.put(ComboSequence.Iai,AttackTypes.Iai);
+        result.put(ComboSequence.Iai,AttackTypes.Iai);
 
-        attackTypeMap.put(ComboSequence.Saya1,AttackTypes.Saya1);
-        attackTypeMap.put(ComboSequence.Saya2,AttackTypes.Saya2);
-
-
-        attackTypeMap.put(ComboSequence.HiraTuki,AttackTypes.Kiriage);
+        result.put(ComboSequence.Saya1,AttackTypes.Saya1);
+        result.put(ComboSequence.Saya2,AttackTypes.Saya2);
 
 
-        attackTypeMap.put(ComboSequence.SlashEdge,AttackTypes.SlashEdge);
-        attackTypeMap.put(ComboSequence.ReturnEdge,AttackTypes.ReturnEdge);
-
-        attackTypeMap.put(ComboSequence.SIai,AttackTypes.SIai);
-        attackTypeMap.put(ComboSequence.SSlashEdge,AttackTypes.SSlashEdge);
-        attackTypeMap.put(ComboSequence.SReturnEdge,AttackTypes.SReturnEdge);
-        attackTypeMap.put(ComboSequence.SSlashBlade,AttackTypes.SSlashBlade);
+        result.put(ComboSequence.HiraTuki,AttackTypes.Kiriage);
 
 
-        attackTypeMap.put(ComboSequence.ASlashEdge,AttackTypes.ASlashEdge);
-        attackTypeMap.put(ComboSequence.AKiriorosi,AttackTypes.AKiriorosi);
+        result.put(ComboSequence.SlashEdge,AttackTypes.SlashEdge);
+        result.put(ComboSequence.ReturnEdge,AttackTypes.ReturnEdge);
+
+        result.put(ComboSequence.SIai,AttackTypes.SIai);
+        result.put(ComboSequence.SSlashEdge,AttackTypes.SSlashEdge);
+        result.put(ComboSequence.SReturnEdge,AttackTypes.SReturnEdge);
+        result.put(ComboSequence.SSlashBlade,AttackTypes.SSlashBlade);
 
 
-        attackTypeMap.put(ComboSequence.AKiriage,AttackTypes.AKiriage);
-        attackTypeMap.put(ComboSequence.AKiriorosiFinish,AttackTypes.AKiriorosiFinish);
+        result.put(ComboSequence.ASlashEdge,AttackTypes.ASlashEdge);
+        result.put(ComboSequence.AKiriorosi,AttackTypes.AKiriorosi);
 
-        attackTypeMap.put(ComboSequence.HelmBraker,AttackTypes.HelmBraker);
 
-        attackTypeMap.put(ComboSequence.Calibur,AttackTypes.Calibur);
+        result.put(ComboSequence.AKiriage,AttackTypes.AKiriage);
+        result.put(ComboSequence.AKiriorosiFinish,AttackTypes.AKiriorosiFinish);
 
-        attackTypeMap.put(ComboSequence.RapidSlash,AttackTypes.RapidSlash);
-        attackTypeMap.put(ComboSequence.RisingStar,AttackTypes.RisingStar);
+        result.put(ComboSequence.HelmBraker,AttackTypes.HelmBraker);
 
-        attackTypeMap.put(ComboSequence.Force1,AttackTypes.Force1);
-        attackTypeMap.put(ComboSequence.Force2,AttackTypes.Force2);
-        attackTypeMap.put(ComboSequence.Force3,AttackTypes.Force3);
-        attackTypeMap.put(ComboSequence.Force4,AttackTypes.Force4);
-        attackTypeMap.put(ComboSequence.Force5,AttackTypes.Force5);
-        attackTypeMap.put(ComboSequence.Force6,AttackTypes.Force6);
+        result.put(ComboSequence.Calibur,AttackTypes.Calibur);
 
-        attackTypeMap.put(ComboSequence.Stinger,AttackTypes.RapidSlash);
+        result.put(ComboSequence.RapidSlash,AttackTypes.RapidSlash);
+        result.put(ComboSequence.RisingStar,AttackTypes.RisingStar);
 
-        return attackTypeMap;
+        result.put(ComboSequence.Force1,AttackTypes.Force1);
+        result.put(ComboSequence.Force2,AttackTypes.Force2);
+        result.put(ComboSequence.Force3,AttackTypes.Force3);
+        result.put(ComboSequence.Force4,AttackTypes.Force4);
+        result.put(ComboSequence.Force5,AttackTypes.Force5);
+        result.put(ComboSequence.Force6,AttackTypes.Force6);
+
+        result.put(ComboSequence.Stinger,AttackTypes.RapidSlash);
+
+        return result;
     }
 
     private void updateStyleAttackType(ItemStack stack, EntityLivingBase e) {
@@ -2432,7 +2412,7 @@ public class ItemSlashBlade extends ItemSword {
 
     @SideOnly(Side.CLIENT)
     public void addInformationOwner(ItemStack par1ItemStack,
-                                         EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
+                                         EntityPlayer par2EntityPlayer, List<String> par3List, boolean par4) {
         NBTTagCompound tag = getItemTagCompound(par1ItemStack);
         if(tag.hasUniqueId("Owner") && par2EntityPlayer != null){
             UUID ownerid = tag.getUniqueId("Owner");
@@ -2448,7 +2428,7 @@ public class ItemSlashBlade extends ItemSword {
 
     @SideOnly(Side.CLIENT)
     public void addInformationSwordClass(ItemStack par1ItemStack,
-            EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
+            EntityPlayer par2EntityPlayer, List<String> par3List, boolean par4) {
 
         EnumSet<SwordType> swordType = getSwordType(par1ItemStack);
         NBTTagCompound tag = getItemTagCompound(par1ItemStack);
@@ -2469,7 +2449,7 @@ public class ItemSlashBlade extends ItemSword {
 
     @SideOnly(Side.CLIENT)
     public void addInformationKillCount(ItemStack par1ItemStack,
-            EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
+            EntityPlayer par2EntityPlayer, List<String> par3List, boolean par4) {
         EnumSet<SwordType> swordType = getSwordType(par1ItemStack);
         NBTTagCompound tag = getItemTagCompound(par1ItemStack);
 
@@ -2479,7 +2459,7 @@ public class ItemSlashBlade extends ItemSword {
 
     @SideOnly(Side.CLIENT)
     public void addInformationProudSoul(ItemStack par1ItemStack,
-                                        EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
+                                        EntityPlayer par2EntityPlayer, List<String> par3List, boolean par4) {
         EnumSet<SwordType> swordType = getSwordType(par1ItemStack);
         NBTTagCompound tag = getItemTagCompound(par1ItemStack);
 
@@ -2489,7 +2469,7 @@ public class ItemSlashBlade extends ItemSword {
 
     @SideOnly(Side.CLIENT)
     public void addInformationSpecialAttack(ItemStack par1ItemStack,
-                                            EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
+                                            EntityPlayer par2EntityPlayer, List<String> par3List, boolean par4) {
         EnumSet<SwordType> swordType = getSwordType(par1ItemStack);
 
         if(swordType.contains(SwordType.Bewitched)){
@@ -2503,7 +2483,7 @@ public class ItemSlashBlade extends ItemSword {
 
     @SideOnly(Side.CLIENT)
     public void addInformationRangeAttack(ItemStack par1ItemStack,
-                                            EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
+                                            EntityPlayer par2EntityPlayer, List<String> par3List, boolean par4) {
         EnumSet<SwordType> swordType = getSwordType(par1ItemStack);
 
         if(swordType.contains(SwordType.Bewitched) && 0 < EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER,par1ItemStack)){
@@ -2517,7 +2497,7 @@ public class ItemSlashBlade extends ItemSword {
 
     @SideOnly(Side.CLIENT)
     public void addInformationRepairCount(ItemStack par1ItemStack,
-                                          EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
+                                          EntityPlayer par2EntityPlayer, List<String> par3List, boolean par4) {
 
         NBTTagCompound tag = getItemTagCompound(par1ItemStack);
         int repair = RepairCount.get(tag);
@@ -2528,7 +2508,7 @@ public class ItemSlashBlade extends ItemSword {
 
     @SideOnly(Side.CLIENT)
     public void addInformationMaxAttack(ItemStack par1ItemStack,
-                                        EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
+                                        EntityPlayer par2EntityPlayer, List<String> par3List, boolean par4) {
 
         NBTTagCompound tag = getItemTagCompound(par1ItemStack);
         float repair = RepairCount.get(tag);
@@ -2561,7 +2541,7 @@ public class ItemSlashBlade extends ItemSword {
 
     @SideOnly(Side.CLIENT)
     public void addInformationSpecialEffec(ItemStack par1ItemStack,
-                                           EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
+                                           EntityPlayer par2EntityPlayer, List<String> par3List, boolean par4) {
 
         NBTTagCompound etag = getSpecialEffect(par1ItemStack);
 
@@ -2585,7 +2565,7 @@ public class ItemSlashBlade extends ItemSword {
 
     @SideOnly(Side.CLIENT)
     public void addInformationEnergy(ItemStack stack,
-                                           EntityPlayer player, List lines, boolean advanced) {
+                                           EntityPlayer player, List<String> lines, boolean advanced) {
 
         if(!stack.hasCapability(BladeCapabilityProvider.ENERGY, null)) return;
         IEnergyStorage storage = stack.getCapability(BladeCapabilityProvider.ENERGY,null);
@@ -2613,7 +2593,7 @@ public class ItemSlashBlade extends ItemSword {
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack par1ItemStack,
-            World world, List par3List, ITooltipFlag inFlag) {
+            World world, List<String> par3List, ITooltipFlag inFlag) {
 
         EntityPlayer par2EntityPlayer = Minecraft.getMinecraft().player;
         boolean par4 = inFlag.isAdvanced();
@@ -3639,21 +3619,16 @@ public class ItemSlashBlade extends ItemSword {
 
     static void incrementProudSoul(ItemStack stack, EntityLivingBase target,EntityLivingBase player){
         if(player instanceof EntityPlayer) {
-            try {
-                int exp = (Integer)ENTITY_GET_EXPERIENCE_POINTS_METHOD.invoke(target, (EntityPlayer) player);
-                exp = net.minecraftforge.event.ForgeEventFactory.getExperienceDrop(target, (EntityPlayer) player, exp);
+            int exp = ((EntityLivingBaseInvoker) target).slashblade$getExperiencePoints((EntityPlayer) player);
+            exp = net.minecraftforge.event.ForgeEventFactory.getExperienceDrop(target, (EntityPlayer) player, exp);
 
-                float rank = StylishRankManager.getStylishRank(player);
+            float rank = StylishRankManager.getStylishRank(player);
 
-                exp *= 1.0 + rank * 0.1;
+            exp *= 1.0 + rank * 0.1;
 
-                NBTTagCompound tag = getItemTagCompound(stack);
-                PrevExp.set(tag,exp);
-                ProudSoul.add(tag,exp);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            NBTTagCompound tag = getItemTagCompound(stack);
+            PrevExp.set(tag,exp);
+            ProudSoul.add(tag,exp);
         }
     }
 

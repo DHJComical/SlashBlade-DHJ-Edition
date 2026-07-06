@@ -5,7 +5,7 @@ import net.minecraft.nbt.NBTTagCompound;
 /**
  * Created by Furia on 14/05/26.
  */
-public abstract class TagPropertyAccessor<T extends Comparable> {
+public abstract class TagPropertyAccessor<T extends Comparable<T>> {
     protected final String tagName;
     public TagPropertyAccessor(String tagName){
         this.tagName = tagName;
@@ -25,6 +25,12 @@ public abstract class TagPropertyAccessor<T extends Comparable> {
         return this.exists(tag) ? get(tag) : defaultValue;
     }
     abstract public T set(NBTTagCompound tag, T value);
+
+    public void copy(NBTTagCompound dest, NBTTagCompound src) {
+        if (exists(src)) {
+            set(dest, get(src));
+        }
+    }
 
     static public class TagPropertyString extends TagPropertyAccessor<String>{
 

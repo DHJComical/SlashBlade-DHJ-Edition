@@ -528,9 +528,9 @@ public class EntitySummonedSwordBase extends Entity implements IProjectile,IThro
         AxisAlignedBB bb = this.getEntityBoundingBox().offset(this.motionX, this.motionY, this.motionZ).grow(1.0D, 1.0D, 1.0D);
         AxisAlignedBB bb2 = this.getEntityBoundingBox().grow(1.0D, 1.0D, 1.0D);
 
-        Predicate<Entity>[] selectors = new Predicate[]{EntitySelectorDestructable.getInstance(), EntitySelectorAttackable.getInstance()};
+        List<Predicate<Entity>> selectors = java.util.Arrays.asList(EntitySelectorDestructable.getInstance(), EntitySelectorAttackable.getInstance());
         for(Predicate<Entity> selector : selectors){
-            List list = this.world.getEntitiesInAABBexcluding(this, bb, selector);
+            List<Entity> list = this.world.getEntitiesInAABBexcluding(this, bb, selector);
             list.removeAll(alreadyHitEntity);
 
             if(selector.equals(EntitySelectorAttackable.getInstance()) && getTargetEntityId() != 0){

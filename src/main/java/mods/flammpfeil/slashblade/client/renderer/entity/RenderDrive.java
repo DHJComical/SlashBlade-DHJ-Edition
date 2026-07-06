@@ -7,7 +7,6 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.entity.Entity;
 
 import mods.flammpfeil.slashblade.util.ResourceLocationRaw;
 import org.lwjgl.opengl.GL11;
@@ -18,7 +17,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  * Created by Furia on 14/05/08.
  */
 @SideOnly(Side.CLIENT)
-public class RenderDrive extends Render {
+public class RenderDrive extends Render<EntityDrive> {
     private static double[][] dVec = {{     0,     1,  -0.5},  // 頂点0
         {     0,  0.75,     0},  // 頂点1
         {   0.1,   0.6, -0.15},  // 頂点2
@@ -52,16 +51,12 @@ public class RenderDrive extends Render {
     }
 
     @Override
-    public void doRender(Entity entity, double d0, double d1, double d2, float f, float f1)
-    {
-        if (entity instanceof EntityDrive)
-        {
-            doDriveRender((EntityDrive) entity, d0, d1, d2, f, f1);
-        }
+    public void doRender(EntityDrive entity, double d0, double d1, double d2, float f, float f1) {
+        doDriveRender(entity, d0, d1, d2, f, f1);
     }
 
     @Override
-    protected ResourceLocationRaw getEntityTexture(Entity var1) {
+    protected ResourceLocationRaw getEntityTexture(EntityDrive var1) {
         return null;
     }
 

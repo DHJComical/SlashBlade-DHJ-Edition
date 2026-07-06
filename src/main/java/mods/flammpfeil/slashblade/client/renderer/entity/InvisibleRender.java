@@ -8,7 +8,7 @@ import mods.flammpfeil.slashblade.util.ResourceLocationRaw;
 /**
  * Created by Furia on 2016/02/08.
  */
-public class InvisibleRender extends Render {
+public class InvisibleRender extends Render<Entity> {
     public InvisibleRender(RenderManager renderManager) {
         super(renderManager);
     }

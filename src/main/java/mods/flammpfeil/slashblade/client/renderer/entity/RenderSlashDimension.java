@@ -8,7 +8,6 @@ import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.entity.Entity;
 import mods.flammpfeil.slashblade.util.ResourceLocationRaw;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL14;
@@ -18,7 +17,7 @@ import java.awt.*;
 /**
  * Created by Furia on 14/08/15.
  */
-public class RenderSlashDimension extends Render{
+public class RenderSlashDimension extends Render<EntitySlashDimension> {
 
     static public WavefrontObject model = null;
 
@@ -34,7 +33,7 @@ public class RenderSlashDimension extends Render{
     }
 
     @Override
-    public void doRender(Entity entity, double x, double y, double z, float yaw, float partialRenderTick) {
+    public void doRender(EntitySlashDimension entity, double x, double y, double z, float yaw, float partialRenderTick) {
         if(renderOutlines){
             GlStateManager.disableLighting();
             GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit);
@@ -60,7 +59,7 @@ public class RenderSlashDimension extends Render{
         }
 
     }
-    public void renderModel(Entity entity, double x, double y, double z, float yaw, float partialRenderTick) {
+    public void renderModel(EntitySlashDimension entity, double x, double y, double z, float yaw, float partialRenderTick) {
         if(model == null){
             model = new WavefrontObject(modelLocation);
         }
@@ -80,10 +79,8 @@ public class RenderSlashDimension extends Render{
 
         int lifetime = 20;
 
-        if(entity instanceof EntitySlashDimension) {
-            color = ((EntitySlashDimension) entity).getColor();
-            lifetime = ((EntitySlashDimension)entity).getLifeTime();
-        }
+        color = entity.getColor();
+        lifetime = entity.getLifeTime();
 
         boolean inverse = color < 0;
 
@@ -191,7 +188,7 @@ public class RenderSlashDimension extends Render{
     }
 
     @Override
-    protected ResourceLocationRaw getEntityTexture(Entity p_110775_1_) {
+    protected ResourceLocationRaw getEntityTexture(EntitySlashDimension p_110775_1_) {
         return textureLocation;
     }
 }

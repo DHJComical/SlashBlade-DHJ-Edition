@@ -61,7 +61,7 @@ public class ConfigEntityListManager {
 
 
                 for(EntityEntry entry : net.minecraftforge.fml.common.registry.ForgeRegistries.ENTITIES){
-                    Class cls = entry.getEntityClass();
+                    Class<? extends Entity> cls = entry.getEntityClass();
 
                     String name = entry.getName();//(String)EntityList.func_191302_a(key);
                     if(name == null || name.length() == 0)
@@ -70,9 +70,9 @@ public class ConfigEntityListManager {
                     Entity instance = null;
 
                     try{
-                        Constructor<Entity> constructor = cls.getConstructor(World.class);
+                        Constructor<? extends Entity> constructor = cls.getConstructor(World.class);
                         if(constructor != null){
-                            instance = constructor.newInstance((Object)event.world);
+                            instance = constructor.newInstance(event.world);
                         }
                     }catch(Throwable e){
                         instance = null;

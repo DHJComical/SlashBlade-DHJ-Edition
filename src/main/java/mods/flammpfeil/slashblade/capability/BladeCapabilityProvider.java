@@ -56,7 +56,7 @@ public class BladeCapabilityProvider implements ICapabilityProvider, INBTSeriali
     @Override
     public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
         updateStorage();
-        if(capability == ENERGY) return (T)this.storage;
+        if(capability == ENERGY) return ENERGY.cast(this.storage);
         return null;
     }
     

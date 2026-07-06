@@ -7,7 +7,6 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -17,7 +16,7 @@ import org.lwjgl.opengl.GL11;
  * Created by Furia on 14/05/08.
  */
 @SideOnly(Side.CLIENT)
-public class RenderSpinningSword extends Render {
+public class RenderSpinningSword extends Render<EntitySpinningSword> {
     private static double[][] dVec = {
             {0.0000,0.0000,417.7431},
             {0.0000,-44.6113,-30.0000},
@@ -53,16 +52,12 @@ public class RenderSpinningSword extends Render {
     }
 
     @Override
-    public void doRender(Entity entity, double d0, double d1, double d2, float f, float f1)
-    {
-        if (entity instanceof EntitySpinningSword)
-        {
-            doDriveRender((EntitySpinningSword) entity, d0, d1, d2, f, f1);
-        }
+    public void doRender(EntitySpinningSword entity, double d0, double d1, double d2, float f, float f1) {
+        doDriveRender(entity, d0, d1, d2, f, f1);
     }
 
     @Override
-    protected ResourceLocation getEntityTexture(Entity var1) {
+    protected ResourceLocation getEntityTexture(EntitySpinningSword var1) {
         return null;
     }
 

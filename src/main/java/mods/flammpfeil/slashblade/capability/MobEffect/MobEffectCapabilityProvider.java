@@ -29,7 +29,7 @@ public class MobEffectCapabilityProvider implements ICapabilityProvider, INBTSer
 
     @Override
     public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
-        if(capability == MOB_EFFECT) return (T)this.storage;
+        if(capability == MOB_EFFECT) return MOB_EFFECT.cast(this.storage);
         return null;
     }
 
