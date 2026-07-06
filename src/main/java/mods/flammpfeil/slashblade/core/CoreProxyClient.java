@@ -1,7 +1,7 @@
 package mods.flammpfeil.slashblade.core;
 
 import com.google.common.collect.Iterables;
-import mods.flammpfeil.slashblade.*;
+import mods.flammpfeil.slashblade.SlashBlade;
 import mods.flammpfeil.slashblade.ability.StylishRankManager;
 import mods.flammpfeil.slashblade.client.model.BladeModelManager;
 import mods.flammpfeil.slashblade.client.model.BladeSpecialRender;

@@ -3,7 +3,7 @@ package mods.flammpfeil.slashblade.item;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
-import mods.flammpfeil.slashblade.*;
+import mods.flammpfeil.slashblade.SlashBlade;
 import mods.flammpfeil.slashblade.capability.BladeCapabilityProvider;
 import mods.flammpfeil.slashblade.core.CoreProxy;
 import mods.flammpfeil.slashblade.entity.*;
