@@ -10,7 +10,6 @@ import mods.flammpfeil.slashblade.entity.*;
 import mods.flammpfeil.slashblade.entity.selector.EntitySelectorAttackable;
 import mods.flammpfeil.slashblade.entity.selector.EntitySelectorDestructable;
 import mods.flammpfeil.slashblade.event.ScheduleEntitySpawner;
-import mods.flammpfeil.slashblade.mixin.EntityLivingBaseInvoker;
 import mods.flammpfeil.slashblade.network.MessageMoveCommandState;
 import mods.flammpfeil.slashblade.network.MessageRangeAttack;
 import mods.flammpfeil.slashblade.network.MessageSpecialAction;
@@ -1540,12 +1539,12 @@ public class ItemSlashBlade extends ItemSword {
 
         if(player.world.isRemote && player.onGround) {
             if (charge == 3 && getComboSequence(tag) == ComboSequence.Kiriage) {
-                ((EntityLivingBaseInvoker) player).slashblade$jump();
+                player.jump();
                 player.addVelocity(0.0, 0.2D, 0.0);
 
             } else if (charge == 7 && getComboSequence(tag) == ComboSequence.RapidSlash) {
                 if (player.world.isRemote) {
-                    ((EntityLivingBaseInvoker) player).slashblade$jump();
+                    player.jump();
                     player.addVelocity(0.0, 0.2D, 0.0);
 
                     NetworkManager.INSTANCE.sendToServer(new MessageSpecialAction((byte) 4));
@@ -3662,7 +3661,7 @@ public class ItemSlashBlade extends ItemSword {
 
     static void incrementProudSoul(ItemStack stack, EntityLivingBase target,EntityLivingBase player){
         if(player instanceof EntityPlayer) {
-            int exp = ((EntityLivingBaseInvoker) target).slashblade$getExperiencePoints((EntityPlayer) player);
+            int exp = target.getExperiencePoints((EntityPlayer) player);
             exp = net.minecraftforge.event.ForgeEventFactory.getExperienceDrop(target, (EntityPlayer) player, exp);
 
             float rank = StylishRankManager.getStylishRank(player);
