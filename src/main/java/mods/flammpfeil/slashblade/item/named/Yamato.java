@@ -1,4 +1,4 @@
-package mods.flammpfeil.slashblade.named;
+package mods.flammpfeil.slashblade.item.named;
 
 import mods.flammpfeil.slashblade.event.DropEventHandler;
 import mods.flammpfeil.slashblade.SlashBlade;
@@ -9,7 +9,7 @@ import mods.flammpfeil.slashblade.specialeffect.SpecialEffects;
 import net.minecraft.init.Enchantments;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import mods.flammpfeil.slashblade.named.event.LoadEvent;
+import mods.flammpfeil.slashblade.item.named.event.LoadEvent;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;

@@ -1,7 +1,7 @@
 package mods.flammpfeil.slashblade.event;
 
 import mods.flammpfeil.slashblade.SlashBlade;
-import mods.flammpfeil.slashblade.core.CoreProxyClient;
+import mods.flammpfeil.slashblade.proxy.CoreProxyClient;
 import mods.flammpfeil.slashblade.network.MessageMoveCommandState;
 import mods.flammpfeil.slashblade.network.NetworkManager;
 import net.minecraft.client.entity.EntityPlayerSP;

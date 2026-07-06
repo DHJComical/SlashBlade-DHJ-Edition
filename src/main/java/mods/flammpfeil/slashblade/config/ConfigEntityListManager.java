@@ -1,4 +1,4 @@
-package mods.flammpfeil.slashblade.core;
+package mods.flammpfeil.slashblade.config;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;

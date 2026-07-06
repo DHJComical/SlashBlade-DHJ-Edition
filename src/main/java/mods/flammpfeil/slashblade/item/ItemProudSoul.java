@@ -4,7 +4,7 @@ import com.google.common.collect.Maps;
 import mods.flammpfeil.slashblade.SlashBlade;
 import mods.flammpfeil.slashblade.entity.EntityBladeStand;
 import mods.flammpfeil.slashblade.entity.EntityGrimGripKey;
-import mods.flammpfeil.slashblade.named.NamedBladeManager;
+import mods.flammpfeil.slashblade.item.named.NamedBladeManager;
 import mods.flammpfeil.slashblade.specialeffect.IRemovable;
 import mods.flammpfeil.slashblade.specialeffect.ISpecialEffect;
 import mods.flammpfeil.slashblade.specialeffect.SpecialEffects;

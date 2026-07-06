@@ -5,7 +5,7 @@ import mods.flammpfeil.slashblade.SlashBlade;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.item.ItemSlashBladeNamed;
 import mods.flammpfeil.slashblade.item.ItemSlashBladeWrapper;
-import mods.flammpfeil.slashblade.named.NamedBladeManager;
+import mods.flammpfeil.slashblade.item.named.NamedBladeManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.init.Enchantments;
 import net.minecraft.item.crafting.Ingredient;

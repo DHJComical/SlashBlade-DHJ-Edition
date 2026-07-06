@@ -5,7 +5,7 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import mods.flammpfeil.slashblade.SlashBlade;
 import mods.flammpfeil.slashblade.capability.BladeCapabilityProvider;
-import mods.flammpfeil.slashblade.core.CoreProxy;
+import mods.flammpfeil.slashblade.proxy.CoreProxy;
 import mods.flammpfeil.slashblade.entity.*;
 import mods.flammpfeil.slashblade.entity.selector.EntitySelectorAttackable;
 import mods.flammpfeil.slashblade.entity.selector.EntitySelectorDestructable;

@@ -1,4 +1,4 @@
-package mods.flammpfeil.slashblade.named;
+package mods.flammpfeil.slashblade.item.named;
 
 import net.minecraft.init.Enchantments;
 import net.minecraft.util.NonNullList;
@@ -9,7 +9,7 @@ import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.item.ItemSlashBladeNamed;
 import mods.flammpfeil.slashblade.item.ItemSlashBladeWrapper;
 import mods.flammpfeil.slashblade.SlashBlade;
-import mods.flammpfeil.slashblade.named.event.LoadEvent;
+import mods.flammpfeil.slashblade.item.named.event.LoadEvent;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;

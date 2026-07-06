@@ -1,4 +1,4 @@
-package mods.flammpfeil.slashblade.named.event;
+package mods.flammpfeil.slashblade.item.named.event;
 
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;

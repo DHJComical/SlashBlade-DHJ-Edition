@@ -1,4 +1,4 @@
-package mods.flammpfeil.slashblade.core;
+package mods.flammpfeil.slashblade.config;
 
 import mods.flammpfeil.slashblade.item.ItemSlashBladeNamed;
 import mods.flammpfeil.slashblade.SlashBlade;

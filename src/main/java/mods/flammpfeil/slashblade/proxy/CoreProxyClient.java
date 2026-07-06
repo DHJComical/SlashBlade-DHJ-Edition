@@ -1,4 +1,4 @@
-package mods.flammpfeil.slashblade.core;
+package mods.flammpfeil.slashblade.proxy;
 
 import com.google.common.collect.Iterables;
 import mods.flammpfeil.slashblade.SlashBlade;

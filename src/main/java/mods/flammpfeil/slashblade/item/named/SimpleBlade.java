@@ -1,4 +1,4 @@
-package mods.flammpfeil.slashblade.named;
+package mods.flammpfeil.slashblade.item.named;
 
 import mods.flammpfeil.slashblade.item.crafting.RecipeAwakeBlade;
 import mods.flammpfeil.slashblade.capability.BladeCapabilityProvider;
@@ -14,7 +14,7 @@ import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.item.ItemSlashBladeNamed;
 import mods.flammpfeil.slashblade.item.crafting.RecipeUpgradeBlade;
 import mods.flammpfeil.slashblade.SlashBlade;
-import mods.flammpfeil.slashblade.named.event.LoadEvent;
+import mods.flammpfeil.slashblade.item.named.event.LoadEvent;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;

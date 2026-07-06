@@ -1,4 +1,4 @@
-package mods.flammpfeil.slashblade.core;
+package mods.flammpfeil.slashblade.proxy;
 
 import mods.flammpfeil.slashblade.network.MessageRankpointSynchronize;
 import net.minecraft.item.Item;
@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class CoreProxy {
-    @SidedProxy(clientSide = "mods.flammpfeil.slashblade.core.CoreProxyClient", serverSide = "mods.flammpfeil.slashblade.core.CoreProxy")
+    @SidedProxy(clientSide = "mods.flammpfeil.slashblade.proxy.CoreProxyClient", serverSide = "mods.flammpfeil.slashblade.proxy.CoreProxy")
     public static CoreProxy proxy;
 
 

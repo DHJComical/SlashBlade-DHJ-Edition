@@ -1,4 +1,4 @@
-package mods.flammpfeil.slashblade.named;
+package mods.flammpfeil.slashblade.item.named;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;

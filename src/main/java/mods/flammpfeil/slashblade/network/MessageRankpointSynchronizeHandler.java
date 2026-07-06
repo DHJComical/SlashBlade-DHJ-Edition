@@ -1,6 +1,6 @@
 package mods.flammpfeil.slashblade.network;
 
-import mods.flammpfeil.slashblade.core.CoreProxy;
+import mods.flammpfeil.slashblade.proxy.CoreProxy;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;

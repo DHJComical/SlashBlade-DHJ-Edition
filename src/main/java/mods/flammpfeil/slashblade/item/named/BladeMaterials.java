@@ -1,4 +1,4 @@
-package mods.flammpfeil.slashblade.named;
+package mods.flammpfeil.slashblade.item.named;
 
 import mods.flammpfeil.slashblade.util.DummyPotionRecipe;
 import net.minecraft.init.PotionTypes;
@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import mods.flammpfeil.slashblade.SlashBlade;
 import mods.flammpfeil.slashblade.item.crafting.RecipeBladeSoulUpgrade;
-import mods.flammpfeil.slashblade.named.event.LoadEvent;
+import mods.flammpfeil.slashblade.item.named.event.LoadEvent;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
