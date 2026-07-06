@@ -1,5 +1,6 @@
-package mods.flammpfeil.slashblade;
+package mods.flammpfeil.slashblade.item.crafting;
 
+import mods.flammpfeil.slashblade.SlashBlade;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;

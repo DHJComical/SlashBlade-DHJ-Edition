@@ -2,6 +2,8 @@ package mods.flammpfeil.slashblade.named;
 
 import mods.flammpfeil.slashblade.event.DropEventHandler;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
+import mods.flammpfeil.slashblade.item.ItemSlashBladeNamed;
+import mods.flammpfeil.slashblade.item.crafting.RecipeAwakeBlade;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import mods.flammpfeil.slashblade.*;

@@ -1,6 +1,5 @@
-package mods.flammpfeil.slashblade;
+package mods.flammpfeil.slashblade.item;
 
-import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 

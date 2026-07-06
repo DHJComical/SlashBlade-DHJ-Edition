@@ -1,6 +1,6 @@
 package mods.flammpfeil.slashblade.client.model;
 
-import mods.flammpfeil.slashblade.ItemSlashBladeWrapper;
+import mods.flammpfeil.slashblade.item.ItemSlashBladeWrapper;
 import mods.flammpfeil.slashblade.SlashBlade;
 import mods.flammpfeil.slashblade.client.model.obj.Face;
 import mods.flammpfeil.slashblade.client.model.obj.WavefrontObject;

@@ -5,7 +5,7 @@ import mods.flammpfeil.slashblade.client.model.BladeModelManager;
 import mods.flammpfeil.slashblade.client.model.obj.GroupObject;
 import mods.flammpfeil.slashblade.client.model.obj.WavefrontObject;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
-import mods.flammpfeil.slashblade.ItemSlashBladeWrapper;
+import mods.flammpfeil.slashblade.item.ItemSlashBladeWrapper;
 import mods.flammpfeil.slashblade.entity.EntityBladeStand;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;

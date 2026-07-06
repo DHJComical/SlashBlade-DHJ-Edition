@@ -1,8 +1,8 @@
 package mods.flammpfeil.slashblade.event;
 
-import mods.flammpfeil.slashblade.ItemSlashBladeNamed;
+import mods.flammpfeil.slashblade.item.ItemSlashBladeNamed;
 import mods.flammpfeil.slashblade.SlashBlade;
-import mods.flammpfeil.slashblade.TagPropertyAccessor;
+import mods.flammpfeil.slashblade.util.TagPropertyAccessor;
 import mods.flammpfeil.slashblade.item.ItemProudSoul;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import net.minecraft.enchantment.Enchantment;

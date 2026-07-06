@@ -1,6 +1,9 @@
-package mods.flammpfeil.slashblade;
+package mods.flammpfeil.slashblade.item.crafting;
 
+import mods.flammpfeil.slashblade.SlashBlade;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
+import mods.flammpfeil.slashblade.item.ItemSlashBladeNamed;
+import mods.flammpfeil.slashblade.util.TagPropertyAccessor;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.inventory.InventoryCrafting;

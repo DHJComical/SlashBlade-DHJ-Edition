@@ -1,7 +1,10 @@
-package mods.flammpfeil.slashblade;
+package mods.flammpfeil.slashblade.item.crafting;
 
 import com.google.common.collect.Maps;
+import mods.flammpfeil.slashblade.SlashBlade;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
+import mods.flammpfeil.slashblade.item.ItemSlashBladeNamed;
+import mods.flammpfeil.slashblade.item.ItemSlashBladeWrapper;
 import mods.flammpfeil.slashblade.named.NamedBladeManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.init.Enchantments;

@@ -1,7 +1,7 @@
 package mods.flammpfeil.slashblade.named;
 
 import net.minecraft.util.ResourceLocation;
-import mods.flammpfeil.slashblade.RecipeAwakeBlade;
+import mods.flammpfeil.slashblade.item.crafting.RecipeAwakeBlade;
 import mods.flammpfeil.slashblade.SlashBlade;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;

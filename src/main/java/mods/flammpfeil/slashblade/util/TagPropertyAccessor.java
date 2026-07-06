@@ -1,4 +1,4 @@
-package mods.flammpfeil.slashblade;
+package mods.flammpfeil.slashblade.util;
 
 import net.minecraft.nbt.NBTTagCompound;
 

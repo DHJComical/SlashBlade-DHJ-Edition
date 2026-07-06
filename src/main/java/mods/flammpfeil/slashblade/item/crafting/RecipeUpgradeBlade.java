@@ -1,4 +1,4 @@
-package mods.flammpfeil.slashblade;
+package mods.flammpfeil.slashblade.item.crafting;
 
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import net.minecraft.inventory.InventoryCrafting;

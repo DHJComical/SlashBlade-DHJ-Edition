@@ -1,4 +1,4 @@
-package mods.flammpfeil.slashblade;
+package mods.flammpfeil.slashblade.item;
 
 import net.minecraft.util.NonNullList;
 import net.minecraft.creativetab.CreativeTabs;

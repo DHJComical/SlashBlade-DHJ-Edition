@@ -1,7 +1,8 @@
-package mods.flammpfeil.slashblade;
+package mods.flammpfeil.slashblade.item;
 
 import com.google.common.collect.Lists;
-import mods.flammpfeil.slashblade.item.ItemSlashBlade;
+import mods.flammpfeil.slashblade.SlashBlade;
+import mods.flammpfeil.slashblade.util.TagPropertyAccessor;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

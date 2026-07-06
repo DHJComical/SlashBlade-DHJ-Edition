@@ -1,6 +1,6 @@
 package mods.flammpfeil.slashblade.named;
 
-import mods.flammpfeil.slashblade.RecipeAwakeBlade;
+import mods.flammpfeil.slashblade.item.crafting.RecipeAwakeBlade;
 import mods.flammpfeil.slashblade.capability.BladeCapabilityProvider;
 import mods.flammpfeil.slashblade.item.crafting.BladeIngredient;
 import mods.flammpfeil.slashblade.specialeffect.SpecialEffects;
@@ -11,8 +11,8 @@ import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
-import mods.flammpfeil.slashblade.ItemSlashBladeNamed;
-import mods.flammpfeil.slashblade.RecipeUpgradeBlade;
+import mods.flammpfeil.slashblade.item.ItemSlashBladeNamed;
+import mods.flammpfeil.slashblade.item.crafting.RecipeUpgradeBlade;
 import mods.flammpfeil.slashblade.SlashBlade;
 import mods.flammpfeil.slashblade.named.event.LoadEvent;
 import net.minecraft.init.Blocks;

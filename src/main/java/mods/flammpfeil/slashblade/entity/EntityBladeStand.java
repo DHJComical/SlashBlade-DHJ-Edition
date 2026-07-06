@@ -2,7 +2,7 @@ package mods.flammpfeil.slashblade.entity;
 
 import com.google.common.collect.Maps;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
-import mods.flammpfeil.slashblade.ItemSlashBladeWrapper;
+import mods.flammpfeil.slashblade.item.ItemSlashBladeWrapper;
 import mods.flammpfeil.slashblade.specialeffect.SpecialEffects;
 import mods.flammpfeil.slashblade.util.ReflectionAccessHelper;
 import mods.flammpfeil.slashblade.util.SlashBladeHooks;

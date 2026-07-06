@@ -9,8 +9,15 @@ import mods.flammpfeil.slashblade.config.ConfigManager;
 import mods.flammpfeil.slashblade.core.ConfigCustomBladeManager;
 import mods.flammpfeil.slashblade.core.CoreProxy;
 import mods.flammpfeil.slashblade.event.*;
+import mods.flammpfeil.slashblade.item.ItemSlashBladeBambooLight;
+import mods.flammpfeil.slashblade.item.ItemSlashBladeDetune;
+import mods.flammpfeil.slashblade.item.ItemSlashBladeNamed;
 import mods.flammpfeil.slashblade.item.ItemProudSoul;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
+import mods.flammpfeil.slashblade.item.ItemSlashBladeWrapper;
+import mods.flammpfeil.slashblade.item.crafting.RecipeAdjustPos;
+import mods.flammpfeil.slashblade.item.crafting.RecipeInstantRepair;
+import mods.flammpfeil.slashblade.item.crafting.RecipeWrapBlade;
 import mods.flammpfeil.slashblade.core.ConfigEntityListManager;
 import mods.flammpfeil.slashblade.network.NetworkManager;
 import mods.flammpfeil.slashblade.util.*;
@@ -45,8 +52,12 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import java.io.File;
 import java.util.*;
 
-@Mod(name = Reference.MOD_NAME, modid = Reference.MOD_ID, version = Reference.VERSION,
-    guiFactory = "mods.flammpfeil.slashblade.gui.config.ConfigGuiFactory")
+@Mod(
+    name = Reference.MOD_NAME,
+    modid = Reference.MOD_ID,
+    version = Reference.VERSION,
+    guiFactory = "mods.flammpfeil.slashblade.gui.config.ConfigGuiFactory"
+)
 public class SlashBlade {
 
 

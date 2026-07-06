@@ -2,6 +2,9 @@ package mods.flammpfeil.slashblade.named;
 
 import mods.flammpfeil.slashblade.event.DropEventHandler;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
+import mods.flammpfeil.slashblade.item.ItemSlashBladeNamed;
+import mods.flammpfeil.slashblade.item.ItemSlashBladeWrapper;
+import mods.flammpfeil.slashblade.item.crafting.RecipeAwakeBlade;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Enchantments;
 import net.minecraft.inventory.EntityEquipmentSlot;

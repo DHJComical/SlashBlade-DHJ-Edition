@@ -1,6 +1,5 @@
-package mods.flammpfeil.slashblade;
+package mods.flammpfeil.slashblade.item;
 
-import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.util.ResourceLocationRaw;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;

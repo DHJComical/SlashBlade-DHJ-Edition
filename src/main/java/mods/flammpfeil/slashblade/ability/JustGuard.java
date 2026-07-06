@@ -5,7 +5,7 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.util.EnumHand;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
-import mods.flammpfeil.slashblade.TagPropertyAccessor;
+import mods.flammpfeil.slashblade.util.TagPropertyAccessor;
 import mods.flammpfeil.slashblade.entity.EntityJustGuardManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;

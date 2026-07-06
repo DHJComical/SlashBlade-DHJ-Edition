@@ -2,9 +2,9 @@ package mods.flammpfeil.slashblade.named;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import mods.flammpfeil.slashblade.ItemSlashBladeNamed;
+import mods.flammpfeil.slashblade.item.ItemSlashBladeNamed;
 import mods.flammpfeil.slashblade.SlashBlade;
-import mods.flammpfeil.slashblade.TagPropertyAccessor;
+import mods.flammpfeil.slashblade.util.TagPropertyAccessor;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.util.DummyAnvilRecipe;
 import mods.flammpfeil.slashblade.util.SlashBladeAchievementCreateEvent;
