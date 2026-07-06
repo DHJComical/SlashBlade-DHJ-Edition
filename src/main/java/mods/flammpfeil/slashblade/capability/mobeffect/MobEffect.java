@@ -1,4 +1,4 @@
-package mods.flammpfeil.slashblade.capability.MobEffect;
+package mods.flammpfeil.slashblade.capability.mobeffect;
 
 public class MobEffect implements IMobEffectHandler {
 

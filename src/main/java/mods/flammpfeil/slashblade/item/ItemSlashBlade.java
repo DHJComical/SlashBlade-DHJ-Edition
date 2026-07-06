@@ -30,7 +30,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.util.math.*;
 import net.minecraftforge.fml.common.registry.IThrowableEntity;
 import mods.flammpfeil.slashblade.ability.*;
-import mods.flammpfeil.slashblade.ability.StylishRankManager.*;
+import mods.flammpfeil.slashblade.ability.StylishRankManager.AttackTypes;
 import mods.flammpfeil.slashblade.specialattack.*;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;

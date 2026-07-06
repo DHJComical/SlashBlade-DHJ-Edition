@@ -1,4 +1,4 @@
-package mods.flammpfeil.slashblade.capability.MobEffect;
+package mods.flammpfeil.slashblade.capability.mobeffect;
 
 import mods.flammpfeil.slashblade.SlashBlade;
 import net.minecraft.entity.Entity;

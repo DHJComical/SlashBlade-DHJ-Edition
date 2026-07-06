@@ -1,7 +1,7 @@
 package mods.flammpfeil.slashblade.ability;
 
-import mods.flammpfeil.slashblade.capability.MobEffect.CapabilityMobEffectHandler;
-import mods.flammpfeil.slashblade.capability.MobEffect.IMobEffectHandler;
+import mods.flammpfeil.slashblade.capability.mobeffect.CapabilityMobEffectHandler;
+import mods.flammpfeil.slashblade.capability.mobeffect.IMobEffectHandler;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import mods.flammpfeil.slashblade.entity.ai.EntityAIStun;

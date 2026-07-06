@@ -1,4 +1,4 @@
-package mods.flammpfeil.slashblade.capability.MobEffect;
+package mods.flammpfeil.slashblade.capability.mobeffect;
 
 public interface IMobEffectHandler {
     void setStunTimeOut(long timeout);

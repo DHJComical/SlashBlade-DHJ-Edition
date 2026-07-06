@@ -1,4 +1,4 @@
-package mods.flammpfeil.slashblade.capability.MobEffect;
+package mods.flammpfeil.slashblade.capability.mobeffect;
 
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;

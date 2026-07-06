@@ -1,7 +1,7 @@
 package mods.flammpfeil.slashblade.entity.ai;
 
-import mods.flammpfeil.slashblade.capability.MobEffect.CapabilityMobEffectHandler;
-import mods.flammpfeil.slashblade.capability.MobEffect.IMobEffectHandler;
+import mods.flammpfeil.slashblade.capability.mobeffect.CapabilityMobEffectHandler;
+import mods.flammpfeil.slashblade.capability.mobeffect.IMobEffectHandler;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 
