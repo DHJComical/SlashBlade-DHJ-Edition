@@ -3,12 +3,3 @@
 
 // If you wish to use the default helper methods, uncomment the line below
 // apply from: 'gradle/scripts/helpers.gradle'
-spotless {
-    java {
-        target 'src/*/java/**/*.java'
-
-        leadingTabsToSpaces()
-        endWithNewline()
-        removeUnusedImports()
-    }
-}
