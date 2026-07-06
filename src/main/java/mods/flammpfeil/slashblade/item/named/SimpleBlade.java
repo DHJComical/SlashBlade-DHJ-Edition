@@ -145,8 +145,9 @@ public class SimpleBlade {
 
         ItemStack brokenBladeWhite = new ItemStack(SlashBlade.bladeWhiteSheath,1,0);
         brokenBladeWhite.setItemDamage(brokenBladeWhite.getMaxDamage());
-        brokenBladeWhite.setStackDisplayName("BrokenBladeWhite");
-        ItemSlashBlade.IsBroken.set(brokenBladeWhite.getTagCompound(), true);
+        NBTTagCompound brokenBladeWhiteTag = ItemSlashBlade.getItemTagCompound(brokenBladeWhite);
+        ItemSlashBladeNamed.CurrentItemName.set(brokenBladeWhiteTag, "slashblade.white.broken");
+        ItemSlashBlade.IsBroken.set(brokenBladeWhiteTag, true);
         SlashBlade.registerCustomItemStack(SlashBlade.BrokenBladeWhiteStr, brokenBladeWhite);
         ItemSlashBladeNamed.NamedBlades.add(SlashBlade.BrokenBladeWhiteStr);
 
@@ -171,8 +172,7 @@ public class SimpleBlade {
             NBTTagCompound tag = ItemSlashBlade.getItemTagCompound(customblade);
 
             SpecialEffects.addEffect(customblade,SpecialEffects.BlastEdge);
-
-            customblade.setStackDisplayName("TestBlastEdge");
+            ItemSlashBladeNamed.CurrentItemName.set(tag, "slashblade.test.blastedge");
 
             String key = "TestBlastEdge";
             SlashBlade.registerCustomItemStack(key, customblade);
@@ -185,8 +185,7 @@ public class SimpleBlade {
             NBTTagCompound tag = ItemSlashBlade.getItemTagCompound(customblade);
 
             SpecialEffects.addEffect(customblade,SpecialEffects.HFCustom);
-
-            customblade.setStackDisplayName("TestHFCustom");
+            ItemSlashBladeNamed.CurrentItemName.set(tag, "slashblade.test.hfcustom");
 
             String key = "TestHFCustom";
             SlashBlade.registerCustomItemStack(key, customblade);
@@ -198,8 +197,7 @@ public class SimpleBlade {
             NBTTagCompound tag = ItemSlashBlade.getItemTagCompound(customblade);
 
             SpecialEffects.addEffect(customblade,SpecialEffects.HFCustom);
-
-            customblade.setStackDisplayName("TestHFCustom");
+            ItemSlashBladeNamed.CurrentItemName.set(tag, "slashblade.test.hfcustom.full");
 
             IEnergyStorage storage = customblade.getCapability(BladeCapabilityProvider.ENERGY, null);
             storage.receiveEnergy(storage.getMaxEnergyStored(),false);

@@ -11,8 +11,6 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.nbt.NBTTagString;
 
 /**
  * Created by Furia on 14/07/07.
@@ -59,12 +57,9 @@ public class Fox {
             SlashBlade.registerCustomItemStack(name, customblade);
 
             customblade = customblade.copy();
-            NBTTagCompound displayTag = new NBTTagCompound();
-            customblade.setTagInfo("display",displayTag);
-            NBTTagList loreList = new NBTTagList();
-            loreList.appendTag(new NBTTagString("is demo item. is wooden sword"));
-            loreList.appendTag(new NBTTagString("true performance : please crafting"));
-            displayTag.setTag("Lore", loreList);
+            ItemSlashBlade.setTooltipKeys(customblade,
+                    "tooltip.slashblade.sample.line1",
+                    "tooltip.slashblade.sample.line2");
             String creativeStr = name+".creative";
             SlashBlade.registerCustomItemStack(creativeStr, customblade);
             ItemSlashBladeNamed.NamedBlades.add(SlashBlade.modid + ":" + creativeStr);
@@ -103,12 +98,9 @@ public class Fox {
             SlashBlade.registerCustomItemStack(name, customblade);
 
             customblade = customblade.copy();
-            NBTTagCompound displayTag = new NBTTagCompound();
-            customblade.setTagInfo("display",displayTag);
-            NBTTagList loreList = new NBTTagList();
-            loreList.appendTag(new NBTTagString("is demo item. is wooden sword"));
-            loreList.appendTag(new NBTTagString("true performance : please crafting"));
-            displayTag.setTag("Lore", loreList);
+            ItemSlashBlade.setTooltipKeys(customblade,
+                    "tooltip.slashblade.sample.line1",
+                    "tooltip.slashblade.sample.line2");
             String creativeStr = name+".creative";
             SlashBlade.registerCustomItemStack(creativeStr, customblade);
             ItemSlashBladeNamed.NamedBlades.add(SlashBlade.modid + ":" + creativeStr);
@@ -141,14 +133,12 @@ public class Fox {
 
                 reqiredBlade.addEnchantment(Enchantments.LOOTING,1);
                 NBTTagCompound tag = reqiredBlade.getTagCompound();
-                ItemSlashBladeNamed.CurrentItemName.set(tag,"wrap.BambooMod.katana");
+                ItemSlashBladeNamed.CurrentItemName.set(tag,"wrap.bamboomod.katana");
                 ItemSlashBladeNamed.BaseAttackModifier.set(tag, 4.0f);
                 ItemSlashBlade.TextureName.set(tag,"BambooKatana");
                 ItemSlashBlade.KillCount.set(tag,199);
                 ItemSlashBlade.ProudSoul.set(tag,1000);
                 ItemSlashBlade.RepairCount.set(tag,1);
-
-                reqiredBlade.setStackDisplayName("BambooMod katana");
             }
             String reqiredStr = nameWhite + ".reqired";
             SlashBlade.registerCustomItemStack(reqiredStr,reqiredBlade);
@@ -177,14 +167,12 @@ public class Fox {
 
                 reqiredBlade.addEnchantment(Enchantments.SMITE,1);
                 NBTTagCompound tag = reqiredBlade.getTagCompound();
-                ItemSlashBladeNamed.CurrentItemName.set(tag,"wrap.BambooMod.katana");
+                ItemSlashBladeNamed.CurrentItemName.set(tag,"wrap.bamboomod.katana");
                 ItemSlashBladeNamed.BaseAttackModifier.set(tag, 4.0f);
                 ItemSlashBlade.TextureName.set(tag,"BambooKatana");
                 ItemSlashBlade.KillCount.set(tag,199);
                 ItemSlashBlade.ProudSoul.set(tag,1000);
                 ItemSlashBlade.RepairCount.set(tag,1);
-
-                reqiredBlade.setStackDisplayName("BambooMod katana");
             }
             String reqiredStr = nameBlack + ".reqired";
             SlashBlade.registerCustomItemStack(reqiredStr,reqiredBlade);

@@ -30,14 +30,7 @@ public class ItemSlashBladeNamed extends ItemSlashBlade {
 
     @Override
     public String getTranslationKey(ItemStack par1ItemStack) {
-        String result = super.getTranslationKey(par1ItemStack);
-        if(par1ItemStack.hasTagCompound()){
-            NBTTagCompound tag = par1ItemStack.getTagCompound();
-            if(CurrentItemName.exists(tag)){
-                result = "item." + CurrentItemName.get(tag);
-            }
-        }
-        return result;
+        return super.getTranslationKey(par1ItemStack);
     }
 
     @Override

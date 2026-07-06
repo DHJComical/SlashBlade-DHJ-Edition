@@ -14,16 +14,16 @@ import net.minecraft.world.World;
 public class RecipeAdjustPos extends ShapedRecipes
 {
 
-    static private Ingredient dirIS(String name){
-        return Ingredient.fromStacks(new ItemStack(Items.STICK, 0, 0).setStackDisplayName(name));
+    static private Ingredient dirIS(String translationKey){
+        return Ingredient.fromStacks(new ItemStack(Items.STICK, 0, 0).setTranslatableName(translationKey));
     }
 
     public RecipeAdjustPos()
     {
         super(SlashBlade.modid + ":adjust" ,3, 3, NonNullList.<Ingredient>from(Ingredient.EMPTY,
-                Ingredient.EMPTY, dirIS("Up"), dirIS("Front"),
-                dirIS("Left"), Ingredient.fromStacks(new ItemStack(SlashBlade.weapon, 1, 0)), dirIS("Right"),
-                dirIS("Back"), dirIS("Down"), Ingredient.EMPTY)
+                Ingredient.EMPTY, dirIS("item.slashblade.adjust.up.name"), dirIS("item.slashblade.adjust.front.name"),
+                dirIS("item.slashblade.adjust.left.name"), Ingredient.fromStacks(new ItemStack(SlashBlade.weapon, 1, 0)), dirIS("item.slashblade.adjust.right.name"),
+                dirIS("item.slashblade.adjust.back.name"), dirIS("item.slashblade.adjust.down.name"), Ingredient.EMPTY)
         , new ItemStack(SlashBlade.weapon, 1, 0));
     }
 

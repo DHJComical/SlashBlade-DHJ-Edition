@@ -50,14 +50,12 @@ public class NamedBladeManager {
         ItemStack crystal = SlashBlade.findItemStack(SlashBlade.modid,SlashBlade.CrystalBladeSoulStr,1);
 
         NBTTagCompound newTag = (NBTTagCompound)tag.copy();
+        String keyName = ItemSlashBladeNamed.CurrentItemName.get(tag);
 
         newTag.removeTag("ench");
 
         crystal.setTagCompound(newTag);
-
-        crystal.setStackDisplayName(name + " soul");
-
-        String keyName = ItemSlashBladeNamed.CurrentItemName.get(tag);
+        crystal.setTranslatableName("item." + keyName + ".soul.name");
         keyList.add(keyName);
         namedbladeSouls.put(keyName, crystal);
     }

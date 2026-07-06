@@ -47,8 +47,10 @@ import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.item.*;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagString;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.*;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IRarity;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -191,6 +193,7 @@ public class ItemSlashBlade extends ItemSword {
     static public TagPropertyAccessor.TagPropertyIntegerWithRange RepairCount = new TagPropertyAccessor.TagPropertyIntegerWithRange("RepairCounter",0,999999999);
 
     static public TagPropertyAccessor.TagPropertyInteger SummonedSwordColor = new TagPropertyAccessor.TagPropertyInteger("SummonedSwordColor");
+    public static final String TooltipKeysTag = "tooltipKeys";
 
     public static int AnvilRepairBonus = 100;
 
@@ -763,6 +766,20 @@ public class ItemSlashBlade extends ItemSword {
         CoreProxy.proxy.setTEISR(this);
     }
 
+    @Override
+    public String getTranslationKey(ItemStack stack) {
+        String result = super.getTranslationKey(stack);
+
+        if (stack.hasTagCompound()) {
+            NBTTagCompound tag = stack.getTagCompound();
+            if (ItemSlashBladeNamed.CurrentItemName.exists(tag)) {
+                result = "item." + ItemSlashBladeNamed.CurrentItemName.get(tag);
+            }
+        }
+
+        return result;
+    }
+
     public static NBTTagCompound getItemTagCompound(ItemStack stack){
         NBTTagCompound tag;
         if(stack.hasTagCompound()){
@@ -773,6 +790,16 @@ public class ItemSlashBlade extends ItemSword {
         }
 
         return tag;
+    }
+
+    public static void setTooltipKeys(ItemStack stack, String... keys) {
+        NBTTagList tooltipKeys = new NBTTagList();
+
+        for (String key : keys) {
+            tooltipKeys.appendTag(new NBTTagString(key));
+        }
+
+        getItemTagCompound(stack).setTag(TooltipKeysTag, tooltipKeys);
     }
 
     Map<ComboSequence, ComboSequence> AerialRave = createAerialRaveMap();
@@ -2628,7 +2655,23 @@ public class ItemSlashBlade extends ItemSword {
             par3List.add(String.format("adjust x:%.1f y:%.1f z:%.1f", ax,ay,az));
         }
 
+        addInformationTranslatedTooltip(par1ItemStack, par3List);
+
         addInformationEnergy(par1ItemStack, par2EntityPlayer, par3List, par4);
+    }
+
+    @SideOnly(Side.CLIENT)
+    private void addInformationTranslatedTooltip(ItemStack stack, List<String> lines) {
+        NBTTagCompound tag = getItemTagCompound(stack);
+
+        if (!tag.hasKey(TooltipKeysTag, 9)) {
+            return;
+        }
+
+        NBTTagList tooltipKeys = tag.getTagList(TooltipKeysTag, 8);
+        for (int i = 0; i < tooltipKeys.tagCount(); i++) {
+            lines.add(TextFormatting.DARK_PURPLE + "" + TextFormatting.ITALIC + I18n.format(tooltipKeys.getStringTagAt(i)));
+        }
     }
 
 

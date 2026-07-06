@@ -16,10 +16,9 @@ import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.nbt.NBTTagString;
 import net.minecraft.world.World;
 
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -72,18 +71,13 @@ public class RecipeWrapBlade extends ShapedRecipes {
 
             reqiredBlade.addEnchantment(Enchantments.LOOTING,1);
             NBTTagCompound tag = reqiredBlade.getTagCompound();
-            ItemSlashBladeNamed.CurrentItemName.set(tag,"wrap." + name.replace(':', '.'));
+            ItemSlashBladeNamed.CurrentItemName.set(tag, "wrap." + name.replace(':', '.').toLowerCase(Locale.ROOT));
             ItemSlashBladeNamed.BaseAttackModifier.set(tag, 4.0f);
             ItemSlashBlade.TextureName.set(tag,texture);
 
-            NBTTagCompound displayTag = new NBTTagCompound();
-            reqiredBlade.setTagInfo("display",displayTag);
-            NBTTagList loreList = new NBTTagList();
-            loreList.appendTag(new NBTTagString("is demo item. is wooden sword"));
-            loreList.appendTag(new NBTTagString("true performance : please crafting"));
-            displayTag.setTag("Lore", loreList);
-
-            reqiredBlade.setStackDisplayName(reqiredBlade.getDisplayName());
+            ItemSlashBlade.setTooltipKeys(reqiredBlade,
+                    "tooltip.slashblade.sample.line1",
+                    "tooltip.slashblade.sample.line2");
         }
         String reqiredStr = "wrap." + name.replace(':', '.') + ".sample";
         SlashBlade.registerCustomItemStack(reqiredStr,reqiredBlade);
@@ -134,7 +128,7 @@ public class RecipeWrapBlade extends ShapedRecipes {
         SlashBlade.wrapBlade.setWrapItem(scabbard,target);
 
         NBTTagCompound tag = scabbard.getTagCompound();
-        ItemSlashBladeNamed.CurrentItemName.set(tag,"wrap." + targetName.toString().replace(':','.'));
+        ItemSlashBladeNamed.CurrentItemName.set(tag, "wrap." + targetName.toString().replace(':', '.').toLowerCase(Locale.ROOT));
         ItemSlashBladeNamed.TextureName.set(tag,wrapableTextureNames.get(targetName.toString()));
         ItemSlashBladeNamed.BaseAttackModifier.set(tag,wrapableBaseAttackModifiers.get(targetName.toString()));
 

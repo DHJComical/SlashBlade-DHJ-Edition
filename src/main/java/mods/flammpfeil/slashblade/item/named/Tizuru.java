@@ -49,10 +49,9 @@ public class Tizuru {
 
                 NBTTagCompound tag = new NBTTagCompound();
                 reqiredBlade.setTagCompound(tag);
+                ItemSlashBladeNamed.CurrentItemName.set(tag, "slashblade.named.muramasa.required");
                 ItemSlashBlade.ProudSoul.set(tag, 10000);
                 ItemSlashBlade.RepairCount.set(tag,20);
-
-                reqiredBlade.setStackDisplayName("syoukan muramasa");
             }
             String reqiredStr = name + ".reqired";
             SlashBlade.registerCustomItemStack(reqiredStr,reqiredBlade);
