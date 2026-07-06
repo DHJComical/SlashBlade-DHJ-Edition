@@ -6,7 +6,7 @@ package mods.flammpfeil.slashblade;
 public final class Reference {
     private Reference() {}
 
-    public static final String MOD_ID = "slashblade";
-    public static final String MOD_NAME = "SlashBlade";
-    public static final String VERSION = "mc1.12-r32";
+    public static final String MOD_ID = Tags.MOD_ID;
+    public static final String MOD_NAME = Tags.MOD_NAME;
+    public static final String VERSION = Tags.VERSION;
 }
