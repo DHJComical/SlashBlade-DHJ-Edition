@@ -6,6 +6,7 @@ import mods.flammpfeil.slashblade.item.BladeIdentity;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.item.ItemSlashBladeNamed;
 import mods.flammpfeil.slashblade.item.ItemSlashBladeWrapper;
+import mods.flammpfeil.slashblade.item.crafting.BladeIngredient;
 import mods.flammpfeil.slashblade.item.crafting.RecipeAwakeBlade;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Enchantments;
@@ -251,7 +252,7 @@ public class Doutanuki {
                     "B  ",
                     'P', SlashBlade.findItemStack(SlashBlade.modid, SlashBlade.ProudSoulStr, 1),
                     'S', SlashBlade.findItemStack(SlashBlade.modid, "slashbladeWrapper", 1),
-                    'B', getNoSeathBlade());
+                    'B', BladeIngredient.of(getNoSeathBlade()));
         }
 
 
@@ -320,7 +321,7 @@ public class Doutanuki {
                     " I ",
                     "B  ",
                     'I', SlashBlade.findItemStack(SlashBlade.modid, SlashBlade.IngotBladeSoulStr, 1),
-                    'B', getBrokenBlade());
+                    'B', BladeIngredient.of(getBrokenBlade()));
         }
 
         static ItemStack getBrokenBlade(){
@@ -390,7 +391,7 @@ public class Doutanuki {
                     " B ",
                     "S  ",
                     'S', SlashBlade.findItemStack(SlashBlade.modid, SlashBlade.SphereBladeSoulStr, 1),
-                    'B', getBrokenBlade());
+                    'B', BladeIngredient.of(getBrokenBlade()));
         }
 
         static ItemStack getBrokenBlade(){

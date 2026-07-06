@@ -4,6 +4,7 @@ import mods.flammpfeil.slashblade.event.DropEventHandler;
 import mods.flammpfeil.slashblade.SlashBlade;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.item.ItemSlashBladeNamed;
+import mods.flammpfeil.slashblade.item.crafting.BladeIngredient;
 import mods.flammpfeil.slashblade.item.crafting.RecipeAwakeBlade;
 import mods.flammpfeil.slashblade.specialeffect.SpecialEffects;
 import net.minecraft.init.Enchantments;
@@ -93,7 +94,7 @@ public class Yamato {
                                     "XBX",
                                     "XXX",
                                     'X', itemSphereBladeSoul,
-                                    'B', reqiredBlade));
+                                    'B', BladeIngredient.of(reqiredBlade)));
                 }
             }
         }

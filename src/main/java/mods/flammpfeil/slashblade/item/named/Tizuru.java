@@ -3,6 +3,7 @@ package mods.flammpfeil.slashblade.item.named;
 import mods.flammpfeil.slashblade.SlashBlade;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.item.ItemSlashBladeNamed;
+import mods.flammpfeil.slashblade.item.crafting.BladeIngredient;
 import mods.flammpfeil.slashblade.item.crafting.RecipeAwakeBlade;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -62,7 +63,7 @@ public class Tizuru {
                     "PPP",
                     "PXP",
                     "PPP",
-                    'X', reqiredBlade,
+                    'X', BladeIngredient.of(reqiredBlade),
                     'P', proudsoul);
 
             SlashBlade.addRecipe(name, recipe);

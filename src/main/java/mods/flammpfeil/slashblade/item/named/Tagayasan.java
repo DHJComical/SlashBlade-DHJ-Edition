@@ -5,6 +5,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.item.ItemSlashBladeNamed;
+import mods.flammpfeil.slashblade.item.crafting.BladeIngredient;
 import mods.flammpfeil.slashblade.item.crafting.RecipeAwakeBlade;
 import mods.flammpfeil.slashblade.SlashBlade;
 import mods.flammpfeil.slashblade.item.named.event.LoadEvent;
@@ -61,7 +62,7 @@ public class Tagayasan {
                     "PBP",
                     "XEX",
                     'X',itemSphereBladeSoul,
-                    'B',reqiredBlade,
+                    'B', BladeIngredient.of(reqiredBlade),
                     'P',new ItemStack(Items.ENDER_PEARL),
                     'E',new ItemStack(Items.ENDER_EYE)));
         }

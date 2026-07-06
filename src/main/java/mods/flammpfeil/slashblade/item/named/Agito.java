@@ -4,6 +4,7 @@ import mods.flammpfeil.slashblade.event.DropEventHandler;
 import mods.flammpfeil.slashblade.SlashBlade;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.item.ItemSlashBladeNamed;
+import mods.flammpfeil.slashblade.item.crafting.BladeIngredient;
 import mods.flammpfeil.slashblade.item.crafting.RecipeAwakeBlade;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -86,7 +87,7 @@ public class Agito {
                             "XBX",
                             " X ",
                             'X',itemProudSoul,
-                            'B',reqiredBlade));
+                            'B', BladeIngredient.of(reqiredBlade)));
                 }
             }
         }
@@ -164,7 +165,7 @@ public class Agito {
                             "PXP",
                             'X',itemSphereBladeSoul,
                             'P',itemProudSoul,
-                            'B',reqiredBlade));
+                            'B', BladeIngredient.of(reqiredBlade)));
                 }
             }
 
@@ -209,7 +210,7 @@ public class Agito {
                             "XBX",
                             " X ",
                             'X',itemProudSoul,
-                            'B',reqiredBlade));
+                            'B', BladeIngredient.of(reqiredBlade)));
                 }
             }
         }

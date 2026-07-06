@@ -5,6 +5,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.item.ItemSlashBladeNamed;
+import mods.flammpfeil.slashblade.item.crafting.BladeIngredient;
 import mods.flammpfeil.slashblade.item.crafting.RecipeAwakeBlade;
 import mods.flammpfeil.slashblade.SlashBlade;
 import mods.flammpfeil.slashblade.item.named.event.LoadEvent;
@@ -73,7 +74,7 @@ public class Tukumo {
                                 'I', new ItemStack(Blocks.IRON_BLOCK),
                                 'G', new ItemStack(Blocks.GOLD_BLOCK),
                                 'S', SlashBlade.findItemStack(SlashBlade.modid, SlashBlade.SphereBladeSoulStr, 1),
-                                'B', custombladeReqired));
+                                'B', BladeIngredient.of(custombladeReqired)));
 
             }
         }

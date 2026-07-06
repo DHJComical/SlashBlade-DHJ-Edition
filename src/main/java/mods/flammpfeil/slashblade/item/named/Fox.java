@@ -3,6 +3,7 @@ package mods.flammpfeil.slashblade.item.named;
 import mods.flammpfeil.slashblade.SlashBlade;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.item.ItemSlashBladeNamed;
+import mods.flammpfeil.slashblade.item.crafting.BladeIngredient;
 import net.minecraft.init.Enchantments;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -172,7 +173,7 @@ public class Fox {
                     "FPF",
                     "FXF",
                     "FIF",
-                    'X', reqiredBlade,
+                    'X', BladeIngredient.of(reqiredBlade),
                     'F', kitunebi,
                     'I', inari,
                     'P', proudsoul);
@@ -188,7 +189,7 @@ public class Fox {
                     "FPF",
                     "FXF",
                     "FIF",
-                    'X', reqiredBlade,
+                    'X', BladeIngredient.of(reqiredBlade),
                     'F', kitunebi,
                     'I', inari,
                     'P', proudsoul);
