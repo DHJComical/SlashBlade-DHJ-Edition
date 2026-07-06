@@ -5,11 +5,10 @@
     "textures": {
       "all": "slashblade:soul"
     },
-    "transform": /*"forge:default-block",*/
+    "transform":
     {
       "thirdperson": {
         "translation":[0,0.25,0],
-        //TRSRTransformation thirdperson = get(0, 2.5f, 0, 75, 45, 0, 0.375f);
         "post-rotation": [0.5624222, 0.3036032, 0.23296292, 0.73296285],
         "scale":0.375
       },
@@ -29,14 +28,11 @@
         "scale": 0.4
       },
       "gui": {
-        //"translation": {"x": 0, "y": 0, "z": 0},
-        //"rotation": [-0.09904575, 0.89239913, 0.23911762, -0.36964378],//{"x": 30, "y": 225, "z": 0},
-        "scale": 0.75 //0.625
+        "scale": 0.75
       },
       "ground": {
         "translation": [0,0.03,0],
-        //"rotation": {"x": 0, "y": 0, "z": 0},
-        "scale": 0.25 //0.25
+        "scale": 0.25
       },
       "fixed": {
         "translation": [0,0,-0.25],

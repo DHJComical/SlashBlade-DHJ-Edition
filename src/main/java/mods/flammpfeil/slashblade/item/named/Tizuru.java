@@ -17,13 +17,14 @@ import net.minecraft.nbt.NBTTagCompound;
  */
 public class Tizuru {
     String name = "slashblade.named.muramasa";
+    String reqiredStr = name + ".reqired";
     @SubscribeEvent
-    public void init(LoadEvent.InitEvent event){
+    public void init(LoadEvent.PreInitEvent event){
         ItemStack customblade = new ItemStack(SlashBlade.bladeNamed,1,0);
         NBTTagCompound tag = new NBTTagCompound();
         customblade.setTagCompound(tag);
 
-        ItemSlashBladeNamed.CurrentItemName.set(tag, name);
+        ItemSlashBladeNamed.setCurrentItemName(tag, name);
         ItemSlashBladeNamed.CustomMaxDamage.set(tag, 50);
         ItemSlashBlade.setBaseAttackModifier(tag, 4 + Item.ToolMaterial.IRON.getAttackDamage());
         ItemSlashBlade.TextureName.set(tag, "named/muramasa/muramasa");
@@ -32,8 +33,19 @@ public class Tizuru {
         ItemSlashBlade.StandbyRenderType.set(tag, 2);
         ItemSlashBladeNamed.IsDefaultBewitched.set(tag,true);
 
-        SlashBlade.registerCustomItemStack(name, customblade);
+        customblade = SlashBlade.registerFixedBladeStack(name, customblade);
         ItemSlashBladeNamed.NamedBlades.add(SlashBlade.modid + ":" + name);
+
+        ItemStack reqiredBlade = SlashBlade.findItemStack(SlashBlade.modid,"slashblade",1);
+        {
+            NBTTagCompound reqTag = new NBTTagCompound();
+            reqiredBlade.setTagCompound(reqTag);
+            ItemSlashBladeNamed.setCurrentItemName(reqTag, "slashblade.named.muramasa.required");
+            ItemSlashBlade.ProudSoul.set(reqTag, 10000);
+            ItemSlashBlade.RepairCount.set(reqTag,20);
+        }
+        reqiredBlade = SlashBlade.registerFixedBladeStack(reqiredStr,reqiredBlade);
+        ItemSlashBladeNamed.NamedBlades.add(SlashBlade.modid + ":" + reqiredStr);
     }
 
     @SubscribeEvent
@@ -43,21 +55,7 @@ public class Tizuru {
 
         {
             ItemStack blade = SlashBlade.getCustomBlade(SlashBlade.modid,name);
-
-            ItemStack reqiredBlade = SlashBlade.findItemStack(SlashBlade.modid,"slashblade",1);
-            {
-
-                NBTTagCompound tag = new NBTTagCompound();
-                reqiredBlade.setTagCompound(tag);
-                ItemSlashBladeNamed.CurrentItemName.set(tag, "slashblade.named.muramasa.required");
-                ItemSlashBlade.ProudSoul.set(tag, 10000);
-                ItemSlashBlade.RepairCount.set(tag,20);
-            }
-            String reqiredStr = name + ".reqired";
-            SlashBlade.registerCustomItemStack(reqiredStr,reqiredBlade);
-            ItemSlashBladeNamed.NamedBlades.add(SlashBlade.modid + ":" + reqiredStr);
-
-            reqiredBlade = reqiredBlade.copy();
+            ItemStack reqiredBlade = SlashBlade.getCustomBlade(reqiredStr).copy();
 
             IRecipe recipe = new RecipeAwakeBlade(new ResourceLocation(SlashBlade.modid,"muramasa"),
                     blade,reqiredBlade,

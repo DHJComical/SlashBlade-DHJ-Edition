@@ -17,12 +17,12 @@ import net.minecraft.nbt.NBTTagCompound;
 public class PSSange {
     String name = "slashblade.named.sange";
     @SubscribeEvent
-    public void init(LoadEvent.InitEvent event){
+    public void init(LoadEvent.PreInitEvent event){
         ItemStack customblade = new ItemStack(SlashBlade.bladeNamed,1,0);
         NBTTagCompound tag = new NBTTagCompound();
         customblade.setTagCompound(tag);
 
-        ItemSlashBladeNamed.CurrentItemName.set(tag, name);
+        ItemSlashBladeNamed.setCurrentItemName(tag, name);
         ItemSlashBladeNamed.CustomMaxDamage.set(tag, 70);
         ItemSlashBlade.setBaseAttackModifier(tag, 4 + Item.ToolMaterial.IRON.getAttackDamage());
         ItemSlashBlade.TextureName.set(tag, "named/sange/sange");
@@ -31,7 +31,7 @@ public class PSSange {
         ItemSlashBlade.StandbyRenderType.set(tag, 2);
         ItemSlashBladeNamed.IsDefaultBewitched.set(tag,true);
 
-        SlashBlade.registerCustomItemStack(name, customblade);
+        customblade = SlashBlade.registerFixedBladeStack(name, customblade);
         ItemSlashBladeNamed.NamedBlades.add(SlashBlade.modid + ":" + name);
     }
 

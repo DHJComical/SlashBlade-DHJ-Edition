@@ -26,6 +26,9 @@ public class ModelRegister {
         ModelLoader.setCustomModelResourceLocation(SlashBlade.bladeWhiteSheath, 0, modelLoc);
         ModelLoader.setCustomModelResourceLocation(SlashBlade.wrapBlade, 0, modelLoc);
         ModelLoader.setCustomModelResourceLocation(SlashBlade.bladeNamed, 0, modelLoc);
+        for (net.minecraft.item.Item item : SlashBlade.getFixedBladeItems()) {
+            ModelLoader.setCustomModelResourceLocation(item, 0, modelLoc);
+        }
 
         /*
         ForgeHooksClient.registerTESRItemStack(SlashBlade.weapon, 0, DummyTileEntity.class);

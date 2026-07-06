@@ -1,8 +1,9 @@
 package mods.flammpfeil.slashblade.event;
 
+import mods.flammpfeil.slashblade.item.BladeIdentity;
+import mods.flammpfeil.slashblade.item.BladeStateCodec;
 import mods.flammpfeil.slashblade.item.ItemSlashBladeNamed;
 import mods.flammpfeil.slashblade.SlashBlade;
-import mods.flammpfeil.slashblade.util.TagPropertyAccessor;
 import mods.flammpfeil.slashblade.item.ItemProudSoul;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import net.minecraft.enchantment.Enchantment;
@@ -89,28 +90,24 @@ public class AnvilEventHandler {
 
                 if (ItemSlashBladeNamed.CurrentItemName.exists(matTag)) {
                     ItemStack targetBlade = SlashBlade.findItemStack(SlashBlade.modid, "slashbladeNamed", 1);
-                    if (out.getTranslationKey().equals(targetBlade.getTranslationKey())) {
+                    if (BladeIdentity.matchesIdentity(out, targetBlade)) {
+                        String bladeId = BladeIdentity.getBladeId(matTag);
+                        ItemStack sourceBlade = out.copy();
+                        ItemStack upgradedBlade = SlashBlade.createBladeStack(bladeId);
 
-                        ItemSlashBladeNamed.CurrentItemName.set(tag, ItemSlashBladeNamed.CurrentItemName.get(matTag));
+                        if (!upgradedBlade.isEmpty()) {
+                            out = upgradedBlade.copy();
+                            tag = ItemSlashBlade.getItemTagCompound(out);
+                            BladeStateCodec.copyPersistentState(sourceBlade, out);
+                            BladeStateCodec.copyEnchantments(sourceBlade, out);
+                            BladeStateCodec.copyDamage(sourceBlade, out);
+                        }
 
-                        if (ItemSlashBlade.BaseAttackModifier.exists(matTag))
-                            ItemSlashBlade.setBaseAttackModifier(tag, ItemSlashBlade.BaseAttackModifier.get(matTag));
+                        tag = ItemSlashBlade.getItemTagCompound(out);
+                        BladeStateCodec.copyDefinitionOverrides(matTag, tag);
 
-                        TagPropertyAccessor<?>[] accessors = {
-                                ItemSlashBladeNamed.CustomMaxDamage,
-                                ItemSlashBlade.TextureName,
-                                ItemSlashBlade.ModelName,
-                                ItemSlashBlade.SpecialAttackType,
-                                ItemSlashBlade.StandbyRenderType,
-                                ItemSlashBladeNamed.IsDefaultBewitched,
-                                ItemSlashBladeNamed.TrueItemName,
-                                ItemSlashBlade.SummonedSwordColor,
-                                ItemSlashBlade.IsDestructable,
-                                ItemSlashBlade.IsBroken
-                        };
-
-                        for (TagPropertyAccessor<?> acc : accessors)
-                            acc.copy(tag, matTag);
+                        if (event.getLeft().hasDisplayName())
+                            out.setStackDisplayName(event.getLeft().getDisplayName());
                     }
                     repairFactor = 1.0f;
                     ItemSlashBlade.ProudSoul.add(tag, 0);

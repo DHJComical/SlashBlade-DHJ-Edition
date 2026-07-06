@@ -3,6 +3,7 @@ package mods.flammpfeil.slashblade.specialeffect;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import mods.flammpfeil.slashblade.item.BladeIdentity;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.util.SlashBladeEvent;
 import mods.flammpfeil.slashblade.util.SlashBladeHooks;
@@ -97,7 +98,7 @@ public class WitherEdge implements ISpecialEffect, IRemovable{
 
     @Override
     public boolean canRemoval(ItemStack stack) {
-        if(stack.getTranslationKey().equals("item.slashblade.named.koseki"))
+        if(BladeIdentity.matchesIdentity(stack, "slashblade.named.koseki"))
             return false;
         return true;
     }

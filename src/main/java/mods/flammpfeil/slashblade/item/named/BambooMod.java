@@ -22,14 +22,8 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
  */
 public class BambooMod {
     @SubscribeEvent
-    public void init(LoadEvent.InitEvent event){
-    }
-
-    @SubscribeEvent
-    public void postinit(LoadEvent.PostInitEvent event){
-
+    public void init(LoadEvent.PreInitEvent event){
         ItemStack innerBlade = SlashBlade.findItemStack("minecraft", "wooden_sword", 1);
-
 
         ItemStack reqiredBlade = SlashBlade.findItemStack(SlashBlade.modid,"slashbladeWrapper",1);
         {
@@ -37,7 +31,7 @@ public class BambooMod {
 
             reqiredBlade.addEnchantment(Enchantments.LOOTING,1);
             NBTTagCompound tag = reqiredBlade.getTagCompound();
-            ItemSlashBladeNamed.CurrentItemName.set(tag,"wrap.bamboomod.katana");
+            ItemSlashBladeNamed.setCurrentItemName(tag,"wrap.bamboomod.katana");
             ItemSlashBladeNamed.BaseAttackModifier.set(tag, 4.0f);
             ItemSlashBlade.TextureName.set(tag,"BambooKatana");
 
@@ -47,10 +41,14 @@ public class BambooMod {
                     "tooltip.slashblade.sample.line1",
                     "tooltip.slashblade.sample.line2");
         }
+        SlashBlade.registerFixedBladeStack("wrap.bamboomod.katana", reqiredBlade.copy());
         String reqiredStr = "wrap.BambooMod.katana.sample";
-        SlashBlade.registerCustomItemStack(reqiredStr,reqiredBlade);
+        reqiredBlade = SlashBlade.registerFixedBladeStack(reqiredStr,reqiredBlade);
         ItemSlashBladeNamed.NamedBlades.add(SlashBlade.modid + ":" + reqiredStr);
+    }
 
+    @SubscribeEvent
+    public void postinit(LoadEvent.PostInitEvent event){
         ItemStack katana = SlashBlade.findItemStack("BambooMod","katana",1);
 
         if(Loader.isModLoaded("BambooMod") && !katana.isEmpty()){
@@ -120,7 +118,7 @@ public class BambooMod {
             SlashBlade.wrapBlade.setWrapItem(scabbard,target);
 
             NBTTagCompound tag = scabbard.getTagCompound();
-            ItemSlashBladeNamed.CurrentItemName.set(tag,"wrap.bamboomod.katana");
+            ItemSlashBladeNamed.setCurrentItemName(tag,"wrap.bamboomod.katana");
             ItemSlashBladeNamed.TextureName.set(tag,"BambooKatana");
             ItemSlashBladeNamed.BaseAttackModifier.set(tag,attackModif);
 

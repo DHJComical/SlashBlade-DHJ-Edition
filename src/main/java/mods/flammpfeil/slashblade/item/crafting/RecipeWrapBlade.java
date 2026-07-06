@@ -2,6 +2,7 @@ package mods.flammpfeil.slashblade.item.crafting;
 
 import com.google.common.collect.Maps;
 import mods.flammpfeil.slashblade.SlashBlade;
+import mods.flammpfeil.slashblade.item.BladeIdentity;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.item.ItemSlashBladeNamed;
 import mods.flammpfeil.slashblade.item.ItemSlashBladeWrapper;
@@ -66,12 +67,13 @@ public class RecipeWrapBlade extends ShapedRecipes {
         ItemStack innerBlade = SlashBlade.findItemStack("minecraft", "wooden_sword", 1);
 
         ItemStack reqiredBlade = SlashBlade.findItemStack(SlashBlade.modid,"slashbladeWrapper",1);
+        String bladeId = "wrap." + name.replace(':', '.').toLowerCase(Locale.ROOT);
         {
             SlashBlade.wrapBlade.setWrapItem(reqiredBlade,innerBlade);
 
             reqiredBlade.addEnchantment(Enchantments.LOOTING,1);
             NBTTagCompound tag = reqiredBlade.getTagCompound();
-            ItemSlashBladeNamed.CurrentItemName.set(tag, "wrap." + name.replace(':', '.').toLowerCase(Locale.ROOT));
+            ItemSlashBladeNamed.setCurrentItemName(tag, bladeId);
             ItemSlashBladeNamed.BaseAttackModifier.set(tag, 4.0f);
             ItemSlashBlade.TextureName.set(tag,texture);
 
@@ -79,8 +81,10 @@ public class RecipeWrapBlade extends ShapedRecipes {
                     "tooltip.slashblade.sample.line1",
                     "tooltip.slashblade.sample.line2");
         }
+        SlashBlade.registerFixedBladeStack(bladeId, reqiredBlade.copy());
+
         String reqiredStr = "wrap." + name.replace(':', '.') + ".sample";
-        SlashBlade.registerCustomItemStack(reqiredStr,reqiredBlade);
+        reqiredBlade = SlashBlade.registerFixedBladeStack(reqiredStr,reqiredBlade);
         ItemSlashBladeNamed.NamedBlades.add(SlashBlade.modid + ":" + reqiredStr);
 
         return reqiredBlade;
@@ -128,7 +132,7 @@ public class RecipeWrapBlade extends ShapedRecipes {
         SlashBlade.wrapBlade.setWrapItem(scabbard,target);
 
         NBTTagCompound tag = scabbard.getTagCompound();
-        ItemSlashBladeNamed.CurrentItemName.set(tag, "wrap." + targetName.toString().replace(':', '.').toLowerCase(Locale.ROOT));
+        ItemSlashBladeNamed.setCurrentItemName(tag, "wrap." + targetName.toString().replace(':', '.').toLowerCase(Locale.ROOT));
         ItemSlashBladeNamed.TextureName.set(tag,wrapableTextureNames.get(targetName.toString()));
         ItemSlashBladeNamed.BaseAttackModifier.set(tag,wrapableBaseAttackModifiers.get(targetName.toString()));
 

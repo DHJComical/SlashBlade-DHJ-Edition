@@ -27,7 +27,7 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
  */
 public class SimpleBlade {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public void init(LoadEvent.InitEvent event){
+    public void init(LoadEvent.PreInitEvent event){
         ItemStack itemIngotBladeSoul = SlashBlade.findItemStack(SlashBlade.modid,SlashBlade.IngotBladeSoulStr,1);
         ItemStack itemSphereBladeSoul = SlashBlade.findItemStack(SlashBlade.modid,SlashBlade.SphereBladeSoulStr,1);
 
@@ -103,7 +103,7 @@ public class SimpleBlade {
             ItemSlashBlade.KillCount.set(tag, 100);
 
             String key = "testsilver";
-            SlashBlade.registerCustomItemStack(key, blade);
+            blade = SlashBlade.registerFixedBladeStack(key, blade);
             ItemSlashBladeNamed.NamedBlades.add(key);
 
         }
@@ -146,9 +146,9 @@ public class SimpleBlade {
         ItemStack brokenBladeWhite = new ItemStack(SlashBlade.bladeWhiteSheath,1,0);
         brokenBladeWhite.setItemDamage(brokenBladeWhite.getMaxDamage());
         NBTTagCompound brokenBladeWhiteTag = ItemSlashBlade.getItemTagCompound(brokenBladeWhite);
-        ItemSlashBladeNamed.CurrentItemName.set(brokenBladeWhiteTag, "slashblade.white.broken");
+        ItemSlashBladeNamed.setCurrentItemName(brokenBladeWhiteTag, "slashblade.white.broken");
         ItemSlashBlade.IsBroken.set(brokenBladeWhiteTag, true);
-        SlashBlade.registerCustomItemStack(SlashBlade.BrokenBladeWhiteStr, brokenBladeWhite);
+        brokenBladeWhite = SlashBlade.registerFixedBladeStack(SlashBlade.BrokenBladeWhiteStr, brokenBladeWhite);
         ItemSlashBladeNamed.NamedBlades.add(SlashBlade.BrokenBladeWhiteStr);
 
 
@@ -172,10 +172,10 @@ public class SimpleBlade {
             NBTTagCompound tag = ItemSlashBlade.getItemTagCompound(customblade);
 
             SpecialEffects.addEffect(customblade,SpecialEffects.BlastEdge);
-            ItemSlashBladeNamed.CurrentItemName.set(tag, "slashblade.test.blastedge");
+            ItemSlashBladeNamed.setCurrentItemName(tag, "slashblade.test.blastedge");
 
             String key = "TestBlastEdge";
-            SlashBlade.registerCustomItemStack(key, customblade);
+            customblade = SlashBlade.registerFixedBladeStack(key, customblade);
             ItemSlashBladeNamed.NamedBlades.add(key);
 
         }
@@ -185,10 +185,10 @@ public class SimpleBlade {
             NBTTagCompound tag = ItemSlashBlade.getItemTagCompound(customblade);
 
             SpecialEffects.addEffect(customblade,SpecialEffects.HFCustom);
-            ItemSlashBladeNamed.CurrentItemName.set(tag, "slashblade.test.hfcustom");
+            ItemSlashBladeNamed.setCurrentItemName(tag, "slashblade.test.hfcustom");
 
             String key = "TestHFCustom";
-            SlashBlade.registerCustomItemStack(key, customblade);
+            customblade = SlashBlade.registerFixedBladeStack(key, customblade);
             ItemSlashBladeNamed.NamedBlades.add(key);
 
         }
@@ -197,13 +197,13 @@ public class SimpleBlade {
             NBTTagCompound tag = ItemSlashBlade.getItemTagCompound(customblade);
 
             SpecialEffects.addEffect(customblade,SpecialEffects.HFCustom);
-            ItemSlashBladeNamed.CurrentItemName.set(tag, "slashblade.test.hfcustom.full");
+            ItemSlashBladeNamed.setCurrentItemName(tag, "slashblade.test.hfcustom.full");
 
             IEnergyStorage storage = customblade.getCapability(BladeCapabilityProvider.ENERGY, null);
             storage.receiveEnergy(storage.getMaxEnergyStored(),false);
 
             String key = "TestHFCustomFull";
-            SlashBlade.registerCustomItemStack(key, customblade);
+            customblade = SlashBlade.registerFixedBladeStack(key, customblade);
             ItemSlashBladeNamed.NamedBlades.add(key);
 
         }

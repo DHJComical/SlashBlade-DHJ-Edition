@@ -54,7 +54,7 @@ public class ConfigCustomBladeManager {
             NBTTagCompound tag = new NBTTagCompound();
             customBlade.setTagCompound(tag);
 
-            ItemSlashBladeNamed.CurrentItemName.set(tag, key);
+            ItemSlashBladeNamed.setCurrentItemName(tag, key);
             ItemSlashBladeNamed.CustomMaxDamage.set(tag, 50);
             ItemSlashBlade.setBaseAttackModifier(tag, 4 + Item.ToolMaterial.IRON.getAttackDamage());
             ItemSlashBlade.TextureName.set(tag, "custom/"+line+"/texture");
@@ -74,7 +74,7 @@ public class ConfigCustomBladeManager {
             ).setMirrored(false);
 
             SlashBlade.addRecipe(key,recipe);
-            SlashBlade.registerCustomItemStack(key, customBlade);
+            SlashBlade.registerDynamicBladeStack(key, customBlade);
 /* todo: advancement
             Achievement achievement = AchievementList.registerCraftingAchievement(
                     key, -3 + x++, y, SlashBlade.getCustomBlade(key), AchievementList.getAchievement("noname"));

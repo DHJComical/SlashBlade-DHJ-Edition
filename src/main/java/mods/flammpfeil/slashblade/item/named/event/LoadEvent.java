@@ -1,5 +1,6 @@
 package mods.flammpfeil.slashblade.item.named.event;
 
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
@@ -8,6 +9,15 @@ import net.minecraftforge.fml.common.eventhandler.Event;
  * Created by Furia on 14/07/07.
  */
 public abstract class LoadEvent extends Event{
+
+    public static class PreInitEvent extends LoadEvent{
+        public FMLPreInitializationEvent event;
+
+        public PreInitEvent(FMLPreInitializationEvent event){
+            super();
+            this.event = event;
+        }
+    }
 
     public static class InitEvent extends LoadEvent{
         public FMLInitializationEvent event;

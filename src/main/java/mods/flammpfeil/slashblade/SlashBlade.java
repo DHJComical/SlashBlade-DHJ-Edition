@@ -9,12 +9,18 @@ import mods.flammpfeil.slashblade.config.ConfigManager;
 import mods.flammpfeil.slashblade.config.ConfigCustomBladeManager;
 import mods.flammpfeil.slashblade.proxy.CoreProxy;
 import mods.flammpfeil.slashblade.event.*;
+import mods.flammpfeil.slashblade.item.BladeIdentity;
 import mods.flammpfeil.slashblade.item.ItemSlashBladeBambooLight;
 import mods.flammpfeil.slashblade.item.ItemSlashBladeDetune;
+import mods.flammpfeil.slashblade.item.ItemSlashBladeDynamic;
 import mods.flammpfeil.slashblade.item.ItemSlashBladeNamed;
+import mods.flammpfeil.slashblade.item.ItemSlashBladeNamedFixed;
 import mods.flammpfeil.slashblade.item.ItemProudSoul;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.item.ItemSlashBladeWrapper;
+import mods.flammpfeil.slashblade.item.BladeDefinition;
+import mods.flammpfeil.slashblade.item.BladeDefinitionRegistry;
+import mods.flammpfeil.slashblade.item.BladeStateCodec;
 import mods.flammpfeil.slashblade.item.crafting.RecipeAdjustPos;
 import mods.flammpfeil.slashblade.item.crafting.RecipeInstantRepair;
 import mods.flammpfeil.slashblade.item.crafting.RecipeWrapBlade;
@@ -44,10 +50,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.util.*;
@@ -73,6 +81,8 @@ public class SlashBlade {
     public static ItemSlashBladeDetune bladeSilverBambooLight;
     public static ItemSlashBladeDetune bladeWhiteSheath;
     public static ItemSlashBladeNamed bladeNamed;
+    public static final Map<String, ItemSlashBlade> FixedBladeItemRegistry = Maps.newLinkedHashMap();
+    public static final Map<String, ItemStack> FixedBladePrototypeRegistry = Maps.newLinkedHashMap();
 
     public static ItemSlashBladeWrapper wrapBlade = null;
 
@@ -313,6 +323,7 @@ public class SlashBlade {
                 .setRegistryName("slashblade");
 
         ForgeRegistries.ITEMS.register(weapon);
+        registerCoreBladeDefinition(new ItemStack(weapon));
 
         //==================================================================================================================================
 
@@ -325,6 +336,7 @@ public class SlashBlade {
                 .setCreativeTab(tab)
                 .setRegistryName("slashbladeWood");
         ForgeRegistries.ITEMS.register(bladeWood);
+        registerCoreBladeDefinition(new ItemStack(bladeWood));
 
         bladeBambooLight = (ItemSlashBladeDetune)(new ItemSlashBladeDetune(ToolMaterial.WOOD, 4 + ToolMaterial.STONE.getAttackDamage()))
                 .setDestructable(true)
@@ -335,6 +347,7 @@ public class SlashBlade {
                 .setCreativeTab(tab)
                 .setRegistryName("slashbladeBambooLight");
         ForgeRegistries.ITEMS.register(bladeBambooLight);
+        registerCoreBladeDefinition(new ItemStack(bladeBambooLight));
 
         bladeSilverBambooLight = (ItemSlashBladeBambooLight)(new ItemSlashBladeBambooLight(ToolMaterial.WOOD, 4 + ToolMaterial.IRON.getAttackDamage()))
                 .setDestructable(true)
@@ -345,6 +358,7 @@ public class SlashBlade {
                 .setCreativeTab(tab)
                 .setRegistryName("slashbladeSilverBambooLight");
         ForgeRegistries.ITEMS.register(bladeSilverBambooLight);
+        registerCoreBladeDefinition(new ItemStack(bladeSilverBambooLight));
 
         bladeWhiteSheath = (ItemSlashBladeDetune)(new ItemSlashBladeDetune(ToolMaterial.IRON, 4 + ToolMaterial.IRON.getAttackDamage()))
                 .setDestructable(false)
@@ -356,6 +370,7 @@ public class SlashBlade {
                 .setCreativeTab(tab)
                 .setRegistryName("slashbladeWhite");
         ForgeRegistries.ITEMS.register(bladeWhiteSheath);
+        registerCoreBladeDefinition(new ItemStack(bladeWhiteSheath));
 
 
 
@@ -367,18 +382,17 @@ public class SlashBlade {
                 .setCreativeTab(tab)
                 .setRegistryName("slashbladeWrapper");
         ForgeRegistries.ITEMS.register(wrapBlade);
+        registerCoreBladeDefinition(new ItemStack(wrapBlade));
 
 
 
 
-        bladeNamed = (ItemSlashBladeNamed)(new ItemSlashBladeNamed(ToolMaterial.IRON, 4.0f))
+        bladeNamed = (ItemSlashBladeNamed)(new ItemSlashBladeDynamic(ToolMaterial.IRON, 4.0f))
                 .setMaxDamage(40)
                 .setTranslationKey("slashblade.named")
                 .setCreativeTab(tab)
                 .setRegistryName("slashbladeNamed");
         ForgeRegistries.ITEMS.register(bladeNamed);
-
-        CoreProxy.proxy.initializeItemRenderer();
 
         manager = new ConfigEntityListManager();
 
@@ -397,10 +411,10 @@ public class SlashBlade {
 
         InitEventBus.register(new PSSange());
         InitEventBus.register(new PSYasha());
+        InitEventBus.register(new BambooMod());
         InitEventBus.register(new Fox());
         InitEventBus.register(new Tizuru());
         InitEventBus.register(new Doutanuki());
-        InitEventBus.register(new BambooMod());
 
         InitEventBus.register(new Koseki());
 
@@ -408,6 +422,11 @@ public class SlashBlade {
         ccb.loadConfig(mainConfiguration);
         InitEventBus.register(ccb);
 
+        InitEventBus.post(new LoadEvent.PreInitEvent(evt));
+
+        SlashBlade.addRecipe("wrap", new RecipeWrapBlade());
+
+        CoreProxy.proxy.initializeItemRenderer();
 
         CapabilityMobEffectHandler.register();
     }
@@ -416,8 +435,6 @@ public class SlashBlade {
 
     @EventHandler
     public void init(FMLInitializationEvent evt){
-
-        SlashBlade.addRecipe("wrap", new RecipeWrapBlade());
 
         SlashBlade.addRecipe("adjust", new RecipeAdjustPos());
 
@@ -594,18 +611,189 @@ public class SlashBlade {
 
     static public Map<ResourceLocationRaw, ItemStack> BladeRegistry = Maps.newHashMap();
 
+    public static Collection<ItemSlashBlade> getFixedBladeItems() {
+        return Collections.unmodifiableCollection(FixedBladeItemRegistry.values());
+    }
+
+    public static Collection<BladeDefinition> getBladeDefinitions() {
+        return BladeDefinitionRegistry.getDefinitions();
+    }
+
+    public static ItemStack registerDynamicBladeStack(String bladeId, ItemStack stack) {
+        if (!stack.isEmpty() && stack.getItem() instanceof ItemSlashBlade) {
+            BladeStateCodec.ensureBladeState(stack, bladeId);
+        }
+        registerCustomItemStack(bladeId, stack);
+        return stack;
+    }
+
     static public void registerCustomItemStack(String name, ItemStack stack){
+        BladeIdentity.ensureRegisteredBladeId(stack, modid, name);
+        if (stack.getItem() instanceof ItemSlashBlade) {
+            BladeStateCodec.ensureBladeState(stack);
+
+            String bladeId = BladeIdentity.getBladeId(stack);
+            String fullKey = new ResourceLocationRaw(modid, name).toString();
+            BladeDefinitionRegistry.registerPrototype(name, stack);
+            BladeDefinitionRegistry.registerPrototype(fullKey, stack);
+            BladeDefinitionRegistry.registerAlias(name, bladeId);
+            BladeDefinitionRegistry.registerAlias(fullKey, bladeId);
+
+            boolean isFixedItem = FixedBladeItemRegistry.containsValue(stack.getItem());
+            boolean isCanonicalKey = StringUtils.equals(name, bladeId) || StringUtils.equals(fullKey, bladeId);
+            if (!isFixedItem && (!BladeDefinitionRegistry.hasDefinition(bladeId) || isCanonicalKey)) {
+                BladeDefinitionRegistry.registerDefinition(bladeId, stack, false, true);
+            }
+        }
         BladeRegistry.put(new ResourceLocationRaw(modid, name),stack);
+    }
+
+    static public ItemStack registerFixedBladeStack(String bladeId, ItemStack stack) {
+        if (stack.isEmpty() || !(stack.getItem() instanceof ItemSlashBlade)) {
+            registerCustomItemStack(bladeId, stack);
+            return stack;
+        }
+
+        String resolvedBladeId = BladeIdentity.getBladeId(stack);
+        if (resolvedBladeId.isEmpty()) {
+            resolvedBladeId = bladeId;
+        }
+
+        ItemSlashBlade sourceItem = (ItemSlashBlade) stack.getItem();
+        ItemSlashBlade fixedItem = getOrCreateFixedBladeItem(resolvedBladeId, sourceItem, stack);
+
+        ItemStack fixedStack = new ItemStack(fixedItem, stack.getCount(), stack.getMetadata());
+        fixedStack.setItemDamage(stack.getItemDamage());
+        if (stack.hasTagCompound()) {
+            fixedStack.setTagCompound((net.minecraft.nbt.NBTTagCompound) stack.getTagCompound().copy());
+        }
+
+        BladeStateCodec.ensureBladeState(fixedStack, resolvedBladeId);
+        BladeDefinitionRegistry.registerDefinition(resolvedBladeId, fixedStack, true, false);
+        BladeDefinitionRegistry.registerPrototype(resolvedBladeId, fixedStack);
+        if (!FixedBladePrototypeRegistry.containsKey(resolvedBladeId) || resolvedBladeId.equals(bladeId)) {
+            FixedBladePrototypeRegistry.put(resolvedBladeId, fixedStack.copy());
+        }
+        registerCustomItemStack(bladeId, fixedStack);
+        return fixedStack;
+    }
+
+    private static ItemSlashBlade getOrCreateFixedBladeItem(String bladeId, ItemSlashBlade sourceItem, ItemStack sourceStack) {
+        if (FixedBladeItemRegistry.containsKey(bladeId)) {
+            return FixedBladeItemRegistry.get(bladeId);
+        }
+
+        ItemSlashBlade fixedItem;
+        float baseAttackModifier = sourceItem.getBaseAttackModifiers(ItemSlashBlade.getItemTagCompound(sourceStack));
+        String registryPath = toFixedBladeRegistryPath(bladeId);
+
+        if (sourceItem instanceof ItemSlashBladeWrapper) {
+            ItemSlashBladeWrapper wrapperItem = new ItemSlashBladeWrapper(ToolMaterial.IRON);
+            wrapperItem.defaultBaseAttackModifier = baseAttackModifier;
+            wrapperItem.setMaxDamage(sourceStack.getMaxDamage());
+            copyRepairConfig(wrapperItem, sourceItem);
+            fixedItem = (ItemSlashBlade) wrapperItem
+                    .setTranslationKey(bladeId)
+                    .setRegistryName(modid, registryPath);
+        } else {
+            ItemSlashBladeNamedFixed namedItem = new ItemSlashBladeNamedFixed(ToolMaterial.IRON, baseAttackModifier);
+            namedItem.configureFromPrototype(sourceItem, sourceStack);
+            copyRepairConfig(namedItem, sourceItem);
+            fixedItem = (ItemSlashBlade) namedItem
+                    .setTranslationKey(bladeId)
+                    .setRegistryName(modid, registryPath);
+        }
+
+        ForgeRegistries.ITEMS.register(fixedItem);
+        FixedBladeItemRegistry.put(bladeId, fixedItem);
+        return fixedItem;
+    }
+
+    private static void copyRepairConfig(ItemSlashBlade targetItem, ItemSlashBlade sourceItem) {
+        ItemStack repairMaterial = sourceItem.getRepairMaterial();
+        if (!repairMaterial.isEmpty()) {
+            targetItem.setRepairMaterial(repairMaterial);
+        }
+
+        String[] repairOreDic = sourceItem.getRepairMaterialOreDic();
+        if (repairOreDic != null && 0 < repairOreDic.length) {
+            targetItem.setRepairMaterialOreDic(repairOreDic);
+        }
+    }
+
+    private static String toFixedBladeRegistryPath(String bladeId) {
+        String normalized = bladeId.toLowerCase(Locale.ROOT).replace(':', '.');
+        normalized = normalized.replaceAll("[^a-z0-9._/\\-]", "_");
+        normalized = normalized.replace('.', '_').replace('/', '_').replace('-', '_');
+        return normalized;
+    }
+
+    private static void registerCoreBladeDefinition(ItemStack stack) {
+        if (stack.isEmpty() || !(stack.getItem() instanceof ItemSlashBlade)) {
+            return;
+        }
+
+        ResourceLocation registryName = stack.getItem().getRegistryName();
+        if (registryName == null) {
+            return;
+        }
+
+        BladeStateCodec.ensureBladeState(stack, registryName.toString());
+        BladeDefinitionRegistry.registerDefinition(registryName.toString(), stack, true, false);
+        BladeDefinitionRegistry.registerPrototype(registryName.toString(), stack);
+    }
+
+    public static BladeDefinition getBladeDefinition(String bladeId) {
+        return BladeDefinitionRegistry.get(bladeId);
+    }
+
+    public static String resolveBladeId(ItemStack stack) {
+        return BladeIdentity.getBladeId(stack);
+    }
+
+    public static void registerBladeAlias(String alias, String bladeId) {
+        BladeDefinitionRegistry.registerAlias(alias, bladeId);
+    }
+
+    public static ItemStack createBladeStack(String bladeId) {
+        if (StringUtils.isBlank(bladeId)) {
+            return ItemStack.EMPTY;
+        }
+
+        ItemStack stack = BladeDefinitionRegistry.createBladeStack(bladeId);
+        if (!stack.isEmpty()) {
+            return stack;
+        }
+
+        String[] path = bladeId.split(":", 2);
+        if (path.length == 2 && SlashBlade.modid.equals(path[0])) {
+            stack = BladeDefinitionRegistry.createBladeStack(path[1]);
+            if (!stack.isEmpty()) {
+                return stack;
+            }
+        }
+
+        return getCustomBlade(bladeId);
     }
 
     static public ItemStack findItemStack(String modid, String name, int count){
         ResourceLocationRaw key = new ResourceLocationRaw(modid, name);
         ItemStack stack = ItemStack.EMPTY;
 
-        if(BladeRegistry.containsKey(key)) {
+        if (SlashBlade.modid.equals(modid)) {
+            stack = BladeDefinitionRegistry.createBladeStack(name);
+            if (stack.isEmpty()) {
+                stack = BladeDefinitionRegistry.createBladeStack(key.toString());
+            }
+        }
+
+        if(stack.isEmpty() && BladeRegistry.containsKey(key)) {
             stack = BladeRegistry.get(new ResourceLocationRaw(modid, name)).copy();
 
-        }else {
+        }else if(stack.isEmpty() && SlashBlade.modid.equals(modid) && FixedBladePrototypeRegistry.containsKey(name)) {
+            stack = FixedBladePrototypeRegistry.get(name).copy();
+
+        }else if(stack.isEmpty()) {
             Item item = Item.REGISTRY.getObject(new ResourceLocationRaw(modid, name));
             if (item != null)
                 stack = new ItemStack(item);
@@ -613,6 +801,11 @@ public class SlashBlade {
         }
 
         if(!stack.isEmpty()) {
+            if (stack.getItem() instanceof ItemSlashBlade) {
+                BladeStateCodec.ensureBladeState(stack);
+            } else {
+                BladeIdentity.ensureBladeId(stack);
+            }
             stack.setCount(count);
         }
 

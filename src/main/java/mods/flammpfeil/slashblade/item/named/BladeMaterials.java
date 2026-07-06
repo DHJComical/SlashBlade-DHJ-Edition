@@ -19,7 +19,7 @@ import net.minecraft.item.ItemStack;
  */
 public class BladeMaterials {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public void init(LoadEvent.InitEvent event){
+    public void init(LoadEvent.PreInitEvent event){
         ItemStack itemProudSoul = SlashBlade.findItemStack(SlashBlade.modid, SlashBlade.ProudSoulStr , 1);
         ItemStack itemIngotBladeSoul = SlashBlade.findItemStack(SlashBlade.modid, SlashBlade.IngotBladeSoulStr , 1);
         ItemStack itemSphereBladeSoul = SlashBlade.findItemStack(SlashBlade.modid, SlashBlade.SphereBladeSoulStr , 1);

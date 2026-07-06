@@ -70,6 +70,7 @@ public class ItemSlashBlade extends ItemSword {
     static public Map<String,ResourceLocationRaw> textureMap = new HashMap<String, ResourceLocationRaw>();
 
     static public TagPropertyAccessor.TagPropertyString TextureName = new TagPropertyAccessor.TagPropertyString("TextureName");
+    static public TagPropertyAccessor.TagPropertyString BladeId = new TagPropertyAccessor.TagPropertyString("BladeId");
     public ResourceLocationRaw getModelTexture(ItemStack par1ItemStack){
         NBTTagCompound tag = getItemTagCompound(par1ItemStack);
         if(TextureName.exists(tag)){
@@ -3044,11 +3045,17 @@ public class ItemSlashBlade extends ItemSword {
         this.repairMaterialOreDic = material;
         return this;
     }
+    public String[] getRepairMaterialOreDic(){
+        return this.repairMaterialOreDic == null ? null : this.repairMaterialOreDic.clone();
+    }
 
     private ItemStack repairMaterial = ItemStack.EMPTY;
     public ItemSlashBlade setRepairMaterial(ItemStack item){
         this.repairMaterial = item;
         return this;
+    }
+    public ItemStack getRepairMaterial(){
+        return this.repairMaterial.isEmpty() ? ItemStack.EMPTY : this.repairMaterial.copy();
     }
     @Override
     public boolean getIsRepairable(ItemStack par1ItemStack, ItemStack par2ItemStack)

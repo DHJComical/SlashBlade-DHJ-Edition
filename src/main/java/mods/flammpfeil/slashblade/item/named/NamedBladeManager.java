@@ -2,9 +2,10 @@ package mods.flammpfeil.slashblade.item.named;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import mods.flammpfeil.slashblade.item.BladeIdentity;
+import mods.flammpfeil.slashblade.item.BladeStateCodec;
 import mods.flammpfeil.slashblade.item.ItemSlashBladeNamed;
 import mods.flammpfeil.slashblade.SlashBlade;
-import mods.flammpfeil.slashblade.util.TagPropertyAccessor;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.util.DummyAnvilRecipe;
 import mods.flammpfeil.slashblade.util.SlashBladeAchievementCreateEvent;
@@ -50,11 +51,13 @@ public class NamedBladeManager {
         ItemStack crystal = SlashBlade.findItemStack(SlashBlade.modid,SlashBlade.CrystalBladeSoulStr,1);
 
         NBTTagCompound newTag = (NBTTagCompound)tag.copy();
-        String keyName = ItemSlashBladeNamed.CurrentItemName.get(tag);
+        BladeStateCodec.ensureStateLayout(newTag);
+        String keyName = BladeIdentity.getBladeId(tag);
 
         newTag.removeTag("ench");
 
         crystal.setTagCompound(newTag);
+        BladeIdentity.ensureBladeId(crystal);
         crystal.setTranslatableName("item." + keyName + ".soul.name");
         keyList.add(keyName);
         namedbladeSouls.put(keyName, crystal);
@@ -64,18 +67,21 @@ public class NamedBladeManager {
         registerBladeSoul(tag,name);
 
         if(addCreativeTab){
-            ItemStack blade = new ItemStack(SlashBlade.bladeNamed, 1, 0);
-            blade.setTagCompound((NBTTagCompound)tag.copy());
-
-            SlashBlade.registerCustomItemStack(blade.getTranslationKey(), blade);
-            ItemSlashBladeNamed.NamedBlades.add(blade.getTranslationKey());
+            String bladeKey = BladeIdentity.getBladeId(tag);
+            ItemStack blade = SlashBlade.createBladeStack(bladeKey);
+            if (blade.isEmpty()) {
+                blade = new ItemStack(SlashBlade.bladeNamed, 1, 0);
+                blade.setTagCompound((NBTTagCompound)tag.copy());
+                SlashBlade.registerDynamicBladeStack(bladeKey, blade);
+            }
+            ItemSlashBladeNamed.NamedBlades.add(bladeKey);
         }
     }
 
     @SubscribeEvent
     public void onRegisterSBAchievement(SlashBladeAchievementCreateEvent event){
         for(Map.Entry<String,ItemStack> entry : namedbladeSouls.entrySet()){
-            ItemStack icon = SlashBlade.getCustomBlade(entry.getKey());
+            ItemStack icon = SlashBlade.createBladeStack(entry.getKey());
 
             if(icon.isEmpty()) {
                 ItemStack soul = entry.getValue();
@@ -85,27 +91,7 @@ public class NamedBladeManager {
 
                 NBTTagCompound tag = ItemSlashBlade.getItemTagCompound(targetBlade);
 
-
-                ItemSlashBladeNamed.CurrentItemName.set(tag, ItemSlashBladeNamed.CurrentItemName.get(matTag));
-
-                if (ItemSlashBlade.BaseAttackModifier.exists(matTag))
-                    ItemSlashBlade.setBaseAttackModifier(tag, ItemSlashBlade.BaseAttackModifier.get(matTag));
-
-                TagPropertyAccessor<?>[] accessors = {
-                        ItemSlashBladeNamed.CustomMaxDamage,
-                        ItemSlashBlade.TextureName,
-                        ItemSlashBlade.ModelName,
-                        ItemSlashBlade.SpecialAttackType,
-                        ItemSlashBlade.StandbyRenderType,
-                        ItemSlashBladeNamed.IsDefaultBewitched,
-                        ItemSlashBladeNamed.TrueItemName,
-                        ItemSlashBlade.SummonedSwordColor,
-                        ItemSlashBlade.IsDestructable,
-                        ItemSlashBlade.IsBroken
-                };
-
-                for (TagPropertyAccessor<?> acc : accessors)
-                    acc.copy(tag, matTag);
+                BladeStateCodec.copyDefinitionOverrides(matTag, tag);
 
                 icon = targetBlade;
             }

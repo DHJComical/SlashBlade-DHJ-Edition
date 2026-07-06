@@ -19,7 +19,7 @@ import net.minecraft.nbt.NBTTagCompound;
  */
 public class Yamato {
     @SubscribeEvent()
-    public void init(LoadEvent.InitEvent event){
+    public void init(LoadEvent.PreInitEvent event){
         ItemStack itemSphereBladeSoul = SlashBlade.findItemStack(SlashBlade.modid,SlashBlade.SphereBladeSoulStr,1);
 
         {
@@ -35,7 +35,7 @@ public class Yamato {
                 customblade.addEnchantment(Enchantments.POWER, 5);
                 customblade.addEnchantment(Enchantments.PUNCH, 2);
 
-                ItemSlashBladeNamed.CurrentItemName.set(tag, nameTrue);
+                ItemSlashBladeNamed.setCurrentItemName(tag, nameTrue);
                 ItemSlashBladeNamed.IsDefaultBewitched.set(tag, true);
                 ItemSlashBladeNamed.CustomMaxDamage.set(tag, 40);
                 ItemSlashBlade.setBaseAttackModifier(tag, 4 + Item.ToolMaterial.DIAMOND.getAttackDamage());
@@ -46,7 +46,7 @@ public class Yamato {
 
                 ItemSlashBlade.KillCount.set(tag,1000);
                 ItemSlashBlade.ProudSoul.set(tag, 1000);
-                SlashBlade.registerCustomItemStack(nameTrue, customblade);
+                customblade = SlashBlade.registerFixedBladeStack(nameTrue, customblade);
                 ItemSlashBladeNamed.NamedBlades.add(nameTrue);
             }
 
@@ -57,7 +57,7 @@ public class Yamato {
                 customblade.setTagCompound(tag);
 
                 String nameBrokend = nameTrue + ".broken";
-                ItemSlashBladeNamed.CurrentItemName.set(tag, nameBrokend);
+                ItemSlashBladeNamed.setCurrentItemName(tag, nameBrokend);
 
                 ItemSlashBladeNamed.CustomMaxDamage.set(tag, 40);
                 ItemSlashBlade.setBaseAttackModifier(tag, 4 + Item.ToolMaterial.DIAMOND.getAttackDamage());
@@ -72,7 +72,7 @@ public class Yamato {
                 ItemSlashBlade.IsNoScabbard.set(tag, true);
                 ItemSlashBlade.IsSealed.set(tag, true);
                 ItemSlashBladeNamed.TrueItemName.set(tag, nameTrue);
-                SlashBlade.registerCustomItemStack(nameBrokend, customblade);
+                customblade = SlashBlade.registerFixedBladeStack(nameBrokend, customblade);
                 ItemSlashBladeNamed.NamedBlades.add(nameBrokend);
 
                 {
@@ -81,7 +81,7 @@ public class Yamato {
                     ItemSlashBlade.ProudSoul.set(reqTag, 1000);
 
                     String nameReqired = nameTrue + ".reqired";
-                    SlashBlade.registerCustomItemStack(nameReqired, reqiredBlade);
+                    reqiredBlade = SlashBlade.registerFixedBladeStack(nameReqired, reqiredBlade);
                     ItemSlashBladeNamed.NamedBlades.add(nameReqired);
 
                     ItemStack yamato = SlashBlade.findItemStack(SlashBlade.modid,nameTrue,1);

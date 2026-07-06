@@ -2,6 +2,7 @@ package mods.flammpfeil.slashblade.item.named;
 
 import mods.flammpfeil.slashblade.event.DropEventHandler;
 import mods.flammpfeil.slashblade.SlashBlade;
+import mods.flammpfeil.slashblade.item.BladeIdentity;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.item.ItemSlashBladeNamed;
 import mods.flammpfeil.slashblade.item.ItemSlashBladeWrapper;
@@ -38,14 +39,14 @@ public class Doutanuki {
     public static float dropRate = 0.2f;
 
     @SubscribeEvent
-    public void init(LoadEvent.InitEvent event){
+    public void init(LoadEvent.PreInitEvent event){
         {
             String name = Doutanuki.name;
             ItemStack customblade = new ItemStack(SlashBlade.bladeNamed,1,0);
             NBTTagCompound tag = new NBTTagCompound();
             customblade.setTagCompound(tag);
 
-            ItemSlashBladeNamed.CurrentItemName.set(tag, name);
+            ItemSlashBladeNamed.setCurrentItemName(tag, name);
             ItemSlashBladeNamed.CustomMaxDamage.set(tag, 50);
             ItemSlashBlade.setBaseAttackModifier(tag, 4 + Item.ToolMaterial.IRON.getAttackDamage());
             ItemSlashBlade.TextureName.set(tag, "named/muramasa/sabigatana");
@@ -55,7 +56,7 @@ public class Doutanuki {
             ItemSlashBlade.IsSealed.set(tag,true);
             //ItemSlashBladeNamed.IsDefaultBewitched.set(tag,true);
 
-            SlashBlade.registerCustomItemStack(name, customblade);
+            customblade = SlashBlade.registerFixedBladeStack(name, customblade);
             ItemSlashBladeNamed.NamedBlades.add(SlashBlade.modid + ":" + name);
 
             {
@@ -64,21 +65,21 @@ public class Doutanuki {
                 ItemSlashBlade.RepairCount.set(tag,5);
                 ItemSlashBlade.ProudSoul.set(tag,1000);
                 ItemSlashBlade.KillCount.set(tag,100);
-                SlashBlade.registerCustomItemStack(name + ".doureqired", cblade);
+                cblade = SlashBlade.registerFixedBladeStack(name + ".doureqired", cblade);
                 ItemSlashBladeNamed.NamedBlades.add(SlashBlade.modid + ":" + name + ".doureqired");
             }
 
             customblade = customblade.copy();
             tag = ItemSlashBlade.getItemTagCompound(customblade);
             ItemSlashBlade.IsNoScabbard.set(tag,true);
-            SlashBlade.registerCustomItemStack(name + ".noscabbard", customblade);
+            customblade = SlashBlade.registerFixedBladeStack(name + ".noscabbard", customblade);
             ItemSlashBladeNamed.NamedBlades.add(SlashBlade.modid + ":" + name + ".noscabbard");
 
             customblade = customblade.copy();
             tag = ItemSlashBlade.getItemTagCompound(customblade);
             ItemSlashBlade.IsBroken.set(tag,true);
             ItemSlashBlade.RepairCount.set(tag,1);
-            SlashBlade.registerCustomItemStack(name + ".broken", customblade);
+            customblade = SlashBlade.registerFixedBladeStack(name + ".broken", customblade);
             ItemSlashBladeNamed.NamedBlades.add(SlashBlade.modid + ":" + name + ".broken");
 
             {
@@ -89,7 +90,7 @@ public class Doutanuki {
                 ItemSlashBlade.KillCount.set(tag,49);
                 ItemSlashBlade.RepairCount.set(tag,0);
                 cblade.setItemDamage(cblade.getMaxDamage() - 1);
-                SlashBlade.registerCustomItemStack(name + ".directdrop", cblade);
+                cblade = SlashBlade.registerFixedBladeStack(name + ".directdrop", cblade);
                 ItemSlashBladeNamed.NamedBlades.add(SlashBlade.modid + ":" + name + ".directdrop");
             }
         }
@@ -100,7 +101,7 @@ public class Doutanuki {
             NBTTagCompound tag = new NBTTagCompound();
             customblade.setTagCompound(tag);
 
-            ItemSlashBladeNamed.CurrentItemName.set(tag, name);
+            ItemSlashBladeNamed.setCurrentItemName(tag, name);
             ItemSlashBladeNamed.CustomMaxDamage.set(tag, 50);
             ItemSlashBlade.setBaseAttackModifier(tag, 4 + Item.ToolMaterial.IRON.getAttackDamage());
             ItemSlashBlade.TextureName.set(tag, "named/muramasa/doutanuki");
@@ -109,7 +110,7 @@ public class Doutanuki {
             ItemSlashBlade.StandbyRenderType.set(tag, 2);
             //ItemSlashBladeNamed.IsDefaultBewitched.set(tag,true);
 
-            SlashBlade.registerCustomItemStack(name, customblade);
+            customblade = SlashBlade.registerFixedBladeStack(name, customblade);
             ItemSlashBladeNamed.NamedBlades.add(SlashBlade.modid + ":" + name);
         }
     }
@@ -290,7 +291,7 @@ public class Doutanuki {
             if(!ItemSlashBlade.IsNoScabbard.get(tag))
                 return false;
 
-            if(!ItemSlashBladeNamed.CurrentItemName.get(tag).equals(name))
+            if(!BladeIdentity.matchesIdentity(target, name))
                 return false;
 
             return true;
@@ -359,7 +360,7 @@ public class Doutanuki {
             if(ItemSlashBlade.RepairCount.get(tag) <= 0)
                 return false;
 
-            if(!ItemSlashBladeNamed.CurrentItemName.get(tag).equals(name))
+            if(!BladeIdentity.matchesIdentity(target, name))
                 return false;
 
             return true;

@@ -21,7 +21,7 @@ public class Tukumo {
     static public final String YuzukiTukumo = "slashblade.named.yuzukitukumo";
 
     @SubscribeEvent()
-    public void init(LoadEvent.InitEvent event){
+    public void init(LoadEvent.PreInitEvent event){
 
         {
             ItemStack customblade = new ItemStack(SlashBlade.bladeNamed,1,0);
@@ -33,7 +33,7 @@ public class Tukumo {
             customblade.addEnchantment(Enchantments.FIRE_ASPECT, 2);
 
             String name = YuzukiTukumo;
-            ItemSlashBladeNamed.CurrentItemName.set(tag, name);
+            ItemSlashBladeNamed.setCurrentItemName(tag, name);
             ItemSlashBladeNamed.IsDefaultBewitched.set(tag, true);
             ItemSlashBladeNamed.CustomMaxDamage.set(tag, 40);
             ItemSlashBlade.setBaseAttackModifier(tag, 4 + Item.ToolMaterial.DIAMOND.getAttackDamage());
@@ -42,7 +42,7 @@ public class Tukumo {
             ItemSlashBlade.SpecialAttackType.set(tag, 3);
             ItemSlashBlade.StandbyRenderType.set(tag, 1);
 
-            SlashBlade.registerCustomItemStack(name, customblade);
+            customblade = SlashBlade.registerFixedBladeStack(name, customblade);
             ItemSlashBladeNamed.NamedBlades.add(name);
 
             {
@@ -56,7 +56,7 @@ public class Tukumo {
                 ItemSlashBlade.KillCount.set(tagReqired, 1000);
 
                 String nameReqired = "slashblade.thousandkill";
-                SlashBlade.registerCustomItemStack(nameReqired, custombladeReqired);
+                custombladeReqired = SlashBlade.registerFixedBladeStack(nameReqired, custombladeReqired);
                 ItemSlashBladeNamed.NamedBlades.add(nameReqired);
 
                 SlashBlade.addRecipe(YuzukiTukumo,

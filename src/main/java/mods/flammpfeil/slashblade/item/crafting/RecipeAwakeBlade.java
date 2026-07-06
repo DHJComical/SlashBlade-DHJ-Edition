@@ -1,6 +1,8 @@
 package mods.flammpfeil.slashblade.item.crafting;
 
 import mods.flammpfeil.slashblade.SlashBlade;
+import mods.flammpfeil.slashblade.item.BladeIdentity;
+import mods.flammpfeil.slashblade.item.BladeStateCodec;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.item.ItemSlashBladeNamed;
 import mods.flammpfeil.slashblade.util.TagPropertyAccessor;
@@ -56,7 +58,7 @@ public class RecipeAwakeBlade extends ShapedOreRecipe {
                     NBTTagCompound reqTag = ItemSlashBlade.getItemTagCompound(requiredStateBlade);
                     NBTTagCompound srcTag = ItemSlashBlade.getItemTagCompound(curIs);
 
-                    if(!curIs.getTranslationKey().equals(requiredStateBlade.getTranslationKey()))
+                    if(!BladeIdentity.matchesIdentity(curIs, requiredStateBlade))
                         return false;
 
                     if(0 < tagValueCompare(ItemSlashBlade.ProudSoul, reqTag, srcTag))
@@ -93,10 +95,14 @@ public class RecipeAwakeBlade extends ShapedOreRecipe {
                     NBTTagCompound newTag;
                     newTag = ItemSlashBlade.getItemTagCompound(result);
 
-                    if(ItemSlashBladeNamed.CurrentItemName.exists(newTag)){
+                    String bladeId = BladeIdentity.getBladeId(result);
+                    if(!bladeId.isEmpty()){
                         ItemStack tmp;
-                        String key = ItemSlashBladeNamed.CurrentItemName.get(newTag);
-                        tmp = SlashBlade.getCustomBlade(key);
+                        tmp = SlashBlade.createBladeStack(bladeId);
+
+                        if(tmp.isEmpty() && ItemSlashBladeNamed.CurrentItemName.exists(newTag)){
+                            tmp = SlashBlade.createBladeStack(ItemSlashBladeNamed.CurrentItemName.get(newTag));
+                        }
 
                         if(!tmp.isEmpty())
                             result = tmp;
@@ -106,51 +112,8 @@ public class RecipeAwakeBlade extends ShapedOreRecipe {
                 NBTTagCompound newTag;
                 newTag = ItemSlashBlade.getItemTagCompound(result);
 
-                ItemSlashBlade.KillCount.set(newTag, ItemSlashBlade.KillCount.get(oldTag));
-                ItemSlashBlade.ProudSoul.set(newTag, ItemSlashBlade.ProudSoul.get(oldTag));
-                ItemSlashBlade.RepairCount.set(newTag, ItemSlashBlade.RepairCount.get(oldTag));
-
-                if(oldTag.hasUniqueId("Owner"))
-                    newTag.setUniqueId("Owner",oldTag.getUniqueId("Owner"));
-
-                if(oldTag.hasKey(ItemSlashBlade.adjustXStr))
-                    newTag.setFloat(ItemSlashBlade.adjustXStr,oldTag.getFloat(ItemSlashBlade.adjustXStr));
-
-                if(oldTag.hasKey(ItemSlashBlade.adjustYStr))
-                    newTag.setFloat(ItemSlashBlade.adjustYStr,oldTag.getFloat(ItemSlashBlade.adjustYStr));
-
-                if(oldTag.hasKey(ItemSlashBlade.adjustZStr))
-                    newTag.setFloat(ItemSlashBlade.adjustZStr,oldTag.getFloat(ItemSlashBlade.adjustZStr));
-
-                {
-                    Map<Enchantment,Integer> newItemEnchants = EnchantmentHelper.getEnchantments(result);
-                    Map<Enchantment,Integer> oldItemEnchants = EnchantmentHelper.getEnchantments(curIs);
-                    for(Enchantment enchantIndex : oldItemEnchants.keySet())
-                    {
-                        Enchantment enchantment = enchantIndex;
-
-                        int destLevel = newItemEnchants.containsKey(enchantIndex) ? newItemEnchants.get(enchantIndex) : 0;
-                        int srcLevel = oldItemEnchants.get(enchantIndex);
-
-                        srcLevel = Math.max(srcLevel, destLevel);
-                        srcLevel = Math.min(srcLevel, enchantment.getMaxLevel());
-
-
-                        boolean canApplyFlag = enchantment.canApply(result);
-                        if(canApplyFlag){
-                            for(Enchantment curEnchantIndex : newItemEnchants.keySet()){
-                                if (curEnchantIndex != enchantIndex && !enchantment.isCompatibleWith(curEnchantIndex) /*canApplyTogether*/)
-                                {
-                                    canApplyFlag = false;
-                                    break;
-                                }
-                            }
-                            if (canApplyFlag)
-                                newItemEnchants.put(enchantIndex, Integer.valueOf(srcLevel));
-                        }
-                    }
-                    EnchantmentHelper.setEnchantments(newItemEnchants, result);
-                }
+                BladeStateCodec.copyPersistentState(oldTag, newTag);
+                BladeStateCodec.copyCompatibleEnchantments(curIs, result);
             }
         }
 

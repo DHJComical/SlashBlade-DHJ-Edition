@@ -21,7 +21,7 @@ public class Tagayasan {
     public static final String Tagayasan = "slashblade.named.tagayasan";
 
     @SubscribeEvent()
-    public void init(LoadEvent.InitEvent event){
+    public void init(LoadEvent.PreInitEvent event){
         ItemStack itemSphereBladeSoul = SlashBlade.findItemStack(SlashBlade.modid, SlashBlade.SphereBladeSoulStr , 1);
 
         ItemStack customblade = new ItemStack(SlashBlade.bladeNamed,1,0);
@@ -32,7 +32,7 @@ public class Tagayasan {
         customblade.addEnchantment(Enchantments.SMITE,3);
         String name = Tagayasan;
         ItemSlashBladeNamed.IsDefaultBewitched.set(tag,true);
-        ItemSlashBladeNamed.CurrentItemName.set(tag, name);
+        ItemSlashBladeNamed.setCurrentItemName(tag, name);
         ItemSlashBladeNamed.CustomMaxDamage.set(tag, 70);
         ItemSlashBlade.setBaseAttackModifier(tag, 4 + Item.ToolMaterial.IRON.getAttackDamage());
         ItemSlashBlade.TextureName.set(tag,"named/tagayasan");
@@ -41,16 +41,16 @@ public class Tagayasan {
 
         tag.setString(ItemSlashBladeNamed.RepairMaterialNameStr,"iron_ingot");
 
-        SlashBlade.registerCustomItemStack(name, customblade);
+        customblade = SlashBlade.registerFixedBladeStack(name, customblade);
         ItemSlashBladeNamed.NamedBlades.add(name);
         {
             ItemStack reqiredBlade = new ItemStack(SlashBlade.bladeWood);
             NBTTagCompound reqTag = ItemSlashBlade.getItemTagCompound(reqiredBlade);
-            ItemSlashBladeNamed.CurrentItemName.set(reqTag, "slashblade.named.tagayasan.required");
+            ItemSlashBladeNamed.setCurrentItemName(reqTag, "slashblade.named.tagayasan.required");
             ItemSlashBlade.KillCount.set(reqTag,1000);
 
             name = "slashblade.tagayasan.reqired";
-            SlashBlade.registerCustomItemStack(name, reqiredBlade);
+            reqiredBlade = SlashBlade.registerFixedBladeStack(name, reqiredBlade);
             ItemSlashBladeNamed.NamedBlades.add(name);
 
             SlashBlade.addRecipe(Tagayasan,

@@ -1,7 +1,6 @@
 package mods.flammpfeil.slashblade.item;
 
 import com.google.common.collect.Lists;
-import mods.flammpfeil.slashblade.SlashBlade;
 import mods.flammpfeil.slashblade.util.TagPropertyAccessor;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -11,7 +10,7 @@ import net.minecraft.util.NonNullList;
 import mods.flammpfeil.slashblade.util.ResourceLocationRaw;
 import net.minecraftforge.oredict.OreDictionary;
 
-import java.util.*;
+import java.util.List;
 
 /**
  * Created by Furia on 14/05/07.
@@ -28,6 +27,12 @@ public class ItemSlashBladeNamed extends ItemSlashBlade {
     static public final String RepairOreDicMaterialStr = "RepairOreDicMaterial";
     static public final String RepairMaterialNameStr = "RepairMaterialName";
 
+    public static String setCurrentItemName(NBTTagCompound tag, String bladeName) {
+        CurrentItemName.set(tag, bladeName);
+        BladeIdentity.syncBladeId(tag);
+        return bladeName;
+    }
+
     @Override
     public String getTranslationKey(ItemStack par1ItemStack) {
         return super.getTranslationKey(par1ItemStack);
@@ -43,20 +48,16 @@ public class ItemSlashBladeNamed extends ItemSlashBlade {
 
     @Override
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems) {
-        if (!this.isInCreativeTab(tab)) return;
-        //super.getSubItems(itemIn, tab, subItems);
-
-        ItemStack targetBlade = SlashBlade.findItemStack(SlashBlade.modid,"slashbladeNamed",1);
-        NBTTagCompound tag = ItemSlashBlade.getItemTagCompound(targetBlade);
-        ItemSlashBlade.ProudSoul.set(tag,1000);
-        subItems.add(targetBlade);
-
-        for(String bladename : NamedBlades){
-            ItemStack blade = SlashBlade.getCustomBlade(bladename);
-            if(blade.getItemDamage() == OreDictionary.WILDCARD_VALUE)
-                blade.setItemDamage(0);
-            if(!blade.isEmpty()) subItems.add(blade);
+        if (!this.isInCreativeTab(tab)) {
+            return;
         }
+
+        ItemStack stack = new ItemStack(this, 1, 0);
+        BladeIdentity.ensureBladeId(stack);
+        if (stack.getItemDamage() == OreDictionary.WILDCARD_VALUE) {
+            stack.setItemDamage(0);
+        }
+        subItems.add(stack);
     }
 
 

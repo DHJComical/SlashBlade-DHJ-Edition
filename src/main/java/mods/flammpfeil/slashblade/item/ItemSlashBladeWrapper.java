@@ -45,6 +45,7 @@ public class ItemSlashBladeWrapper extends ItemSlashBladeNamed {
         if(tag.hasKey("display"))       tag.removeTag("display");
         IsBroken.remove(tag);
         BaseAttackModifier.remove(tag);
+        BladeId.remove(tag);
         CurrentItemName.remove(tag);
         TrueItemName.remove(tag);
         stack.setItemDamage(0);

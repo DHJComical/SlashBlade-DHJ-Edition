@@ -18,7 +18,7 @@ public class PSYasha {
     String name = "slashblade.named.yasha";
     String nameTrue = "slashblade.named.yashatrue";
     @SubscribeEvent
-    public void init(LoadEvent.InitEvent event){
+    public void init(LoadEvent.PreInitEvent event){
 
         {
             String name = this.name;
@@ -26,7 +26,7 @@ public class PSYasha {
             NBTTagCompound tag = new NBTTagCompound();
             customblade.setTagCompound(tag);
 
-            ItemSlashBladeNamed.CurrentItemName.set(tag, name);
+            ItemSlashBladeNamed.setCurrentItemName(tag, name);
             ItemSlashBladeNamed.CustomMaxDamage.set(tag, 70);
             ItemSlashBlade.setBaseAttackModifier(tag, 4 + Item.ToolMaterial.IRON.getAttackDamage());
             ItemSlashBlade.TextureName.set(tag, "named/yasha/yasha");
@@ -38,7 +38,7 @@ public class PSYasha {
             tag.setBoolean("IsNoStandDrop",true);
 
             NamedBladeManager.registerBladeSoul(tag , customblade.getDisplayName());
-            SlashBlade.registerCustomItemStack(name, customblade);
+            customblade = SlashBlade.registerFixedBladeStack(name, customblade);
             ItemSlashBladeNamed.NamedBlades.add(SlashBlade.modid + ":" + name);
         }
         {
@@ -47,7 +47,7 @@ public class PSYasha {
             NBTTagCompound tag = new NBTTagCompound();
             customblade.setTagCompound(tag);
 
-            ItemSlashBladeNamed.CurrentItemName.set(tag, name);
+            ItemSlashBladeNamed.setCurrentItemName(tag, name);
             ItemSlashBladeNamed.CustomMaxDamage.set(tag, 70);
             ItemSlashBlade.setBaseAttackModifier(tag, 4 + Item.ToolMaterial.IRON.getAttackDamage());
             ItemSlashBlade.TextureName.set(tag, "named/yasha/yasha");
@@ -57,7 +57,7 @@ public class PSYasha {
             ItemSlashBladeNamed.IsDefaultBewitched.set(tag,true);
 
             NamedBladeManager.registerBladeSoul(tag , customblade.getDisplayName());
-            SlashBlade.registerCustomItemStack(name, customblade);
+            customblade = SlashBlade.registerFixedBladeStack(name, customblade);
             ItemSlashBladeNamed.NamedBlades.add(SlashBlade.modid + ":" + name);
         }
     }

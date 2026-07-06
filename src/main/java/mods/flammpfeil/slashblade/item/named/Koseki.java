@@ -2,6 +2,7 @@ package mods.flammpfeil.slashblade.item.named;
 
 import net.minecraft.init.Enchantments;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import mods.flammpfeil.slashblade.item.BladeIdentity;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.item.ItemSlashBladeNamed;
 import mods.flammpfeil.slashblade.SlashBlade;
@@ -21,12 +22,12 @@ import net.minecraft.nbt.NBTTagCompound;
 public class Koseki {
     String name = "slashblade.named.koseki";
     @SubscribeEvent
-    public void init(LoadEvent.InitEvent event){
+    public void init(LoadEvent.PreInitEvent event){
         ItemStack customblade = new ItemStack(SlashBlade.bladeNamed,1,0);
         NBTTagCompound tag = new NBTTagCompound();
         customblade.setTagCompound(tag);
 
-        ItemSlashBladeNamed.CurrentItemName.set(tag, name);
+        ItemSlashBladeNamed.setCurrentItemName(tag, name);
         ItemSlashBladeNamed.CustomMaxDamage.set(tag, 70);
         ItemSlashBlade.setBaseAttackModifier(tag, 4 + Item.ToolMaterial.IRON.getAttackDamage());
         ItemSlashBlade.TextureName.set(tag, "named/dios/koseki");
@@ -41,7 +42,7 @@ public class Koseki {
         customblade.addEnchantment(Enchantments.THORNS,1);
         customblade.addEnchantment(Enchantments.POWER,2);
 
-        SlashBlade.registerCustomItemStack(name, customblade);
+        customblade = SlashBlade.registerFixedBladeStack(name, customblade);
         ItemSlashBladeNamed.NamedBlades.add(SlashBlade.modid + ":" + name);
     }
 
@@ -60,7 +61,7 @@ public class Koseki {
 
         ItemStack targetBlade = SlashBlade.findItemStack(SlashBlade.modid,"slashbladeNamed",1);
 
-        if(!event.blade.getTranslationKey().equals(targetBlade.getTranslationKey())) return;
+        if(!BladeIdentity.matchesIdentity(event.blade, targetBlade)) return;
 
         ItemStack resultBlade = SlashBlade.getCustomBlade(name);
 

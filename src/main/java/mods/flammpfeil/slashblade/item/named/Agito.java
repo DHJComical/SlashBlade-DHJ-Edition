@@ -18,7 +18,7 @@ import net.minecraft.nbt.NBTTagCompound;
 public class Agito {
 
     @SubscribeEvent()
-    public void init(LoadEvent.InitEvent event){
+    public void init(LoadEvent.PreInitEvent event){
         ItemStack itemProudSoul = SlashBlade.findItemStack(SlashBlade.modid, SlashBlade.ProudSoulStr , 1);
         ItemStack itemSphereBladeSoul = SlashBlade.findItemStack(SlashBlade.modid, SlashBlade.SphereBladeSoulStr , 1);
 
@@ -32,7 +32,7 @@ public class Agito {
                 NBTTagCompound tag = new NBTTagCompound();
                 customblade.setTagCompound(tag);
 
-                ItemSlashBladeNamed.CurrentItemName.set(tag, nameAgito);
+                ItemSlashBladeNamed.setCurrentItemName(tag, nameAgito);
                 ItemSlashBladeNamed.CustomMaxDamage.set(tag, 60);
                 ItemSlashBlade.setBaseAttackModifier(tag, 4 + Item.ToolMaterial.IRON.getAttackDamage());
                 ItemSlashBlade.TextureName.set(tag, "named/agito_false");
@@ -40,7 +40,7 @@ public class Agito {
                 ItemSlashBlade.SpecialAttackType.set(tag, 2);
                 ItemSlashBlade.StandbyRenderType.set(tag, 2);
 
-                SlashBlade.registerCustomItemStack(nameAgito, customblade);
+                customblade = SlashBlade.registerFixedBladeStack(nameAgito, customblade);
                 ItemSlashBladeNamed.NamedBlades.add(nameAgito);
             }
 
@@ -50,7 +50,7 @@ public class Agito {
                 NBTTagCompound tag = new NBTTagCompound();
                 customblade.setTagCompound(tag);
 
-                ItemSlashBladeNamed.CurrentItemName.set(tag, nameAgitoRust);
+                ItemSlashBladeNamed.setCurrentItemName(tag, nameAgitoRust);
 
                 ItemSlashBladeNamed.CustomMaxDamage.set(tag, 60);
                 ItemSlashBlade.setBaseAttackModifier(tag, 4 + Item.ToolMaterial.STONE.getAttackDamage());
@@ -64,7 +64,7 @@ public class Agito {
                 ItemSlashBladeNamed.TrueItemName.set(tag, nameAgito);
 
                 NamedBladeManager.registerBladeSoul(tag , customblade.getDisplayName());
-                SlashBlade.registerCustomItemStack(nameAgitoRust, customblade);
+                customblade = SlashBlade.registerFixedBladeStack(nameAgitoRust, customblade);
                 ItemSlashBladeNamed.NamedBlades.add(nameAgitoRust);
 
 
@@ -74,7 +74,7 @@ public class Agito {
                     ItemSlashBlade.KillCount.set(reqTag,100);
                     ItemSlashBlade.RepairCount.set(reqTag,1);
 
-                    SlashBlade.registerCustomItemStack(nameAgitoReqired, reqiredBlade);
+                    reqiredBlade = SlashBlade.registerFixedBladeStack(nameAgitoReqired, reqiredBlade);
                     ItemSlashBladeNamed.NamedBlades.add(nameAgitoReqired);
 
                     ItemStack destBlade = SlashBlade.findItemStack(SlashBlade.modid,ItemSlashBladeNamed.TrueItemName.get(tag),1);
@@ -105,7 +105,7 @@ public class Agito {
                 NBTTagCompound tag = new NBTTagCompound();
                 customblade.setTagCompound(tag);
 
-                ItemSlashBladeNamed.CurrentItemName.set(tag, nameOrotiagito);
+                ItemSlashBladeNamed.setCurrentItemName(tag, nameOrotiagito);
 
                 ItemSlashBladeNamed.CustomMaxDamage.set(tag, 60);
                 ItemSlashBlade.setBaseAttackModifier(tag, 4 + Item.ToolMaterial.DIAMOND.getAttackDamage());
@@ -114,13 +114,13 @@ public class Agito {
                 ItemSlashBlade.SpecialAttackType.set(tag, 2);
                 ItemSlashBlade.StandbyRenderType.set(tag, 2);
 
-                SlashBlade.registerCustomItemStack(nameOrotiagito, customblade);
+                customblade = SlashBlade.registerFixedBladeStack(nameOrotiagito, customblade);
                 ItemSlashBladeNamed.NamedBlades.add(nameOrotiagito);
 
                 String brokableTest = nameOrotiagito + ".damaged";
                 ItemStack brokable = customblade.copy();
                 brokable.setItemDamage(brokable.getMaxDamage());
-                SlashBlade.registerCustomItemStack(brokableTest, brokable);
+                brokable = SlashBlade.registerFixedBladeStack(brokableTest, brokable);
                 ItemSlashBladeNamed.NamedBlades.add(brokableTest);
             }
 
@@ -129,7 +129,7 @@ public class Agito {
                 NBTTagCompound tag = new NBTTagCompound();
                 customblade.setTagCompound(tag);
 
-                ItemSlashBladeNamed.CurrentItemName.set(tag, nameOrotiagitoSeald);
+                ItemSlashBladeNamed.setCurrentItemName(tag, nameOrotiagitoSeald);
 
                 ItemSlashBladeNamed.CustomMaxDamage.set(tag, 60);
                 ItemSlashBlade.setBaseAttackModifier(tag, 4 + Item.ToolMaterial.IRON.getAttackDamage());
@@ -140,7 +140,7 @@ public class Agito {
 
                 ItemSlashBladeNamed.TrueItemName.set(tag, nameOrotiagito);
 
-                SlashBlade.registerCustomItemStack(nameOrotiagitoSeald, customblade);
+                customblade = SlashBlade.registerFixedBladeStack(nameOrotiagitoSeald, customblade);
                 ItemSlashBladeNamed.NamedBlades.add(nameOrotiagitoSeald);
 
 
@@ -151,7 +151,7 @@ public class Agito {
                     ItemSlashBlade.ProudSoul.set(reqTag,1000);
                     ItemSlashBlade.RepairCount.set(reqTag, 10);
 
-                    SlashBlade.registerCustomItemStack(nameOrotiagitoReqired, reqiredBlade);
+                    reqiredBlade = SlashBlade.registerFixedBladeStack(nameOrotiagitoReqired, reqiredBlade);
                     ItemSlashBladeNamed.NamedBlades.add(nameOrotiagitoReqired);
 
                     ItemStack destBlade = SlashBlade.findItemStack(SlashBlade.modid,ItemSlashBladeNamed.TrueItemName.get(tag),1);
@@ -174,7 +174,7 @@ public class Agito {
                 NBTTagCompound tag = new NBTTagCompound();
                 customblade.setTagCompound(tag);
 
-                ItemSlashBladeNamed.CurrentItemName.set(tag, nameOrotiagitoRust);
+                ItemSlashBladeNamed.setCurrentItemName(tag, nameOrotiagitoRust);
 
                 ItemSlashBladeNamed.CustomMaxDamage.set(tag, 60);
                 ItemSlashBlade.setBaseAttackModifier(tag, 4 + Item.ToolMaterial.STONE.getAttackDamage());
@@ -188,7 +188,7 @@ public class Agito {
                 ItemSlashBladeNamed.TrueItemName.set(tag, nameOrotiagitoSeald);
 
                 NamedBladeManager.registerBladeSoul(tag , customblade.getDisplayName());
-                SlashBlade.registerCustomItemStack(nameOrotiagitoRust, customblade);
+                customblade = SlashBlade.registerFixedBladeStack(nameOrotiagitoRust, customblade);
                 ItemSlashBladeNamed.NamedBlades.add(nameOrotiagitoRust);
 
                 {
@@ -197,7 +197,7 @@ public class Agito {
                     ItemSlashBlade.KillCount.set(reqTag, 100);
                     ItemSlashBlade.RepairCount.set(reqTag, 1);
 
-                    SlashBlade.registerCustomItemStack(nameOrotiagitoSealdReqired, reqiredBlade);
+                    reqiredBlade = SlashBlade.registerFixedBladeStack(nameOrotiagitoSealdReqired, reqiredBlade);
                     ItemSlashBladeNamed.NamedBlades.add(nameOrotiagitoSealdReqired);
 
                     ItemStack destBlade = SlashBlade.findItemStack(SlashBlade.modid,ItemSlashBladeNamed.TrueItemName.get(tag),1);

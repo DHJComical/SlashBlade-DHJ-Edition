@@ -18,9 +18,11 @@ import net.minecraft.nbt.NBTTagCompound;
 public class Fox {
     static public final String nameWhite = "slashblade.named.fox.white";
     static public final String nameBlack = "slashblade.named.fox.black";
+    static public final String nameWhiteReqired = nameWhite + ".reqired";
+    static public final String nameBlackReqired = nameBlack + ".reqired";
 
     @SubscribeEvent
-    public void init(LoadEvent.InitEvent event){
+    public void init(LoadEvent.PreInitEvent event){
 
         {
             String name = nameWhite;
@@ -42,7 +44,7 @@ public class Fox {
 
             ItemSlashBladeNamed.BaseAttackModifier.set(tag, 4.0f);
 
-            ItemSlashBladeNamed.CurrentItemName.set(tag, name);
+            ItemSlashBladeNamed.setCurrentItemName(tag, name);
             ItemSlashBladeNamed.TrueItemName.set(tag, name);
 
             ItemSlashBlade.TextureName.set(tag, "named/sange/white");
@@ -54,14 +56,14 @@ public class Fox {
             ItemSlashBladeNamed.IsDefaultBewitched.set(tag, true);
 
             NamedBladeManager.registerBladeSoul(tag , customblade.getDisplayName());
-            SlashBlade.registerCustomItemStack(name, customblade);
+            customblade = SlashBlade.registerFixedBladeStack(name, customblade);
 
             customblade = customblade.copy();
             ItemSlashBlade.setTooltipKeys(customblade,
                     "tooltip.slashblade.sample.line1",
                     "tooltip.slashblade.sample.line2");
             String creativeStr = name+".creative";
-            SlashBlade.registerCustomItemStack(creativeStr, customblade);
+            customblade = SlashBlade.registerFixedBladeStack(creativeStr, customblade);
             ItemSlashBladeNamed.NamedBlades.add(SlashBlade.modid + ":" + creativeStr);
         }
 
@@ -83,7 +85,7 @@ public class Fox {
 
             ItemSlashBladeNamed.BaseAttackModifier.set(tag, 4.0f);
 
-            ItemSlashBladeNamed.CurrentItemName.set(tag, name);
+            ItemSlashBladeNamed.setCurrentItemName(tag, name);
             ItemSlashBladeNamed.TrueItemName.set(tag, name);
 
             ItemSlashBlade.TextureName.set(tag, "named/sange/black");
@@ -95,15 +97,52 @@ public class Fox {
             ItemSlashBladeNamed.IsDefaultBewitched.set(tag,true);
 
             NamedBladeManager.registerBladeSoul(tag , customblade.getDisplayName());
-            SlashBlade.registerCustomItemStack(name, customblade);
+            customblade = SlashBlade.registerFixedBladeStack(name, customblade);
 
             customblade = customblade.copy();
             ItemSlashBlade.setTooltipKeys(customblade,
                     "tooltip.slashblade.sample.line1",
                     "tooltip.slashblade.sample.line2");
             String creativeStr = name+".creative";
-            SlashBlade.registerCustomItemStack(creativeStr, customblade);
+            customblade = SlashBlade.registerFixedBladeStack(creativeStr, customblade);
             ItemSlashBladeNamed.NamedBlades.add(SlashBlade.modid + ":" + creativeStr);
+        }
+
+        ItemStack innerBlade = SlashBlade.findItemStack("minecraft", "wooden_sword", 1);
+
+        {
+            ItemStack reqiredBlade = SlashBlade.findItemStack(SlashBlade.modid,"slashbladeWrapper",1);
+            {
+                SlashBlade.wrapBlade.setWrapItem(reqiredBlade,innerBlade);
+
+                reqiredBlade.addEnchantment(Enchantments.LOOTING,1);
+                NBTTagCompound tag = reqiredBlade.getTagCompound();
+                ItemSlashBladeNamed.setCurrentItemName(tag,"wrap.bamboomod.katana");
+                ItemSlashBladeNamed.BaseAttackModifier.set(tag, 4.0f);
+                ItemSlashBlade.TextureName.set(tag,"BambooKatana");
+                ItemSlashBlade.KillCount.set(tag,199);
+                ItemSlashBlade.ProudSoul.set(tag,1000);
+                ItemSlashBlade.RepairCount.set(tag,1);
+            }
+            reqiredBlade = SlashBlade.registerFixedBladeStack(nameWhiteReqired,reqiredBlade);
+            ItemSlashBladeNamed.NamedBlades.add(SlashBlade.modid + ":" + nameWhiteReqired);
+        }
+        {
+            ItemStack reqiredBlade = SlashBlade.findItemStack(SlashBlade.modid,"slashbladeWrapper",1);
+            {
+                SlashBlade.wrapBlade.setWrapItem(reqiredBlade,innerBlade);
+
+                reqiredBlade.addEnchantment(Enchantments.SMITE,1);
+                NBTTagCompound tag = reqiredBlade.getTagCompound();
+                ItemSlashBladeNamed.setCurrentItemName(tag,"wrap.bamboomod.katana");
+                ItemSlashBladeNamed.BaseAttackModifier.set(tag, 4.0f);
+                ItemSlashBlade.TextureName.set(tag,"BambooKatana");
+                ItemSlashBlade.KillCount.set(tag,199);
+                ItemSlashBlade.ProudSoul.set(tag,1000);
+                ItemSlashBlade.RepairCount.set(tag,1);
+            }
+            reqiredBlade = SlashBlade.registerFixedBladeStack(nameBlackReqired,reqiredBlade);
+            ItemSlashBladeNamed.NamedBlades.add(SlashBlade.modid + ":" + nameBlackReqired);
         }
     }
 
@@ -126,25 +165,7 @@ public class Fox {
 
         {
             ItemStack blade = SlashBlade.getCustomBlade(SlashBlade.modid,nameWhite);
-
-            ItemStack reqiredBlade = SlashBlade.findItemStack(SlashBlade.modid,"slashbladeWrapper",1);
-            {
-                SlashBlade.wrapBlade.setWrapItem(reqiredBlade,innerBlade);
-
-                reqiredBlade.addEnchantment(Enchantments.LOOTING,1);
-                NBTTagCompound tag = reqiredBlade.getTagCompound();
-                ItemSlashBladeNamed.CurrentItemName.set(tag,"wrap.bamboomod.katana");
-                ItemSlashBladeNamed.BaseAttackModifier.set(tag, 4.0f);
-                ItemSlashBlade.TextureName.set(tag,"BambooKatana");
-                ItemSlashBlade.KillCount.set(tag,199);
-                ItemSlashBlade.ProudSoul.set(tag,1000);
-                ItemSlashBlade.RepairCount.set(tag,1);
-            }
-            String reqiredStr = nameWhite + ".reqired";
-            SlashBlade.registerCustomItemStack(reqiredStr,reqiredBlade);
-            ItemSlashBladeNamed.NamedBlades.add(SlashBlade.modid + ":" + reqiredStr);
-
-            reqiredBlade = reqiredBlade.copy();
+            ItemStack reqiredBlade = SlashBlade.getCustomBlade(nameWhiteReqired).copy();
 
             IRecipe recipe = new RecipeAwakeBladeFox(new ResourceLocation(SlashBlade.modid,"fox_white"),
                     blade,reqiredBlade,
@@ -160,25 +181,7 @@ public class Fox {
         }
         {
             ItemStack blade = SlashBlade.getCustomBlade(SlashBlade.modid,nameBlack);
-
-            ItemStack reqiredBlade = SlashBlade.findItemStack(SlashBlade.modid,"slashbladeWrapper",1);
-            {
-                SlashBlade.wrapBlade.setWrapItem(reqiredBlade,innerBlade);
-
-                reqiredBlade.addEnchantment(Enchantments.SMITE,1);
-                NBTTagCompound tag = reqiredBlade.getTagCompound();
-                ItemSlashBladeNamed.CurrentItemName.set(tag,"wrap.bamboomod.katana");
-                ItemSlashBladeNamed.BaseAttackModifier.set(tag, 4.0f);
-                ItemSlashBlade.TextureName.set(tag,"BambooKatana");
-                ItemSlashBlade.KillCount.set(tag,199);
-                ItemSlashBlade.ProudSoul.set(tag,1000);
-                ItemSlashBlade.RepairCount.set(tag,1);
-            }
-            String reqiredStr = nameBlack + ".reqired";
-            SlashBlade.registerCustomItemStack(reqiredStr,reqiredBlade);
-            ItemSlashBladeNamed.NamedBlades.add(SlashBlade.modid + ":" + reqiredStr);
-
-            reqiredBlade = reqiredBlade.copy();
+            ItemStack reqiredBlade = SlashBlade.getCustomBlade(nameBlackReqired).copy();
 
             IRecipe recipe = new RecipeAwakeBladeFox(new ResourceLocation(SlashBlade.modid,"fox_black"),
                     blade,reqiredBlade,
