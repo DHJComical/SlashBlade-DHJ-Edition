@@ -1,10 +1,12 @@
 {
-  "package": "mods.flammpfeil.slashblade.bridge.mixin",
-  "required": false,
+  "package": "mods.flammpfeil.slashblade.bridge.mixins.sjap",
+  "required": true,
   "target": "@env(DEFAULT)",
   "minVersion": "0.8.5",
   "compatibilityLevel": "JAVA_8",
   "mixins": [],
   "server": [],
-  "client": []
+  "client": [
+    "MixinClientProxy"
+  ]
 }

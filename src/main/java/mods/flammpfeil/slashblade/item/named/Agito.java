@@ -19,6 +19,11 @@ import net.minecraft.nbt.NBTTagCompound;
 public class Agito {
 
     @SubscribeEvent()
+    public void init(LoadEvent.InitEvent event){
+        // Legacy addons may overwrite the old InitEvent signature through Mixin.
+    }
+
+    @SubscribeEvent()
     public void init(LoadEvent.PreInitEvent event){
         ItemStack itemProudSoul = SlashBlade.findItemStack(SlashBlade.modid, SlashBlade.ProudSoulStr , 1);
         ItemStack itemSphereBladeSoul = SlashBlade.findItemStack(SlashBlade.modid, SlashBlade.SphereBladeSoulStr , 1);

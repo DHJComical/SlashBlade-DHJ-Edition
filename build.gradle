@@ -401,7 +401,10 @@ tasks.register('compatBridgeJar', Jar) {
     dependsOn tasks.named('compatBridgeClasses')
     manifest {
         attributes(
-                'MixinConfigs': 'mixins.flammpfeil.slashblade.bridge.json'
+                'FMLCorePlugin': 'mods.flammpfeil.slashblade.bridge.core.LegacySlashBladeCorePlugin',
+                'FMLCorePluginContainsFMLMod': true,
+                'ForceLoadAsMod': true,
+                'MixinConfigs': 'mixins.flammpfeil.slashblade.bridge.vanilla.json'
         )
     }
 }
@@ -413,9 +416,11 @@ tasks.named('assemble').configure {
 tasks.named('runClient').configure {
     dependsOn tasks.named('compatBridgeClasses')
     classpath += sourceSets.compatBridge.output
+    jvmArgs '-Dfml.coreMods.load=mods.flammpfeil.slashblade.bridge.core.LegacySlashBladeCorePlugin'
 }
 
 tasks.named('runServer').configure {
     dependsOn tasks.named('compatBridgeClasses')
     classpath += sourceSets.compatBridge.output
+    jvmArgs '-Dfml.coreMods.load=mods.flammpfeil.slashblade.bridge.core.LegacySlashBladeCorePlugin'
 }
