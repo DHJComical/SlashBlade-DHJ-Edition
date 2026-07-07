@@ -14,6 +14,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.nbt.NBTTagCompound;
@@ -60,6 +61,31 @@ public class RecipeWrapBlade extends ShapedRecipes {
         tag.removeTag("display");
 
         NamedBladeManager.registerBladeSoul(tag , blade.getDisplayName());
+    }
+
+    public static boolean isRegisteredWrapBladeId(String bladeId) {
+        return getWrapTargetName(bladeId) != null;
+    }
+
+    public static boolean hasAvailableWrapTarget(String bladeId) {
+        String targetName = getWrapTargetName(bladeId);
+        return targetName != null && Item.REGISTRY.getObject(new ResourceLocation(targetName)) != null;
+    }
+
+    private static String getWrapTargetName(String bladeId) {
+        if (bladeId == null) {
+            return null;
+        }
+
+        String normalizedBladeId = bladeId.toLowerCase(Locale.ROOT);
+        for (String targetName : wrapableTextureNames.keySet()) {
+            String expectedBladeId = "wrap." + targetName.replace(':', '.').toLowerCase(Locale.ROOT);
+            if (expectedBladeId.equals(normalizedBladeId)) {
+                return targetName;
+            }
+        }
+
+        return null;
     }
 
     static public ItemStack getWrapSampleBlade(String name,String texture){
