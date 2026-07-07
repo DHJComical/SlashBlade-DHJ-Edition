@@ -29,6 +29,8 @@ import java.util.Map;
 import java.util.Set;
 
 final class SlashBladeRecipeDebugPlugin implements IRecipeRegistryPlugin {
+    private static final String LEGACY_SLASHBLADE_MODID = "flammpfeil.slashblade";
+
     @Override
     public <V> List<String> getRecipeCategoryUids(IFocus<V> focus) {
         logFocus(focus, "categories");
@@ -122,7 +124,7 @@ final class SlashBladeRecipeDebugPlugin implements IRecipeRegistryPlugin {
             }
         }
 
-        if (stack.getItem().getRegistryName() != null) {
+        if (stack.getItem().getRegistryName() != null && shouldUseRegistryKey(stack)) {
             addKey(keys, stack.getItem().getRegistryName().toString());
         }
 
@@ -135,6 +137,12 @@ final class SlashBladeRecipeDebugPlugin implements IRecipeRegistryPlugin {
         }
 
         keys.add(key);
+        String normalizedLegacyKey = normalizeLegacySlashBladeKey(key);
+        if (!StringUtils.equals(normalizedLegacyKey, key)) {
+            addKey(keys, normalizedLegacyKey);
+            return;
+        }
+
         String slashBladePrefix = SlashBlade.modid + ":";
         if (StringUtils.startsWith(key, slashBladePrefix)) {
             addKey(keys, key.substring(slashBladePrefix.length()));
@@ -151,6 +159,47 @@ final class SlashBladeRecipeDebugPlugin implements IRecipeRegistryPlugin {
         if (StringUtils.startsWith(lowerKey, "slashblade_named_")) {
             keys.add("slashblade.named." + lowerKey.substring("slashblade_named_".length()).replace('_', '.'));
         }
+    }
+
+    private boolean shouldUseRegistryKey(ItemStack stack) {
+        if (!(stack.getItem() instanceof ItemSlashBlade)) {
+            return true;
+        }
+
+        if (!hasExplicitBladeIdentity(stack)) {
+            return true;
+        }
+
+        return stack.getItem() != SlashBlade.bladeNamed && stack.getItem() != SlashBlade.wrapBlade;
+    }
+
+    private boolean hasExplicitBladeIdentity(ItemStack stack) {
+        if (!stack.hasTagCompound()) {
+            return false;
+        }
+
+        NBTTagCompound tag = stack.getTagCompound();
+        return (ItemSlashBlade.BladeId.exists(tag) && !StringUtils.isBlank(ItemSlashBlade.BladeId.get(tag)))
+                || (ItemSlashBladeNamed.CurrentItemName.exists(tag) && !StringUtils.isBlank(ItemSlashBladeNamed.CurrentItemName.get(tag)))
+                || (ItemSlashBladeNamed.TrueItemName.exists(tag) && !StringUtils.isBlank(ItemSlashBladeNamed.TrueItemName.get(tag)));
+    }
+
+    private String normalizeLegacySlashBladeKey(String key) {
+        if (StringUtils.isBlank(key)) {
+            return key;
+        }
+
+        String legacyColonPrefix = LEGACY_SLASHBLADE_MODID + ":";
+        if (StringUtils.startsWith(key, legacyColonPrefix)) {
+            return SlashBlade.modid + ":" + normalizeLegacySlashBladeKey(key.substring(legacyColonPrefix.length()));
+        }
+
+        String legacyDotPrefix = LEGACY_SLASHBLADE_MODID + ".";
+        if (StringUtils.startsWith(key, legacyDotPrefix)) {
+            return SlashBlade.modid + "." + key.substring(legacyDotPrefix.length());
+        }
+
+        return key;
     }
 
     private void addDisplayBaseKeys(Set<String> keys, String key) {
@@ -202,6 +251,10 @@ final class SlashBladeRecipeDebugPlugin implements IRecipeRegistryPlugin {
 
     private boolean isDefaultJeiRecipeSufficient(IRecipe recipe, ItemStack focusStack) {
         if (recipe == null || recipe instanceof DummyRecipeBase || recipe instanceof RecipeWrapBlade) {
+            return false;
+        }
+
+        if (recipe instanceof SlashBladeJeiInputOverride) {
             return false;
         }
 

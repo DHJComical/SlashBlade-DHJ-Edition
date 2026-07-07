@@ -72,6 +72,7 @@ public class SlashBlade {
     public static final String modname = Reference.MOD_NAME;
     public static final String modid = Reference.MOD_ID;
     public static final String version = Reference.VERSION;
+    public static final String legacyModid = "flammpfeil.slashblade";
 
     public static final String BrokenBladeWhiteStr = "BrokenBladeWhite";
 
@@ -760,12 +761,20 @@ public class SlashBlade {
             return ItemStack.EMPTY;
         }
 
-        ItemStack stack = BladeDefinitionRegistry.createBladeStack(bladeId);
+        String normalizedBladeId = normalizeLegacyBladeKey(bladeId);
+        ItemStack stack = BladeDefinitionRegistry.createBladeStack(normalizedBladeId);
         if (!stack.isEmpty()) {
             return stack;
         }
 
-        String[] path = bladeId.split(":", 2);
+        if (!StringUtils.equals(normalizedBladeId, bladeId)) {
+            stack = BladeDefinitionRegistry.createBladeStack(bladeId);
+            if (!stack.isEmpty()) {
+                return stack;
+            }
+        }
+
+        String[] path = normalizedBladeId.split(":", 2);
         if (path.length == 2 && SlashBlade.modid.equals(path[0])) {
             stack = BladeDefinitionRegistry.createBladeStack(path[1]);
             if (!stack.isEmpty()) {
@@ -773,31 +782,45 @@ public class SlashBlade {
             }
         }
 
-        return getCustomBlade(bladeId);
+        return getCustomBlade(normalizedBladeId);
     }
 
     static public ItemStack findItemStack(String modid, String name, int count){
-        ResourceLocationRaw key = new ResourceLocationRaw(modid, name);
+        String resolvedModId = normalizeLegacyModId(modid);
+        String resolvedName = normalizeLegacyBladeKey(name);
+        ResourceLocationRaw key = new ResourceLocationRaw(resolvedModId, resolvedName);
         ItemStack stack = ItemStack.EMPTY;
 
-        if (SlashBlade.modid.equals(modid)) {
-            stack = BladeDefinitionRegistry.createBladeStack(name);
+        if (SlashBlade.modid.equals(resolvedModId)) {
+            stack = BladeDefinitionRegistry.createBladeStack(resolvedName);
             if (stack.isEmpty()) {
                 stack = BladeDefinitionRegistry.createBladeStack(key.toString());
             }
         }
 
         if(stack.isEmpty() && BladeRegistry.containsKey(key)) {
-            stack = BladeRegistry.get(new ResourceLocationRaw(modid, name)).copy();
+            stack = BladeRegistry.get(key).copy();
 
-        }else if(stack.isEmpty() && SlashBlade.modid.equals(modid) && FixedBladePrototypeRegistry.containsKey(name)) {
-            stack = FixedBladePrototypeRegistry.get(name).copy();
+        }else if(stack.isEmpty() && SlashBlade.modid.equals(resolvedModId) && FixedBladePrototypeRegistry.containsKey(resolvedName)) {
+            stack = FixedBladePrototypeRegistry.get(resolvedName).copy();
 
         }else if(stack.isEmpty()) {
-            Item item = Item.REGISTRY.getObject(new ResourceLocationRaw(modid, name));
+            Item item = Item.REGISTRY.getObject(key);
             if (item != null)
                 stack = new ItemStack(item);
 
+        }
+
+        if (stack.isEmpty() && (!StringUtils.equals(resolvedModId, modid) || !StringUtils.equals(resolvedName, name))) {
+            ResourceLocationRaw legacyKey = new ResourceLocationRaw(modid, name);
+            if(BladeRegistry.containsKey(legacyKey)) {
+                stack = BladeRegistry.get(legacyKey).copy();
+            } else {
+                Item item = Item.REGISTRY.getObject(legacyKey);
+                if (item != null) {
+                    stack = new ItemStack(item);
+                }
+            }
         }
 
         if(!stack.isEmpty()) {
@@ -821,7 +844,7 @@ public class SlashBlade {
         String modid;
         String name;
         {
-            String str[] = key.split(":",2);
+            String str[] = normalizeLegacyBladeKey(key).split(":",2);
             if(str.length == 2){
                 modid = str[0];
                 name = str[1];
@@ -832,6 +855,28 @@ public class SlashBlade {
         }
 
         return getCustomBlade(modid,name);
+    }
+
+    private static String normalizeLegacyModId(String modId) {
+        return legacyModid.equals(modId) ? SlashBlade.modid : modId;
+    }
+
+    private static String normalizeLegacyBladeKey(String key) {
+        if (StringUtils.isBlank(key)) {
+            return key;
+        }
+
+        String legacyColonPrefix = legacyModid + ":";
+        if (StringUtils.startsWith(key, legacyColonPrefix)) {
+            return SlashBlade.modid + ":" + normalizeLegacyBladeKey(key.substring(legacyColonPrefix.length()));
+        }
+
+        String legacyDotPrefix = legacyModid + ".";
+        if (StringUtils.startsWith(key, legacyDotPrefix)) {
+            return SlashBlade.modid + "." + key.substring(legacyDotPrefix.length());
+        }
+
+        return key;
     }
 
 

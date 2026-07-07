@@ -22,6 +22,7 @@ import mods.flammpfeil.slashblade.item.named.Doutanuki;
 import mods.flammpfeil.slashblade.item.named.RecipeAwakeBladeFox;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import java.util.Collections;
@@ -80,7 +81,67 @@ public class SlashBladeJeiPlugin extends BlankModPlugin {
 
     @Override
     public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {
+        hideDefaultInputOverrideCraftingRecipes(jeiRuntime.getRecipeRegistry());
         hideUnavailableGeneratedWrapAnvilRecipes(jeiRuntime.getRecipeRegistry());
+    }
+
+    private void hideDefaultInputOverrideCraftingRecipes(IRecipeRegistry recipeRegistry) {
+        IRecipeCategory craftingCategory = recipeRegistry.getRecipeCategory(VanillaRecipeCategoryUid.CRAFTING);
+        if (craftingCategory == null) {
+            return;
+        }
+
+        for (Map.Entry<String, IRecipe> entry : SlashBlade.recipeMultimap.entries()) {
+            IRecipe recipe = entry.getValue();
+            if (!(recipe instanceof SlashBladeJeiInputOverride)) {
+                continue;
+            }
+
+            ItemStack output = recipe.getRecipeOutput();
+            if (output.isEmpty()) {
+                continue;
+            }
+
+            List<IRecipeWrapper> wrappers = recipeRegistry.getRecipeWrappers(
+                    craftingCategory,
+                    recipeRegistry.createFocus(mezz.jei.api.recipe.IFocus.Mode.OUTPUT, output)
+            );
+
+            for (IRecipeWrapper wrapper : wrappers) {
+                if (wrapper instanceof SlashBladeCraftingRecipeWrapper) {
+                    continue;
+                }
+
+                if (!hasMatchingOutput(wrapper, output)) {
+                    continue;
+                }
+
+                recipeRegistry.hideRecipe(wrapper, VanillaRecipeCategoryUid.CRAFTING);
+                SlashBladeJeiDebug.log("Hid default SlashBlade input override crafting recipe: "
+                        + recipe.getRegistryName()
+                        + " wrapper=" + wrapper.getClass().getName());
+            }
+        }
+    }
+
+    private boolean hasMatchingOutput(IRecipeWrapper wrapper, ItemStack expectedOutput) {
+        IIngredients ingredients = new mezz.jei.ingredients.Ingredients();
+        wrapper.getIngredients(ingredients);
+
+        List<List<ItemStack>> outputs = ingredients.getOutputs(VanillaTypes.ITEM);
+        if (outputs == null) {
+            return false;
+        }
+
+        for (List<ItemStack> outputList : outputs) {
+            for (ItemStack output : outputList == null ? Collections.<ItemStack>emptyList() : outputList) {
+                if (BladeIdentity.matchesIdentity(output, BladeIdentity.getBladeId(expectedOutput))) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     private void hideUnavailableGeneratedWrapAnvilRecipes(IRecipeRegistry recipeRegistry) {

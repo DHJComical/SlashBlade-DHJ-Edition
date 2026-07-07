@@ -8,6 +8,7 @@ import mods.flammpfeil.slashblade.item.BladeIdentity;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.item.crafting.BladeIngredient;
 import mods.flammpfeil.slashblade.item.crafting.RecipeAwakeBlade;
+import mods.flammpfeil.slashblade.item.crafting.RequestDefinition;
 import mods.flammpfeil.slashblade.item.named.Doutanuki;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -40,16 +41,26 @@ final class SlashBladeCraftingRecipeWrapper implements IShapedCraftingRecipeWrap
     @Override
     public void getIngredients(IIngredients ingredients) {
         java.util.ArrayList<List<ItemStack>> inputs = new java.util.ArrayList<List<ItemStack>>();
+        int width = Math.max(1, getWidth());
+        int index = 0;
         for (Ingredient ingredient : recipe.getIngredients()) {
-            ItemStack[] stacks = cleanDisplayStacks(getDisplayStacks(ingredient));
+            int x = index % width;
+            int y = index / width;
+            ItemStack[] stacks = cleanDisplayStacks(getDisplayStacks(ingredient, x, y));
             inputs.add(stacks.length == 0 ? Collections.<ItemStack>emptyList() : Arrays.asList(stacks));
+            index++;
         }
 
         ingredients.setInputLists(VanillaTypes.ITEM, inputs);
         ingredients.setOutput(VanillaTypes.ITEM, output);
     }
 
-    private ItemStack[] getDisplayStacks(Ingredient ingredient) {
+    private ItemStack[] getDisplayStacks(Ingredient ingredient, int x, int y) {
+        ItemStack overrideStack = getInputOverrideStack(ingredient, x, y);
+        if (!overrideStack.isEmpty()) {
+            return new ItemStack[]{overrideStack};
+        }
+
         if (ingredient instanceof BladeIngredient) {
             ItemStack[] rustBladeStacks = getRustBladeDisplayStacks();
             if (0 < rustBladeStacks.length) {
@@ -64,7 +75,31 @@ final class SlashBladeCraftingRecipeWrapper implements IShapedCraftingRecipeWrap
             }
         }
 
+        if (ingredient instanceof BladeIngredient) {
+            ItemStack[] bladeStacks = getBladeIngredientDisplayStacks((BladeIngredient) ingredient);
+            if (0 < bladeStacks.length) {
+                return bladeStacks;
+            }
+        }
+
         return ingredient.getMatchingStacks();
+    }
+
+    private ItemStack getInputOverrideStack(Ingredient ingredient, int x, int y) {
+        if (!(recipe instanceof SlashBladeJeiInputOverride)) {
+            return ItemStack.EMPTY;
+        }
+
+        ItemStack stack = ((SlashBladeJeiInputOverride) recipe).slashblade$getJeiInputOverride(x, y, ingredient);
+        if (stack == null || stack.isEmpty()) {
+            return ItemStack.EMPTY;
+        }
+
+        ItemStack normalized = normalizeBladeDisplayStack(stack.copy());
+        SlashBladeJeiDebug.log("Recipe input override recipe=" + getRegistryName()
+                + " xy=" + x + "," + y
+                + " stack=" + SlashBladeJeiDebug.describeStack(normalized));
+        return normalized;
     }
 
     private ItemStack[] cleanDisplayStacks(ItemStack[] stacks) {
@@ -113,7 +148,7 @@ final class SlashBladeCraftingRecipeWrapper implements IShapedCraftingRecipeWrap
         if (required.isEmpty()) {
             required = awakeRecipe.getRequestDefinition().createDisplayStack();
         } else {
-            required = normalizeCoreBladeDisplayStack(required);
+            required = normalizeBladeDisplayStack(required);
             awakeRecipe.getRequestDefinition().initItemStack(required);
         }
 
@@ -127,6 +162,41 @@ final class SlashBladeCraftingRecipeWrapper implements IShapedCraftingRecipeWrap
         named.setStackDisplayName(required.getDisplayName());
 
         return new ItemStack[]{required, named};
+    }
+
+    private ItemStack[] getBladeIngredientDisplayStacks(BladeIngredient ingredient) {
+        RequestDefinition request = ingredient.getRequest();
+        ItemStack[] matchingStacks = ingredient.getMatchingStacks();
+        java.util.ArrayList<ItemStack> result = new java.util.ArrayList<ItemStack>();
+
+        if (matchingStacks != null) {
+            for (ItemStack matchingStack : matchingStacks) {
+                if (matchingStack == null || matchingStack.isEmpty()) {
+                    continue;
+                }
+
+                ItemStack displayStack = normalizeBladeDisplayStack(matchingStack.copy());
+                request.initItemStack(displayStack);
+                result.add(displayStack);
+            }
+        }
+
+        if (result.isEmpty()) {
+            ItemStack fallback = normalizeBladeDisplayStack(request.createDisplayStack());
+            if (!fallback.isEmpty()) {
+                result.add(fallback);
+            }
+        }
+
+        return result.toArray(new ItemStack[result.size()]);
+    }
+
+    private ItemStack normalizeBladeDisplayStack(ItemStack stack) {
+        stack = normalizeCoreBladeDisplayStack(stack);
+        if (!stack.isEmpty() && stack.getItem() instanceof ItemSlashBlade && stack.getItemDamage() == net.minecraftforge.oredict.OreDictionary.WILDCARD_VALUE) {
+            stack.setItemDamage(0);
+        }
+        return stack;
     }
 
     private ItemStack normalizeCoreBladeDisplayStack(ItemStack stack) {
