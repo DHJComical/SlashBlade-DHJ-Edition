@@ -365,3 +365,57 @@ idea.project.settings {
 
 apply from: 'gradle/scripts/publishing.gradle'
 apply from: 'gradle/scripts/extra.gradle'
+
+sourceSets {
+    compatBridge {
+        java.setSrcDirs(['src/compatBridge/java'])
+        resources.setSrcDirs(['src/compatBridge/resources'])
+        compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+        runtimeClasspath += output + compileClasspath
+    }
+}
+
+tasks.named('compileCompatBridgeJava', JavaCompile).configure {
+    dependsOn tasks.named('compileJava')
+    sourceCompatibility = targetCompatibility = 8
+}
+
+tasks.named('processCompatBridgeResources').configure {
+    inputs.property 'minecraft_version', '1.12.2'
+    inputs.property 'mod_version', propertyString('mod_version')
+
+    filesMatching('mcmod.info') {
+        expand(
+                'minecraft_version': '1.12.2',
+                'mod_version': propertyString('mod_version')
+        )
+    }
+}
+
+tasks.register('compatBridgeJar', Jar) {
+    group = 'build'
+    description = 'Builds the legacy SlashBlade compatibility bridge mod jar.'
+    archiveBaseName.set('flammpfeil.slashblade-compat-bridge')
+    archiveVersion.set(project.version.toString())
+    from sourceSets.compatBridge.output
+    dependsOn tasks.named('compatBridgeClasses')
+    manifest {
+        attributes(
+                'MixinConfigs': 'mixins.flammpfeil.slashblade.bridge.json'
+        )
+    }
+}
+
+tasks.named('assemble').configure {
+    dependsOn tasks.named('compatBridgeJar')
+}
+
+tasks.named('runClient').configure {
+    dependsOn tasks.named('compatBridgeClasses')
+    classpath += sourceSets.compatBridge.output
+}
+
+tasks.named('runServer').configure {
+    dependsOn tasks.named('compatBridgeClasses')
+    classpath += sourceSets.compatBridge.output
+}

@@ -1,0 +1,14 @@
+[
+{
+  "modid": "flammpfeil.slashblade",
+  "name": "SlashBlade Legacy Compatibility Bridge",
+  "version": "${mod_version}",
+  "mcversion": "${minecraft_version}",
+  "description": "Compatibility bridge that exposes the legacy SlashBlade mod id for older addon dependencies.",
+  "authorList": ["dhjco"],
+  "credits": "SlashBlade DHJ Edition",
+  "url": "",
+  "updateJSON": "",
+  "logoFile": ""
+}
+]
