@@ -273,10 +273,16 @@ final class SlashBladeRecipeDebugPlugin implements IRecipeRegistryPlugin {
 
         ItemStack kitunebi = SlashBlade.findItemStack("BambooMod", "kitunebi", 1);
         ItemStack katana = SlashBlade.findItemStack("BambooMod", "katana", 1);
+        ItemStack sakuraKitunebi = SlashBlade.findItemStack("sakura", "kitunebi", 1);
+        ItemStack sakuraKatana = SlashBlade.findItemStack("sakura", "katana", 1);
+        ItemStack sakuraFriedTofu = SlashBlade.findItemStack("sakura", "tofu_fried", 1);
         lines.add("fox dependency BambooMod:kitunebi=" + SlashBladeJeiDebug.describeStack(kitunebi));
         lines.add("fox dependency BambooMod:katana=" + SlashBladeJeiDebug.describeStack(katana));
-        if (kitunebi.isEmpty()) {
-            lines.add("fox recipe status=not registered because Fox.postInit returns when BambooMod:kitunebi is empty");
+        lines.add("fox dependency sakura:kitunebi=" + SlashBladeJeiDebug.describeStack(sakuraKitunebi));
+        lines.add("fox dependency sakura:katana=" + SlashBladeJeiDebug.describeStack(sakuraKatana));
+        lines.add("fox dependency sakura:tofu_fried=" + SlashBladeJeiDebug.describeStack(sakuraFriedTofu));
+        if (kitunebi.isEmpty() && sakuraKitunebi.isEmpty()) {
+            lines.add("fox recipe status=not registered because no compatible kitunebi item was found");
         }
     }
 

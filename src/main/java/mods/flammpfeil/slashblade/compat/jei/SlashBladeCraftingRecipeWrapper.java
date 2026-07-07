@@ -34,13 +34,14 @@ final class SlashBladeCraftingRecipeWrapper implements IShapedCraftingRecipeWrap
     SlashBladeCraftingRecipeWrapper(IRecipe recipe, ItemStack output, boolean preserveOutputState) {
         this.recipe = recipe;
         this.output = getDisplayOutput(recipe, output, preserveOutputState);
+        removeRecipeOnlyTooltip(this.output);
     }
 
     @Override
     public void getIngredients(IIngredients ingredients) {
         java.util.ArrayList<List<ItemStack>> inputs = new java.util.ArrayList<List<ItemStack>>();
         for (Ingredient ingredient : recipe.getIngredients()) {
-            ItemStack[] stacks = getDisplayStacks(ingredient);
+            ItemStack[] stacks = cleanDisplayStacks(getDisplayStacks(ingredient));
             inputs.add(stacks.length == 0 ? Collections.<ItemStack>emptyList() : Arrays.asList(stacks));
         }
 
@@ -64,6 +65,27 @@ final class SlashBladeCraftingRecipeWrapper implements IShapedCraftingRecipeWrap
         }
 
         return ingredient.getMatchingStacks();
+    }
+
+    private ItemStack[] cleanDisplayStacks(ItemStack[] stacks) {
+        if (stacks.length == 0) {
+            return stacks;
+        }
+
+        ItemStack[] cleanedStacks = new ItemStack[stacks.length];
+        for (int i = 0; i < stacks.length; i++) {
+            ItemStack stack = stacks[i];
+            if (stack == null || stack.isEmpty()) {
+                cleanedStacks[i] = ItemStack.EMPTY;
+                continue;
+            }
+
+            ItemStack cleanedStack = stack.copy();
+            removeRecipeOnlyTooltip(cleanedStack);
+            cleanedStacks[i] = cleanedStack;
+        }
+
+        return cleanedStacks;
     }
 
     private ItemStack[] getRustBladeDisplayStacks() {
@@ -99,6 +121,8 @@ final class SlashBladeCraftingRecipeWrapper implements IShapedCraftingRecipeWrap
             return new ItemStack[0];
         }
 
+        removeRecipeOnlyTooltip(required);
+
         ItemStack named = required.copy();
         named.setStackDisplayName(required.getDisplayName());
 
@@ -119,6 +143,14 @@ final class SlashBladeCraftingRecipeWrapper implements IShapedCraftingRecipeWrap
             normalized.setTagCompound((NBTTagCompound) stack.getTagCompound().copy());
         }
         return normalized;
+    }
+
+    private static void removeRecipeOnlyTooltip(ItemStack stack) {
+        if (stack.isEmpty() || !stack.hasTagCompound()) {
+            return;
+        }
+
+        stack.getTagCompound().removeTag(ItemSlashBlade.TooltipKeysTag);
     }
 
     private static ItemStack getDisplayOutput(IRecipe recipe, ItemStack output, boolean preserveOutputState) {

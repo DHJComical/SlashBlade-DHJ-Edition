@@ -10,6 +10,7 @@ import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.item.crafting.RecipeAwakeBlade;
 import mods.flammpfeil.slashblade.item.named.Doutanuki;
+import mods.flammpfeil.slashblade.item.named.RecipeAwakeBladeFox;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
@@ -36,6 +37,12 @@ public class SlashBladeJeiPlugin extends BlankModPlugin {
         registry.handleRecipes(RecipeAwakeBlade.class, new IRecipeWrapperFactory<RecipeAwakeBlade>() {
             @Override
             public IRecipeWrapper getRecipeWrapper(RecipeAwakeBlade recipe) {
+                return new SlashBladeCraftingRecipeWrapper(recipe, recipe.getRecipeOutput());
+            }
+        }, VanillaRecipeCategoryUid.CRAFTING);
+        registry.handleRecipes(RecipeAwakeBladeFox.class, new IRecipeWrapperFactory<RecipeAwakeBladeFox>() {
+            @Override
+            public IRecipeWrapper getRecipeWrapper(RecipeAwakeBladeFox recipe) {
                 return new SlashBladeCraftingRecipeWrapper(recipe, recipe.getRecipeOutput());
             }
         }, VanillaRecipeCategoryUid.CRAFTING);

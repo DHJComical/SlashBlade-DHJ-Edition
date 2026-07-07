@@ -21,6 +21,15 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
  * Created by Furia on 14/11/11.
  */
 public class BambooMod {
+    public static ItemStack findCompatibleKatana() {
+        ItemStack katana = SlashBlade.findItemStack("BambooMod", "katana", 1);
+        if (!katana.isEmpty()) {
+            return katana;
+        }
+
+        return SlashBlade.findItemStack("sakura", "katana", 1);
+    }
+
     @SubscribeEvent
     public void init(LoadEvent.PreInitEvent event){
         ItemStack innerBlade = SlashBlade.findItemStack("minecraft", "wooden_sword", 1);
@@ -49,9 +58,9 @@ public class BambooMod {
 
     @SubscribeEvent
     public void postinit(LoadEvent.PostInitEvent event){
-        ItemStack katana = SlashBlade.findItemStack("BambooMod","katana",1);
+        ItemStack katana = findCompatibleKatana();
 
-        if(Loader.isModLoaded("BambooMod") && !katana.isEmpty()){
+        if((Loader.isModLoaded("BambooMod") || Loader.isModLoaded("sakura")) && !katana.isEmpty()){
             RecipeBambooMod recipe = new BambooMod.RecipeBambooMod();
             SlashBlade.addRecipe("wrap.BambooMod.katana.sample", recipe);
         }
@@ -72,10 +81,10 @@ public class BambooMod {
                     "B  ",
                     'P', SlashBlade.findItemStack(SlashBlade.modid, SlashBlade.ProudSoulStr, 1),
                     'S', SlashBlade.findItemStack(SlashBlade.modid,"slashbladeWrapper",1),
-                    'B', SlashBlade.findItemStack("BambooMod","katana",1));
+                    'B', findCompatibleKatana());
 
             this.proudSoul = SlashBlade.findItemStack(SlashBlade.modid,SlashBlade.ProudSoulStr,1);
-            this.katana = SlashBlade.findItemStack("BambooMod","katana",1);
+            this.katana = findCompatibleKatana();
             this.attackModif = 4.0f;
         }
     //RegisterWrapable("BambooMod:katana", "BambooKatana", 4.0f);

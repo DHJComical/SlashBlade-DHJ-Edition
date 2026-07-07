@@ -19,7 +19,7 @@ public class RecipeAwakeBladeFox extends RecipeAwakeBlade {
     public ItemStack getCraftingResult(InventoryCrafting var1) {
         ItemStack blade =  super.getCraftingResult(var1);
 
-        ItemStack katana = SlashBlade.findItemStack("BambooMod", "katana", 1);
+        ItemStack katana = BambooMod.findCompatibleKatana();
         if(!katana.isEmpty())
             SlashBlade.wrapBlade.setWrapItem(blade,katana);
 
@@ -30,7 +30,7 @@ public class RecipeAwakeBladeFox extends RecipeAwakeBlade {
     public ItemStack getRecipeOutput() {
         ItemStack blade =  super.getRecipeOutput();
 
-        ItemStack katana = SlashBlade.findItemStack("BambooMod","katana",1);
+        ItemStack katana = BambooMod.findCompatibleKatana();
         if(!katana.isEmpty())
             SlashBlade.wrapBlade.setWrapItem(blade,katana);
 

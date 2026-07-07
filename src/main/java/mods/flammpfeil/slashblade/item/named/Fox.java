@@ -22,6 +22,26 @@ public class Fox {
     static public final String nameWhiteReqired = nameWhite + ".reqired";
     static public final String nameBlackReqired = nameBlack + ".reqired";
 
+    public static ItemStack findCompatibleFoxFire() {
+        ItemStack kitunebi = SlashBlade.findItemStack("BambooMod", "kitunebi", 1);
+        if (!kitunebi.isEmpty()) {
+            return kitunebi;
+        }
+
+        return SlashBlade.findItemStack("sakura", "kitunebi", 1);
+    }
+
+    private static ItemStack findCompatibleInari() {
+        ItemStack inari = SlashBlade.findItemStack("TofuCraft", "foodSet", 1);
+        if (!inari.isEmpty()) {
+            inari.setItemDamage(14);
+            return inari;
+        }
+
+        inari = SlashBlade.findItemStack("sakura", "tofu_fried", 1);
+        return inari.isEmpty() ? new ItemStack(Items.WHEAT, 1) : inari;
+    }
+
     @SubscribeEvent
     public void init(LoadEvent.PreInitEvent event){
 
@@ -152,15 +172,11 @@ public class Fox {
 
         ItemStack innerBlade = SlashBlade.findItemStack("minecraft", "wooden_sword", 1);
 
-        ItemStack kitunebi = SlashBlade.findItemStack("BambooMod","kitunebi",1);
+        ItemStack kitunebi = findCompatibleFoxFire();
         if(kitunebi.isEmpty())
             return;
 
-        ItemStack inari = SlashBlade.findItemStack("TofuCraft","foodSet",1);
-        if(!inari.isEmpty())
-            inari.setItemDamage(14);
-        else
-            inari = new ItemStack(Items.WHEAT,1);
+        ItemStack inari = findCompatibleInari();
 
         ItemStack proudsoul = SlashBlade.findItemStack(SlashBlade.modid,"proudsoul",1);
 
