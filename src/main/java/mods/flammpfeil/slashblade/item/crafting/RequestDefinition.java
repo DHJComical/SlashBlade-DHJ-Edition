@@ -73,7 +73,7 @@ public final class RequestDefinition {
 
         Builder builder = builder();
 
-        String bladeId = BladeIdentity.getBladeId(stack);
+        String bladeId = BladeIdentity.getRawBladeId(stack);
         if (!StringUtils.isBlank(bladeId)) {
             builder.bladeId(bladeId);
         }

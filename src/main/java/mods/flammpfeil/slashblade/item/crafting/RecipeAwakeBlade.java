@@ -72,11 +72,11 @@ public class RecipeAwakeBlade extends ShapedOreRecipe {
         return result;
     }
 
-    protected ItemStack getRequiredStateBlade() {
+    public ItemStack getRequiredStateBlade() {
         return requiredStateBlade.isEmpty() ? ItemStack.EMPTY : requiredStateBlade.copy();
     }
 
-    protected RequestDefinition getRequestDefinition() {
+    public RequestDefinition getRequestDefinition() {
         return requestDefinition;
     }
 

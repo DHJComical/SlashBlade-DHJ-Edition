@@ -68,6 +68,8 @@ dependencies {
     // annotationProcessor = annotation processing dependencies
     // shade = includes dependency in output
 
+    implementation 'curse.maven:had-enough-items-557549:4543375'
+
     // Transitive dependencies:
     // (Dependencies that your dependency depends on)
     // If you wish to exclude transitive dependencies in the described dependencies

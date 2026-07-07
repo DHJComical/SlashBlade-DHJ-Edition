@@ -4,10 +4,12 @@ import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntComparators;
 import it.unimi.dsi.fastutil.ints.IntList;
 import mods.flammpfeil.slashblade.SlashBlade;
+import mods.flammpfeil.slashblade.item.BladeIdentity;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.oredict.OreDictionary;
 
 import javax.annotation.Nullable;
@@ -58,7 +60,7 @@ public class BladeIngredient extends Ingredient {
             return false;
         }
 
-        if (!super.apply(input)) {
+        if (!(input.getItem() instanceof ItemSlashBlade)) {
             return false;
         }
 
@@ -98,7 +100,7 @@ public class BladeIngredient extends Ingredient {
     }
 
     private static ItemStack[] createDisplayStacks(ItemStack[] stacks, RequestDefinition request) {
-        List<ItemStack> result = new ArrayList<ItemStack>(stacks.length);
+        List<ItemStack> result = new ArrayList<ItemStack>(stacks.length * 2);
         RequestDefinition resolvedRequest = request == null ? RequestDefinition.empty() : request;
 
         for (ItemStack stack : stacks) {
@@ -106,15 +108,15 @@ public class BladeIngredient extends Ingredient {
                 continue;
             }
 
-            ItemStack displayStack = stack.copy();
+            ItemStack displayStack = normalizeCoreBladeDisplayStack(stack.copy());
             resolvedRequest.initItemStack(displayStack);
-            result.add(displayStack);
+            addDisplayStackVariants(result, displayStack);
         }
 
         if (result.isEmpty()) {
-            ItemStack fallback = resolvedRequest.createDisplayStack();
+            ItemStack fallback = normalizeCoreBladeDisplayStack(resolvedRequest.createDisplayStack());
             if (!fallback.isEmpty()) {
-                result.add(fallback);
+                addDisplayStackVariants(result, fallback);
             }
         }
 
@@ -125,9 +127,11 @@ public class BladeIngredient extends Ingredient {
         RequestDefinition resolvedRequest = request == null ? RequestDefinition.empty() : request;
 
         if (resolvedRequest.hasBladeId()) {
-            ItemStack displayStack = resolvedRequest.createDisplayStack();
+            ItemStack displayStack = normalizeCoreBladeDisplayStack(resolvedRequest.createDisplayStack());
             if (!displayStack.isEmpty()) {
-                return new ItemStack[]{displayStack};
+                List<ItemStack> displayStacks = new ArrayList<ItemStack>(2);
+                addDisplayStackVariants(displayStacks, displayStack);
+                return displayStacks.toArray(new ItemStack[displayStacks.size()]);
             }
         }
 
@@ -159,6 +163,38 @@ public class BladeIngredient extends Ingredient {
         }
 
         return stacks.toArray(new ItemStack[stacks.size()]);
+    }
+
+    private static void addDisplayStackVariants(List<ItemStack> result, ItemStack displayStack) {
+        if (displayStack.isEmpty()) {
+            return;
+        }
+
+        result.add(displayStack);
+
+        if (!displayStack.isItemEnchanted()) {
+            return;
+        }
+
+        ItemStack namedDisplayStack = displayStack.copy();
+        namedDisplayStack.setStackDisplayName(displayStack.getDisplayName());
+        result.add(namedDisplayStack);
+    }
+
+    private static ItemStack normalizeCoreBladeDisplayStack(ItemStack stack) {
+        if (stack.isEmpty() || SlashBlade.weapon == null || stack.getItem() == SlashBlade.weapon) {
+            return stack;
+        }
+
+        if (!String.valueOf(SlashBlade.weapon.getRegistryName()).equals(BladeIdentity.getBladeId(stack))) {
+            return stack;
+        }
+
+        ItemStack normalized = new ItemStack(SlashBlade.weapon, stack.getCount(), Math.min(stack.getItemDamage(), SlashBlade.weapon.getMaxDamage()));
+        if (stack.hasTagCompound()) {
+            normalized.setTagCompound((NBTTagCompound) stack.getTagCompound().copy());
+        }
+        return normalized;
     }
 
     private static void addBladeItem(Set<Item> items, Item item) {
