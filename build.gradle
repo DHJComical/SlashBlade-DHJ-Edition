@@ -403,8 +403,7 @@ tasks.register('compatBridgeJar', Jar) {
         attributes(
                 'FMLCorePlugin': 'mods.flammpfeil.slashblade.bridge.core.LegacySlashBladeCorePlugin',
                 'FMLCorePluginContainsFMLMod': true,
-                'ForceLoadAsMod': true,
-                'MixinConfigs': 'mixins.flammpfeil.slashblade.bridge.vanilla.json'
+                'ForceLoadAsMod': true
         )
     }
 }

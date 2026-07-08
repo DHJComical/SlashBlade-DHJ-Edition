@@ -72,6 +72,8 @@ dependencies {
     implementation 'curse.maven:mysterious-mountain-lib-368098:3254750'
     implementation 'curse.maven:sakura-reforged-1461245:8085691'
     implementation rfg.deobf('curse.maven:sjap-310187:6845011')
+    implementation rfg.deobf("curse.maven:cialloblade-1281291:7051675")
+    implementation rfg.deobf("curse.maven:slashblade-murasame-1330499:6922408")
 
     // Transitive dependencies:
     // (Dependencies that your dependency depends on)
