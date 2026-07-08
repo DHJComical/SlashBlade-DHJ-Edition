@@ -25,6 +25,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
+import javax.annotation.Nonnull;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.List;
@@ -33,12 +34,12 @@ import java.util.Map;
 @JEIPlugin
 public class SlashBladeJeiPlugin extends BlankModPlugin {
     @Override
-    public void registerItemSubtypes(ISubtypeRegistry subtypeRegistry) {
+    public void registerItemSubtypes(@Nonnull ISubtypeRegistry subtypeRegistry) {
         registerSubtypes(subtypeRegistry);
     }
 
     @Override
-    public void registerSubtypes(ISubtypeRegistry subtypeRegistry) {
+    public void registerSubtypes(@Nonnull ISubtypeRegistry subtypeRegistry) {
         for (Item item : ForgeRegistries.ITEMS.getValuesCollection()) {
             if (item instanceof ItemSlashBlade) {
                 subtypeRegistry.registerSubtypeInterpreter(item, SlashBladeSubtypeInterpreter.INSTANCE);
@@ -52,40 +53,42 @@ public class SlashBladeJeiPlugin extends BlankModPlugin {
     public void register(IModRegistry registry) {
         registry.handleRecipes(RecipeAwakeBlade.class, new IRecipeWrapperFactory<RecipeAwakeBlade>() {
             @Override
-            public IRecipeWrapper getRecipeWrapper(RecipeAwakeBlade recipe) {
+            public IRecipeWrapper getRecipeWrapper(@Nonnull RecipeAwakeBlade recipe) {
                 return new SlashBladeCraftingRecipeWrapper(recipe, recipe.getRecipeOutput());
             }
         }, VanillaRecipeCategoryUid.CRAFTING);
         registry.handleRecipes(RecipeAwakeBladeFox.class, new IRecipeWrapperFactory<RecipeAwakeBladeFox>() {
             @Override
-            public IRecipeWrapper getRecipeWrapper(RecipeAwakeBladeFox recipe) {
+            public IRecipeWrapper getRecipeWrapper(@Nonnull RecipeAwakeBladeFox recipe) {
                 return new SlashBladeCraftingRecipeWrapper(recipe, recipe.getRecipeOutput());
             }
         }, VanillaRecipeCategoryUid.CRAFTING);
         registry.handleRecipes(Doutanuki.RecipeSheath.class, new IRecipeWrapperFactory<Doutanuki.RecipeSheath>() {
             @Override
-            public IRecipeWrapper getRecipeWrapper(Doutanuki.RecipeSheath recipe) {
+            public IRecipeWrapper getRecipeWrapper(@Nonnull Doutanuki.RecipeSheath recipe) {
                 return new SlashBladeCraftingRecipeWrapper(recipe, recipe.getRecipeOutput());
             }
         }, VanillaRecipeCategoryUid.CRAFTING);
         registry.handleRecipes(Doutanuki.RecipeRepairBrokenBlade.class, new IRecipeWrapperFactory<Doutanuki.RecipeRepairBrokenBlade>() {
             @Override
-            public IRecipeWrapper getRecipeWrapper(Doutanuki.RecipeRepairBrokenBlade recipe) {
+            public IRecipeWrapper getRecipeWrapper(@Nonnull Doutanuki.RecipeRepairBrokenBlade recipe) {
                 return new SlashBladeCraftingRecipeWrapper(recipe, recipe.getRecipeOutput());
             }
         }, VanillaRecipeCategoryUid.CRAFTING);
+        registry.addRecipeRegistryPlugin(new SlashBladeRecipeRegistryPlugin());
         registry.addRecipeRegistryPlugin(new SlashBladeRecipeDebugPlugin());
         SlashBladeJeiDebug.log("Registered SlashBlade crafting recipe wrappers");
-        SlashBladeJeiDebug.log("Registered SlashBlade recipe debug plugin");
+        SlashBladeJeiDebug.log("Registered SlashBlade recipe registry plugin");
+        SlashBladeJeiDebug.log("Registered SlashBlade recipe debug logger");
     }
 
     @Override
     public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {
-        hideDefaultInputOverrideCraftingRecipes(jeiRuntime.getRecipeRegistry());
+        hideDefaultCustomWrappedCraftingRecipes(jeiRuntime.getRecipeRegistry());
         hideUnavailableGeneratedWrapAnvilRecipes(jeiRuntime.getRecipeRegistry());
     }
 
-    private void hideDefaultInputOverrideCraftingRecipes(IRecipeRegistry recipeRegistry) {
+    private void hideDefaultCustomWrappedCraftingRecipes(IRecipeRegistry recipeRegistry) {
         IRecipeCategory craftingCategory = recipeRegistry.getRecipeCategory(VanillaRecipeCategoryUid.CRAFTING);
         if (craftingCategory == null) {
             return;
@@ -93,7 +96,7 @@ public class SlashBladeJeiPlugin extends BlankModPlugin {
 
         for (Map.Entry<String, IRecipe> entry : SlashBlade.recipeMultimap.entries()) {
             IRecipe recipe = entry.getValue();
-            if (!(recipe instanceof SlashBladeJeiInputOverride)) {
+            if (!hasCustomCraftingWrapper(recipe)) {
                 continue;
             }
 
@@ -117,11 +120,19 @@ public class SlashBladeJeiPlugin extends BlankModPlugin {
                 }
 
                 recipeRegistry.hideRecipe(wrapper, VanillaRecipeCategoryUid.CRAFTING);
-                SlashBladeJeiDebug.log("Hid default SlashBlade input override crafting recipe: "
+                SlashBladeJeiDebug.log("Hid default SlashBlade custom-wrapped crafting recipe: "
                         + recipe.getRegistryName()
                         + " wrapper=" + wrapper.getClass().getName());
             }
         }
+    }
+
+    private boolean hasCustomCraftingWrapper(IRecipe recipe) {
+        return recipe instanceof RecipeAwakeBlade
+                || recipe instanceof RecipeAwakeBladeFox
+                || recipe instanceof Doutanuki.RecipeSheath
+                || recipe instanceof Doutanuki.RecipeRepairBrokenBlade
+                || recipe instanceof SlashBladeJeiInputOverride;
     }
 
     private boolean hasMatchingOutput(IRecipeWrapper wrapper, ItemStack expectedOutput) {

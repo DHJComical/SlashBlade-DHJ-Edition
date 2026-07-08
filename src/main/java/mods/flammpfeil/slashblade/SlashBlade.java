@@ -56,6 +56,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
 
 import java.io.File;
 import java.util.*;
@@ -145,9 +146,22 @@ public class SlashBlade {
         if(!isDummy) {
             if(value.getRegistryName() == null)
                 value.setRegistryName(new ResourceLocation(value.getGroup()));
+            if (isDuplicateLegacyRecipe(value.getRegistryName())) {
+                LogManager.getLogger("SlashBlade").info("Skipped duplicate legacy SlashBlade recipe mirror: {}", value.getRegistryName());
+                return;
+            }
             ForgeRegistries.RECIPES.register(value);
         }
         recipeMultimap.put(key, value);
+    }
+
+    private static boolean isDuplicateLegacyRecipe(ResourceLocation registryName) {
+        if (registryName == null || !legacyModid.equals(registryName.getNamespace())) {
+            return false;
+        }
+
+        ResourceLocation canonicalName = new ResourceLocation(modid, registryName.getPath());
+        return ForgeRegistries.RECIPES.getValue(canonicalName) != null;
     }
 
     @EventHandler
