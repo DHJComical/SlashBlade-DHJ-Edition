@@ -102,6 +102,7 @@ item.slashblade.adjust.back.name=Back
 item.slashblade.adjust.down.name=Down
 tooltip.slashblade.sample.line1=Demo item: wrapped wooden sword
 tooltip.slashblade.sample.line2=Craft the real blade to unlock its full power
+tooltip.slashblade.jei.inheritance_source=Main data inherited from: %s
 
 item.slashblade.named.koseki.name=WitherBlade
 

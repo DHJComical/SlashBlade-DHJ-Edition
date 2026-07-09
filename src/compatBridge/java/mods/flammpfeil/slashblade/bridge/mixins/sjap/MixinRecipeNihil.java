@@ -97,6 +97,16 @@ public abstract class MixinRecipeNihil implements SlashBladeJeiInputOverride {
         return ItemStack.EMPTY;
     }
 
+    @Override
+    public ItemStack slashblade$getJeiInheritanceSource() {
+        ItemStack source = slashblade$getJeiInputOverride(1, 1, Ingredient.EMPTY);
+        if (!source.isEmpty()) {
+            return source;
+        }
+
+        return copyBlade(requiredBladeMain);
+    }
+
     private ItemStack copyBlade(ItemStack stack) {
         return stack == null || stack.isEmpty() ? ItemStack.EMPTY : stack.copy();
     }

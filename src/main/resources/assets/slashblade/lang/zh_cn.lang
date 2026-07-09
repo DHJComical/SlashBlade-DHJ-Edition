@@ -107,6 +107,7 @@ item.slashblade.adjust.back.name=后
 item.slashblade.adjust.down.name=下
 tooltip.slashblade.sample.line1=演示用物品：包裹了木剑的刀鞘
 tooltip.slashblade.sample.line2=真正性能请通过配方合成后体验
+tooltip.slashblade.jei.inheritance_source=主要数据继承自：%s
 
 item.slashblade.named.koseki.name=枯石大刀
 

@@ -143,16 +143,21 @@ public class SlashBlade {
         addRecipe(key, value, value instanceof DummyRecipeBase);
     }
     public static void addRecipe(String key, IRecipe value, boolean isDummy) {
+        boolean registered = false;
         if(!isDummy) {
             if(value.getRegistryName() == null)
                 value.setRegistryName(new ResourceLocation(value.getGroup()));
             if (isDuplicateLegacyRecipe(value.getRegistryName())) {
-                LogManager.getLogger("SlashBlade").info("Skipped duplicate legacy SlashBlade recipe mirror: {}", value.getRegistryName());
-                return;
+                LogManager.getLogger("SlashBlade").info("Skipped duplicate legacy SlashBlade recipe mirror registration: {}", value.getRegistryName());
+            } else {
+                ForgeRegistries.RECIPES.register(value);
+                registered = true;
             }
-            ForgeRegistries.RECIPES.register(value);
         }
         recipeMultimap.put(key, value);
+        if (!isDummy && !registered) {
+            LogManager.getLogger("SlashBlade").debug("Indexed legacy SlashBlade recipe mirror for compatibility: {}", value.getRegistryName());
+        }
     }
 
     private static boolean isDuplicateLegacyRecipe(ResourceLocation registryName) {

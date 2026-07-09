@@ -52,6 +52,7 @@ item.slashblade.named.fox.black.name=狐月刀「黒狐」
 item.slashblade.named.muramasa.name=「千鶴」村正
 item.slashblade.named.sabigatana.name=銹刀
 item.slashblade.named.doutanuki.name=剛刀「胴田貫」
+tooltip.slashblade.jei.inheritance_source=主要資料繼承自：%s
 
 item.slashblade.named.koseki.name=枯石大刀
 

@@ -194,6 +194,7 @@ public class ItemSlashBlade extends ItemSword {
 
     static public TagPropertyAccessor.TagPropertyInteger SummonedSwordColor = new TagPropertyAccessor.TagPropertyInteger("SummonedSwordColor");
     public static final String TooltipKeysTag = "tooltipKeys";
+    public static final String JeiInheritanceSourceTag = "jeiInheritanceSource";
 
     public static int AnvilRepairBonus = 100;
 
@@ -2656,6 +2657,7 @@ public class ItemSlashBlade extends ItemSword {
         }
 
         addInformationTranslatedTooltip(par1ItemStack, par3List);
+        addInformationJeiInheritanceSource(par1ItemStack, par3List);
 
         addInformationEnergy(par1ItemStack, par2EntityPlayer, par3List, par4);
     }
@@ -2672,6 +2674,19 @@ public class ItemSlashBlade extends ItemSword {
         for (int i = 0; i < tooltipKeys.tagCount(); i++) {
             lines.add(TextFormatting.DARK_PURPLE + "" + TextFormatting.ITALIC + I18n.format(tooltipKeys.getStringTagAt(i)));
         }
+    }
+
+    @SideOnly(Side.CLIENT)
+    private void addInformationJeiInheritanceSource(ItemStack stack, List<String> lines) {
+        NBTTagCompound tag = getItemTagCompound(stack);
+
+        if (!tag.hasKey(JeiInheritanceSourceTag, 8)) {
+            return;
+        }
+
+        lines.add(TextFormatting.GRAY + I18n.format(
+                "tooltip.slashblade.jei.inheritance_source",
+                tag.getString(JeiInheritanceSourceTag)));
     }
 
 

@@ -36,6 +36,8 @@ final class SlashBladeCraftingRecipeWrapper implements IShapedCraftingRecipeWrap
         this.recipe = recipe;
         this.output = getDisplayOutput(recipe, output, preserveOutputState);
         removeRecipeOnlyTooltip(this.output);
+        removeInheritanceSourceTooltip(this.output);
+        addInheritanceSourceTooltip(this.output);
     }
 
     @Override
@@ -117,6 +119,7 @@ final class SlashBladeCraftingRecipeWrapper implements IShapedCraftingRecipeWrap
 
             ItemStack cleanedStack = stack.copy();
             removeRecipeOnlyTooltip(cleanedStack);
+            removeInheritanceSourceTooltip(cleanedStack);
             cleanedStacks[i] = cleanedStack;
         }
 
@@ -144,13 +147,7 @@ final class SlashBladeCraftingRecipeWrapper implements IShapedCraftingRecipeWrap
     }
 
     private ItemStack[] getAwakeBladeDisplayStacks(RecipeAwakeBlade awakeRecipe) {
-        ItemStack required = awakeRecipe.getRequiredStateBlade();
-        if (required.isEmpty()) {
-            required = awakeRecipe.getRequestDefinition().createDisplayStack();
-        } else {
-            required = normalizeBladeDisplayStack(required);
-            awakeRecipe.getRequestDefinition().initItemStack(required);
-        }
+        ItemStack required = getAwakeBladeDisplayStack(awakeRecipe);
 
         if (required.isEmpty()) {
             return new ItemStack[0];
@@ -162,6 +159,18 @@ final class SlashBladeCraftingRecipeWrapper implements IShapedCraftingRecipeWrap
         named.setStackDisplayName(required.getDisplayName());
 
         return new ItemStack[]{required, named};
+    }
+
+    private ItemStack getAwakeBladeDisplayStack(RecipeAwakeBlade awakeRecipe) {
+        ItemStack required = awakeRecipe.getRequiredStateBlade();
+        if (required.isEmpty()) {
+            required = awakeRecipe.getRequestDefinition().createDisplayStack();
+        } else {
+            required = normalizeBladeDisplayStack(required);
+            awakeRecipe.getRequestDefinition().initItemStack(required);
+        }
+
+        return required.isEmpty() ? ItemStack.EMPTY : required;
     }
 
     private ItemStack[] getBladeIngredientDisplayStacks(BladeIngredient ingredient) {
@@ -221,6 +230,50 @@ final class SlashBladeCraftingRecipeWrapper implements IShapedCraftingRecipeWrap
         }
 
         stack.getTagCompound().removeTag(ItemSlashBlade.TooltipKeysTag);
+    }
+
+    private static void removeInheritanceSourceTooltip(ItemStack stack) {
+        if (stack.isEmpty() || !stack.hasTagCompound()) {
+            return;
+        }
+
+        stack.getTagCompound().removeTag(ItemSlashBlade.JeiInheritanceSourceTag);
+    }
+
+    private void addInheritanceSourceTooltip(ItemStack stack) {
+        if (stack.isEmpty()) {
+            return;
+        }
+
+        ItemStack source = getInheritanceSourceStack();
+        if (source.isEmpty()) {
+            return;
+        }
+
+        removeRecipeOnlyTooltip(source);
+        removeInheritanceSourceTooltip(source);
+        ItemSlashBlade.getItemTagCompound(stack).setString(ItemSlashBlade.JeiInheritanceSourceTag, source.getDisplayName());
+        SlashBladeJeiDebug.log("Recipe inheritance source recipe=" + getRegistryName()
+                + " output=" + SlashBladeJeiDebug.describeStack(stack)
+                + " source=" + SlashBladeJeiDebug.describeStack(source));
+    }
+
+    private ItemStack getInheritanceSourceStack() {
+        if (recipe instanceof SlashBladeJeiInputOverride) {
+            ItemStack source = ((SlashBladeJeiInputOverride) recipe).slashblade$getJeiInheritanceSource();
+            if (source != null && !source.isEmpty()) {
+                return normalizeBladeDisplayStack(source.copy());
+            }
+        }
+
+        if (recipe instanceof RecipeAwakeBlade) {
+            ItemStack required = ((RecipeAwakeBlade) recipe).getRequiredStateBlade();
+            if (!required.isEmpty()) {
+                return normalizeBladeDisplayStack(required);
+            }
+        }
+
+        return ItemStack.EMPTY;
     }
 
     private static ItemStack getDisplayOutput(IRecipe recipe, ItemStack output, boolean preserveOutputState) {
