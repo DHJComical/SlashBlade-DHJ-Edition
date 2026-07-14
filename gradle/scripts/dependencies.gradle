@@ -1,6 +1,9 @@
 apply from: 'gradle/scripts/helpers.gradle'
 
 repositories {
+    flatDir {
+        dirs('libs') // /libs
+    }
     // Other repositories described by default:
     // CleanroomMC: https://maven.cleanroommc.com
     exclusiveContent {
@@ -74,6 +77,7 @@ dependencies {
     implementation rfg.deobf('curse.maven:sjap-310187:6845011')
     implementation rfg.deobf("curse.maven:cialloblade-1281291:7051675")
     implementation rfg.deobf("curse.maven:slashblade-murasame-1330499:6922408")
+    implementation rfg.deobf('libs:negorerouse-r5-mc1.12.2')
 
     // Transitive dependencies:
     // (Dependencies that your dependency depends on)

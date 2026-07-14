@@ -1,6 +1,9 @@
 package mods.flammpfeil.slashblade.bridge.core;
 
 import net.minecraft.launchwrapper.IClassTransformer;
+import net.minecraftforge.fml.relauncher.FMLLaunchHandler;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
@@ -11,11 +14,22 @@ import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
+import org.objectweb.asm.TypePath;
 
 import java.nio.charset.StandardCharsets;
 
 public class LegacySlashBladeClassTransformer implements IClassTransformer {
+    private static final Logger LOGGER = LogManager.getLogger("SlashBladeLegacyBridge");
     private static final byte[] LEGACY_ROOT_MARKER = "mods/flammpfeil/slashblade/".getBytes(StandardCharsets.UTF_8);
+    private final boolean deobfuscatedEnvironment;
+
+    public LegacySlashBladeClassTransformer() {
+        this(FMLLaunchHandler.isDeobfuscatedEnvironment());
+    }
+
+    LegacySlashBladeClassTransformer(boolean deobfuscatedEnvironment) {
+        this.deobfuscatedEnvironment = deobfuscatedEnvironment;
+    }
 
     @Override
     public byte[] transform(String name, String transformedName, byte[] basicClass) {
@@ -26,10 +40,12 @@ public class LegacySlashBladeClassTransformer implements IClassTransformer {
         try {
             ClassReader reader = new ClassReader(basicClass);
             ClassWriter writer = new ClassWriter(reader, 0);
-            reader.accept(new RemappingClassVisitor(writer), 0);
+            reader.accept(new RemappingClassVisitor(writer, deobfuscatedEnvironment), 0);
             return writer.toByteArray();
-        } catch (Throwable ignored) {
-            return basicClass;
+        } catch (RuntimeException | Error exception) {
+            LOGGER.error("Failed to remap legacy SlashBlade references in class {}",
+                    transformedName != null ? transformedName : name, exception);
+            throw exception;
         }
     }
 
@@ -53,9 +69,9 @@ public class LegacySlashBladeClassTransformer implements IClassTransformer {
     private static class RemappingClassVisitor extends ClassVisitor {
         private final Remapper remapper;
 
-        RemappingClassVisitor(ClassVisitor visitor) {
+        RemappingClassVisitor(ClassVisitor visitor, boolean deobfuscatedEnvironment) {
             super(Opcodes.ASM5, visitor);
-            this.remapper = new Remapper();
+            this.remapper = new Remapper(deobfuscatedEnvironment);
         }
 
         @Override
@@ -70,7 +86,7 @@ public class LegacySlashBladeClassTransformer implements IClassTransformer {
         }
 
         @Override
-        public AnnotationVisitor visitTypeAnnotation(int typeRef, org.objectweb.asm.TypePath typePath, String desc, boolean visible) {
+        public AnnotationVisitor visitTypeAnnotation(int typeRef, TypePath typePath, String desc, boolean visible) {
             return new RemappingAnnotationVisitor(super.visitTypeAnnotation(typeRef, typePath, remapper.mapDesc(desc), visible), remapper);
         }
 
@@ -92,7 +108,8 @@ public class LegacySlashBladeClassTransformer implements IClassTransformer {
 
         @Override
         public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
-            return new RemappingMethodVisitor(super.visitMethod(access, name, remapper.mapMethodDesc(desc),
+            return new RemappingMethodVisitor(super.visitMethod(access, remapper.mapMethodName(name, desc),
+                    remapper.mapMethodDesc(desc),
                     remapper.mapString(signature), remapper.mapInternalNames(exceptions)), remapper);
         }
     }
@@ -111,7 +128,7 @@ public class LegacySlashBladeClassTransformer implements IClassTransformer {
         }
 
         @Override
-        public AnnotationVisitor visitTypeAnnotation(int typeRef, org.objectweb.asm.TypePath typePath, String desc, boolean visible) {
+        public AnnotationVisitor visitTypeAnnotation(int typeRef, TypePath typePath, String desc, boolean visible) {
             return new RemappingAnnotationVisitor(super.visitTypeAnnotation(typeRef, typePath, remapper.mapDesc(desc), visible), remapper);
         }
     }
@@ -135,7 +152,7 @@ public class LegacySlashBladeClassTransformer implements IClassTransformer {
         }
 
         @Override
-        public AnnotationVisitor visitTypeAnnotation(int typeRef, org.objectweb.asm.TypePath typePath, String desc, boolean visible) {
+        public AnnotationVisitor visitTypeAnnotation(int typeRef, TypePath typePath, String desc, boolean visible) {
             return new RemappingAnnotationVisitor(super.visitTypeAnnotation(typeRef, typePath, remapper.mapDesc(desc), visible), remapper);
         }
 
@@ -161,7 +178,8 @@ public class LegacySlashBladeClassTransformer implements IClassTransformer {
 
         @Override
         public void visitMethodInsn(int opcode, String owner, String name, String desc, boolean itf) {
-            super.visitMethodInsn(opcode, remapper.mapInternalName(owner), name, remapper.mapMethodDesc(desc), itf);
+            super.visitMethodInsn(opcode, remapper.mapInternalName(owner), remapper.mapMethodName(name, desc),
+                    remapper.mapMethodDesc(desc), itf);
         }
 
         @Override
@@ -180,7 +198,7 @@ public class LegacySlashBladeClassTransformer implements IClassTransformer {
         }
 
         @Override
-        public AnnotationVisitor visitInsnAnnotation(int typeRef, org.objectweb.asm.TypePath typePath, String desc, boolean visible) {
+        public AnnotationVisitor visitInsnAnnotation(int typeRef, TypePath typePath, String desc, boolean visible) {
             return new RemappingAnnotationVisitor(super.visitInsnAnnotation(typeRef, typePath, remapper.mapDesc(desc), visible), remapper);
         }
 
@@ -190,7 +208,7 @@ public class LegacySlashBladeClassTransformer implements IClassTransformer {
         }
 
         @Override
-        public AnnotationVisitor visitTryCatchAnnotation(int typeRef, org.objectweb.asm.TypePath typePath, String desc, boolean visible) {
+        public AnnotationVisitor visitTryCatchAnnotation(int typeRef, TypePath typePath, String desc, boolean visible) {
             return new RemappingAnnotationVisitor(super.visitTryCatchAnnotation(typeRef, typePath, remapper.mapDesc(desc), visible), remapper);
         }
 
@@ -200,7 +218,9 @@ public class LegacySlashBladeClassTransformer implements IClassTransformer {
         }
 
         @Override
-        public AnnotationVisitor visitLocalVariableAnnotation(int typeRef, org.objectweb.asm.TypePath typePath, Label[] start, Label[] end, int[] index, String desc, boolean visible) {
+        public AnnotationVisitor visitLocalVariableAnnotation(int typeRef, TypePath typePath, Label[] start,
+                                                              Label[] end, int[] index, String desc,
+                                                              boolean visible) {
             return new RemappingAnnotationVisitor(super.visitLocalVariableAnnotation(typeRef, typePath, start, end, index, remapper.mapDesc(desc), visible), remapper);
         }
     }
@@ -235,6 +255,17 @@ public class LegacySlashBladeClassTransformer implements IClassTransformer {
     }
 
     private static class Remapper {
+        private static final String SET_TRANSLATION_KEY_DESC = "(Ljava/lang/String;)Lnet/minecraft/item/Item;";
+        private static final String SET_MAX_DAMAGE_DESC = "(I)Lnet/minecraft/item/Item;";
+        private static final String IS_IN_CREATIVE_TAB_DESC = "(Lnet/minecraft/creativetab/CreativeTabs;)Z";
+        private static final String GET_SUB_ITEMS_DESC =
+                "(Lnet/minecraft/creativetab/CreativeTabs;Lnet/minecraft/util/NonNullList;)V";
+        private final boolean deobfuscatedEnvironment;
+
+        Remapper(boolean deobfuscatedEnvironment) {
+            this.deobfuscatedEnvironment = deobfuscatedEnvironment;
+        }
+
         private String mapString(String value) {
             if (value == null) {
                 return null;
@@ -285,6 +316,25 @@ public class LegacySlashBladeClassTransformer implements IClassTransformer {
             return mapString(value);
         }
 
+        private String mapMethodName(String name, String desc) {
+            if (!deobfuscatedEnvironment) {
+                return name;
+            }
+            if ("func_77655_b".equals(name) && SET_TRANSLATION_KEY_DESC.equals(desc)) {
+                return "setTranslationKey";
+            }
+            if ("func_77656_e".equals(name) && SET_MAX_DAMAGE_DESC.equals(desc)) {
+                return "setMaxDamage";
+            }
+            if ("func_194125_a".equals(name) && IS_IN_CREATIVE_TAB_DESC.equals(desc)) {
+                return "isInCreativeTab";
+            }
+            if ("func_150895_a".equals(name) && GET_SUB_ITEMS_DESC.equals(desc)) {
+                return "getSubItems";
+            }
+            return name;
+        }
+
         private Object mapValue(Object value) {
             if (value instanceof Type) {
                 Type type = (Type) value;
@@ -325,7 +375,8 @@ public class LegacySlashBladeClassTransformer implements IClassTransformer {
         }
 
         private Handle mapHandle(Handle handle) {
-            return new Handle(handle.getTag(), mapInternalName(handle.getOwner()), handle.getName(),
+            return new Handle(handle.getTag(), mapInternalName(handle.getOwner()),
+                    mapMethodName(handle.getName(), handle.getDesc()),
                     mapMethodDesc(handle.getDesc()), handle.isInterface());
         }
     }

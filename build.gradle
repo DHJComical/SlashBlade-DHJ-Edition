@@ -373,6 +373,10 @@ sourceSets {
         compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
         runtimeClasspath += output + compileClasspath
     }
+    test {
+        compileClasspath += sourceSets.compatBridge.output
+        runtimeClasspath += sourceSets.compatBridge.output
+    }
 }
 
 tasks.named('compileCompatBridgeJava', JavaCompile).configure {
@@ -406,6 +410,10 @@ tasks.register('compatBridgeJar', Jar) {
                 'ForceLoadAsMod': true
         )
     }
+}
+
+tasks.named('compileTestJava', JavaCompile).configure {
+    dependsOn tasks.named('compileCompatBridgeJava')
 }
 
 tasks.named('assemble').configure {
